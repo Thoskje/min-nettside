@@ -35,7 +35,6 @@
       font-size: 0.9em;
     }
 
-    /* CHAT STIL */
     .chat-button {
       position: fixed;
       bottom: 20px;
@@ -72,7 +71,7 @@
     }
 
     .chat-messages {
-      height: 200px;
+      height: 220px;
       padding: 10px;
       overflow-y: auto;
       font-size: 0.9em;
@@ -95,6 +94,11 @@
       border: none;
       padding: 10px 15px;
       cursor: pointer;
+    }
+
+    .typing {
+      font-style: italic;
+      color: #666;
     }
   </style>
 </head>
@@ -124,7 +128,7 @@
       Ja, vi har erfaring med de fleste vanlige biler på norske veier – inkludert elbiler.</p>
 
       <p><strong>💬 Hvordan fungerer chatten?</strong><br>
-      Du kan skrive spørsmål og få automatisk svar. Senere vil vi tilby betalingsbasert tilgang til menneskelig rådgiver.</p>
+      Du kan skrive spørsmål og få svar fra Veihjelpen. Etter tre svar må du gå videre til betalt løsning.</p>
     </div>
 
     <div class="box">
@@ -141,9 +145,9 @@
   <!-- CHAT -->
   <button class="chat-button" onclick="toggleChat()">Chat</button>
   <div class="chat-box" id="chatBox">
-    <div class="chat-header">Snakk med VeihjelpBot 🤖</div>
+    <div class="chat-header">Snakk med Veihjelpen</div>
     <div class="chat-messages" id="chatMessages">
-      <p><em>Stil et spørsmål, så svarer vi automatisk!</em></p>
+      <p><em>Stil et spørsmål, så svarer vi så godt vi kan.</em></p>
     </div>
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="Skriv her..." />
@@ -152,6 +156,9 @@
   </div>
 
   <script>
+    let responseCount = 0;
+    const maxFreeResponses = 3;
+
     function toggleChat() {
       const box = document.getElementById('chatBox');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
@@ -168,26 +175,45 @@
       userMsg.textContent = 'Du: ' + userText;
       messages.appendChild(userMsg);
 
-      const botMsg = document.createElement('p');
-      botMsg.textContent = 'Bot: ' + getBotReply(userText);
-      messages.appendChild(botMsg);
-
       input.value = '';
       messages.scrollTop = messages.scrollHeight;
+
+      if (responseCount >= maxFreeResponses) {
+        const stopMsg = document.createElement('p');
+        stopMsg.innerHTML = 'Veihjelpen: <em>For videre rådgivning må du benytte vår betalte tjeneste. Ta kontakt på e-post eller kom tilbake senere.</em>';
+        messages.appendChild(stopMsg);
+        messages.scrollTop = messages.scrollHeight;
+        return;
+      }
+
+      const typingMsg = document.createElement('p');
+      typingMsg.className = 'typing';
+      typingMsg.textContent = 'Veihjelpen skriver...';
+      messages.appendChild(typingMsg);
+      messages.scrollTop = messages.scrollHeight;
+
+      setTimeout(() => {
+        messages.removeChild(typingMsg);
+        const botReply = document.createElement('p');
+        botReply.textContent = 'Veihjelpen: ' + getReply(userText);
+        messages.appendChild(botReply);
+        messages.scrollTop = messages.scrollHeight;
+        responseCount++;
+      }, 10000); // 10 sekunder
     }
 
-    function getBotReply(input) {
-      const text = input.toLowerCase();
+    function getReply(text) {
+      const lower = text.toLowerCase();
 
-      if (text.includes('pris') || text.includes('koster')) {
+      if (lower.includes('pris') || lower.includes('koster')) {
         return 'Vi tilbyr både gratis og betalte tjenester. Enkel hjelp er gratis.';
-      } else if (text.includes('elbil')) {
-        return 'Ja, vi hjelper med både elbil og fossilbil.';
-      } else if (text.includes('hvordan fungerer')) {
-        return 'Du stiller spørsmål her, og får svar fra oss eller en bot. Rådgivning via video krever betaling.';
-      } else if (text.includes('tilgjengelig')) {
-        return 'Vi svarer vanligvis innen få minutter mellom kl. 08 og 22.';
-      } else if (text.includes('tilbud') || text.includes('tjeneste')) {
+      } else if (lower.includes('elbil')) {
+        return 'Ja, vi har erfaring med både elbil og fossilbil.';
+      } else if (lower.includes('hvordan fungerer')) {
+        return 'Du stiller spørsmål her og får svar direkte. Betalt rådgivning kommer snart.';
+      } else if (lower.includes('tilgjengelig')) {
+        return 'Vi er normalt tilgjengelig fra kl. 08 til 22 alle dager.';
+      } else if (lower.includes('tilbud') || lower.includes('tjeneste')) {
         return 'Vi tilbyr digital veihjelp, rådgivning og feilsøking via nett.';
       } else {
         return 'Beklager, det forstod vi ikke helt. Prøv å stille spørsmålet på en annen måte.';
