@@ -6,6 +6,13 @@
   <title>Digital Veihjelp</title>
   <style>
     body {
+      <script>
+  const adgang = prompt("Skriv inn adgangskode for å se siden:");
+  if (adgang !== "minhemmeligeide123") {
+    document.body.innerHTML = "<h2>Nettsiden er midlertidig utilgjengelig.</h2>";
+  }
+</script>
+
       font-family: Arial, sans-serif;
       background-color: #f0f4f8;
       color: #333;
