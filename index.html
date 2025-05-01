@@ -139,4 +139,60 @@
   </footer>
 
   <!-- CHAT -->
-  <button class="chat-button" onclick
+  <button class="chat-button" onclick="toggleChat()">Chat</button>
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">Snakk med VeihjelpBot 🤖</div>
+    <div class="chat-messages" id="chatMessages">
+      <p><em>Stil et spørsmål, så svarer vi automatisk!</em></p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Skriv her..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleChat() {
+      const box = document.getElementById('chatBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const messages = document.getElementById('chatMessages');
+      const userText = input.value.trim();
+
+      if (userText === '') return;
+
+      const userMsg = document.createElement('p');
+      userMsg.textContent = 'Du: ' + userText;
+      messages.appendChild(userMsg);
+
+      const botMsg = document.createElement('p');
+      botMsg.textContent = 'Bot: ' + getBotReply(userText);
+      messages.appendChild(botMsg);
+
+      input.value = '';
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function getBotReply(input) {
+      const text = input.toLowerCase();
+
+      if (text.includes('pris') || text.includes('koster')) {
+        return 'Vi tilbyr både gratis og betalte tjenester. Enkel hjelp er gratis.';
+      } else if (text.includes('elbil')) {
+        return 'Ja, vi hjelper med både elbil og fossilbil.';
+      } else if (text.includes('hvordan fungerer')) {
+        return 'Du stiller spørsmål her, og får svar fra oss eller en bot. Rådgivning via video krever betaling.';
+      } else if (text.includes('tilgjengelig')) {
+        return 'Vi svarer vanligvis innen få minutter mellom kl. 08 og 22.';
+      } else if (text.includes('tilbud') || text.includes('tjeneste')) {
+        return 'Vi tilbyr digital veihjelp, rådgivning og feilsøking via nett.';
+      } else {
+        return 'Beklager, det forstod vi ikke helt. Prøv å stille spørsmålet på en annen måte.';
+      }
+    }
+  </script>
+</body>
+</html>
