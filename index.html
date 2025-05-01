@@ -72,7 +72,7 @@
     }
 
     .chat-messages {
-      height: 150px;
+      height: 200px;
       padding: 10px;
       overflow-y: auto;
       font-size: 0.9em;
@@ -108,7 +108,7 @@
     <div class="box">
       <h2>Hva tilbyr vi?</h2>
       <ul>
-        <li>Enkel digital veihjelp – vi forklarer hva du kan gjøre hvis bilen stopper</li>
+        <li>Digital veihjelp – vi forklarer hva du kan gjøre hvis bilen stopper</li>
         <li>Feilsøking over video eller melding</li>
         <li>Vedlikeholdsråd og hva du bør prioritere</li>
         <li>Uavhengig rådgivning – slik at du unngår unødvendige kostnader</li>
@@ -118,19 +118,19 @@
     <div class="box">
       <h2>Ofte stilte spørsmål</h2>
       <p><strong>💬 Koster det noe?</strong><br>
-      Vi tilbyr både gratis råd og betalte tjenester. Enkel rådgivning er gratis. Mer avansert hjelp skjer via betaling.</p>
+      Vi tilbyr både gratis og betalte tjenester. Enkel rådgivning er gratis. Mer avansert hjelp skjer via betaling.</p>
 
       <p><strong>💬 Kan dere hjelpe med alle bilmerker?</strong><br>
-      Ja, vi har erfaring med de fleste vanlige biler på norske veier.</p>
+      Ja, vi har erfaring med de fleste vanlige biler på norske veier – inkludert elbiler.</p>
 
       <p><strong>💬 Hvordan fungerer chatten?</strong><br>
-      Du får tilgang etter betaling – vi jobber med å legge inn Vipps og kortbetaling.</p>
+      Du kan skrive spørsmål og få automatisk svar. Senere vil vi tilby betalingsbasert tilgang til menneskelig rådgiver.</p>
     </div>
 
     <div class="box">
       <h2>Kontakt oss</h2>
       <p>Send e-post til <a href="mailto:din-epost@eksempel.no">din-epost@eksempel.no</a>  
-      eller bruk chattefunksjonen nederst til høyre (testversjon).</p>
+      eller bruk chattefunksjonen nederst til høyre.</p>
     </div>
   </main>
 
@@ -138,36 +138,5 @@
     &copy; 2025 Digital Veihjelp. Skapt av bilmekanikere – for deg på veien.
   </footer>
 
-  <!-- CHAT-KOMPONENT -->
-  <button class="chat-button" onclick="toggleChat()">Chat</button>
-  <div class="chat-box" id="chatBox">
-    <div class="chat-header">Snakk med oss (demo)</div>
-    <div class="chat-messages" id="chatMessages">
-      <p><em>Chatten er foreløpig kun for visning.</em></p>
-    </div>
-    <div class="chat-input">
-      <input type="text" id="chatInput" placeholder="Skriv en melding..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    function toggleChat() {
-      const chatBox = document.getElementById('chatBox');
-      chatBox.style.display = (chatBox.style.display === 'block') ? 'none' : 'block';
-    }
-
-    function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const messages = document.getElementById('chatMessages');
-      if (input.value.trim() !== '') {
-        const p = document.createElement('p');
-        p.textContent = 'Du: ' + input.value;
-        messages.appendChild(p);
-        input.value = '';
-        messages.scrollTop = messages.scrollHeight;
-      }
-    }
-  </script>
-</body>
-</html>
+  <!-- CHAT -->
+  <button class="chat-button" onclick
