@@ -1,4 +1,4 @@
-:-<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
@@ -34,7 +34,6 @@
       text-align: center;
       font-size: 0.9em;
     }
-
     .chat-button {
       position: fixed;
       bottom: 20px;
@@ -48,7 +47,6 @@
       font-size: 16px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
-
     .chat-box {
       display: none;
       position: fixed;
@@ -62,32 +60,27 @@
       overflow: hidden;
       z-index: 1000;
     }
-
     .chat-header {
       background-color: #004080;
       color: white;
       padding: 10px;
       font-weight: bold;
     }
-
     .chat-messages {
       height: 220px;
       padding: 10px;
       overflow-y: auto;
       font-size: 0.9em;
     }
-
     .chat-input {
       display: flex;
       border-top: 1px solid #ccc;
     }
-
     .chat-input input {
       flex: 1;
       border: none;
       padding: 10px;
     }
-
     .chat-input button {
       background-color: #004080;
       color: white;
@@ -95,7 +88,6 @@
       padding: 10px 15px;
       cursor: pointer;
     }
-
     .typing {
       font-style: italic;
       color: #666;
@@ -105,14 +97,13 @@
 <body>
   <header>
     <h1>Veihjelpen</h1>
-     </p>Hjelp fra erfarne bilmekanikere – nå digitalt</p>
+    <p>Hjelp fra erfarne bilmekanikere – nå digitalt</p>
     <p>Digital veihjelp & rådgivning</p>
   </header>
 
   <main>
     <div class="box">
-
-       <h2>Visste du at?</h2>
+      <h2>Visste du at?</h2>
       <ul>
         <li>I de fleste tilfeller kan du:</li>
         <li>Enkelt fikse problemet selv</li>
@@ -120,28 +111,25 @@
         <li>Spare tid og bekymringer</li>
       </ul>
     </div>
-      
-      <h2>Hvike tjenester tilbyr vi?</h2>
+
+    <div class="box">
+      <h2>Hvilke tjenester tilbyr vi?</h2>
       <ul>
-        <li>Digital veihjelp – Rask feilsøking og veiledning over chat når uhellet er ute. Vi forklarer hva du selv kan gjøre hvis bilen stopper, eller hjelper deg på en kostnadsbesparende måte med hvordan du kan skaffe den nødvenige hjelpen du trenger videre.</li>
-        <li>,Avtalt veileding- Meldingstjeneste med mulighet for oppringing, video eller bildedeling</li>
-        <li>Uavhengig rådgivning – Basert på innsendt forespørsel gir vi deg råd om vedlikehold og reparasjoner av din bil, slik at du kan unødvendige kostnader, etter gjeldende lover og regler</li>
+        <li>Digital veihjelp – Rask feilsøking og veiledning over chat når uhellet er ute. Vi forklarer hva du selv kan gjøre hvis bilen stopper, eller hjelper deg på en kostnadsbesparende måte med hvordan du kan skaffe den nødvendige hjelpen du trenger videre.</li>
+        <li>Avtalt veiledning – Meldingstjeneste med mulighet for oppringing, video eller bildedeling.</li>
+        <li>Uavhengig rådgivning – Basert på innsendt forespørsel gir vi deg råd om vedlikehold og reparasjoner av din bil, slik at du kan unngå unødvendige kostnader, etter gjeldende lover og regler.</li>
       </ul>
     </div>
 
     <div class="box">
       <h2>Ofte stilte spørsmål</h2>
-      <p><strong>💬 Koster det noe?</strong><br>
-      Vi tilbyr både gratis og betalte tjenester. Enkel rådgivning er gratis. Mer avansert hjelp skjer via betaling.</p>
-
-      <p><strong>💬 Hvordan fungerer det?</strong><br>
-      1. Chat- Vipps for 15min tilgang til faglert bilmekaniker. 2. Avtal time for en grundig gjennomgang (Du vil få tilsendt lenke til meldingsplattform med mulighet for video og bildedeling) 3. Bestill detaljert rådgivning og veiledning for reparasjon og vedlikehold av din bil.
+      <p><strong>💬 Koster det noe?</strong><br>Vi tilbyr både gratis og betalte tjenester. Enkel rådgivning er gratis. Mer avansert hjelp skjer via betaling.</p>
+      <p><strong>💬 Hvordan fungerer det?</strong><br>1. Chat – Vipps for 15 min tilgang til faglært bilmekaniker. 2. Avtal time for en grundig gjennomgang (du vil få tilsendt lenke til meldingsplattform med mulighet for video og bildedeling). 3. Bestill detaljert rådgivning og veiledning for reparasjon og vedlikehold av din bil.</p>
     </div>
 
     <div class="box">
       <h2>Kontakt oss</h2>
-      <p>Send e-post til <a href="mailto:din-epost@eksempel.no">din-epost@eksempel.no</a>  
-      eller bruk chattefunksjonen nederst til høyre.</p>
+      <p>Send e-post til <a href="mailto:din-epost@eksempel.no">din-epost@eksempel.no</a> eller bruk chattefunksjonen nederst til høyre.</p>
     </div>
   </main>
 
@@ -155,14 +143,13 @@
     <div class="chat-header">Snakk med Veihjelpen</div>
     <div class="chat-messages" id="chatMessages">
       <p><em>Hei :-) Stil et spørsmål til Veihjelpen, så svarer vi så godt vi kan. Konkrete eller avanserte problemstillinger og spørsmål skjer via betalt løsning. Rådspør en faglært bilmekaniker i 15 minutter for 249kr</em></p>
-
     </div>
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="Skriv her..." />
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
- 
+
   <script>
     let responseCount = 0;
     const maxFreeResponses = 3;
@@ -188,7 +175,7 @@
 
       if (responseCount >= maxFreeResponses) {
         const stopMsg = document.createElement('p');
-        stopMsg.innerHTML = 'Veihjelpen: <em>For videre rådgivning må du benytte en av våre betalte tjenester. 1. Chat- Vipps for 15min tilgang til faglert bilmekaniker. 2. Avtal time for en grundig gjennomgang (Du vil få tilsendt lenke til meldingsplattform med mulighet for video og bildedeling) 3. Bestill detaljert rådgivning og veiledning for reparasjon og vedlikehold av din bil.</em>';
+        stopMsg.innerHTML = 'Veihjelpen: <em>For videre rådgivning må du benytte en av våre betalte tjenester. 1. Chat – Vipps for 15 min tilgang til faglært bilmekaniker. 2. Avtal time for en grundig gjennomgang (du vil få tilsendt lenke til meldingsplattform med mulighet for video og bildedeling). 3. Bestill detaljert rådgivning og veiledning for reparasjon og vedlikehold av din bil.</em>';
         messages.appendChild(stopMsg);
         messages.scrollTop = messages.scrollHeight;
         return;
@@ -207,18 +194,18 @@
         messages.appendChild(botReply);
         messages.scrollTop = messages.scrollHeight;
         responseCount++;
-      }, 10000); // 10 sekunder
+      }, 10000);
     }
 
     function getReply(text) {
       const lower = text.toLowerCase();
 
       if (lower.includes('pris') || lower.includes('koster')) {
-        return 'Hei :-) Vi tilbyr både gratis og betalte tjenester. Vi kan gi deg enkel og standarisert rådgivning kostnadsfritt. Men for at du skal få mer skreddersydde løsninger som kan fungere i ditt tilfelle, og potensielt spare deg for høye kostnader anbefales du å bruke vipps-funksjonen for å rådspørre en mekaniker. 15 minutter for 249 kr';
+        return 'Hei :-) Vi tilbyr både gratis og betalte tjenester. Vi kan gi deg enkel og standardisert rådgivning kostnadsfritt. For mer skreddersydde løsninger anbefaler vi å bruke vipps-funksjonen. 15 minutter for 249 kr';
       } else if (lower.includes('elbil')) {
         return 'Ja, vi har erfaring med både elbiler og fossilbiler.';
       } else if (lower.includes('hvordan fungerer')) {
-        return 'Stil et spørsmål til Veihjelpen, så svarer vi så godt vi kan. Konkrete eller avanserte problemstillinger og spørsmål skjer via betalt løsning. Rådspør en faglært bilmekaniker i 15 minutter for 249kr.';
+        return 'Still et spørsmål til Veihjelpen, så svarer vi så godt vi kan. Konkrete eller avanserte problemstillinger og spørsmål skjer via betalt løsning. Rådspør en faglært bilmekaniker i 15 minutter for 249 kr.';
       } else if (lower.includes('tilgjengelig')) {
         return 'Vi er normalt tilgjengelig fra kl. 08 til 22 alle dager.';
       } else if (lower.includes('tilbud') || lower.includes('tjeneste')) {
