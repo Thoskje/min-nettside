@@ -34,6 +34,68 @@
       text-align: center;
       font-size: 0.9em;
     }
+
+    /* CHAT STIL */
+    .chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .chat-box {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-header {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      height: 150px;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 0.9em;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+    }
+
+    .chat-input button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -68,4 +130,44 @@
     <div class="box">
       <h2>Kontakt oss</h2>
       <p>Send e-post til <a href="mailto:din-epost@eksempel.no">din-epost@eksempel.no</a>  
-      eller bruk chattefunks
+      eller bruk chattefunksjonen nederst til høyre (testversjon).</p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Digital Veihjelp. Skapt av bilmekanikere – for deg på veien.
+  </footer>
+
+  <!-- CHAT-KOMPONENT -->
+  <button class="chat-button" onclick="toggleChat()">Chat</button>
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">Snakk med oss (demo)</div>
+    <div class="chat-messages" id="chatMessages">
+      <p><em>Chatten er foreløpig kun for visning.</em></p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Skriv en melding..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleChat() {
+      const chatBox = document.getElementById('chatBox');
+      chatBox.style.display = (chatBox.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const messages = document.getElementById('chatMessages');
+      if (input.value.trim() !== '') {
+        const p = document.createElement('p');
+        p.textContent = 'Du: ' + input.value;
+        messages.appendChild(p);
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>
