@@ -187,6 +187,10 @@
       padding-left: 10px;
       font-size: 0.95em;
     }
+
+    .faq-answer-show {
+      display: block;
+    }
   </style>
   <script>
     function toggleTheme() {
@@ -236,30 +240,38 @@
       <p>Vi tilbyr både gratis og betalt rådgivning via chat og video:</p>
       <div class="tjeneste-knapper">
         <button onclick="Tawk_API.maximize();">Start gratis chat</button>
-        <button onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Start betalt chat</button>
+        <button onclick="window.location.href='https://vipps.no/checkout/nettverkstedet-betalt-chat'">Start betalt chat</button>
         <button onclick="window.location.href='https://buy.stripe.com/test_14kaGV9sK9zk64AaEE'">Start videorådgivning</button>
       </div>
     </section>
 
     <section class="box">
       <h2>Hvorfor velge oss?</h2>
-      <p>
-        Ikke alle bilproblemer krever et kostbart verkstedsbesøk. Mange utfordringer – som rare lyder, merkelige lukter, startproblemer, dårlig batteri eller ujevn motorgange – kan i første omgang håndteres med riktig veiledning.
-      </p>
-      <p>
-        Vår tjeneste hjelper deg med å forstå hva som er galt, og hvor det kan være lurt å starte. Kanskje trenger du bare en enkel sjekk du kan gjøre selv, eller et råd som sparer deg for både tid og penger. Vi gir deg innsikten du trenger, slik at du kan ta riktige valg – uten å møte opp på verksted med en gang.
-      </p>
+      <ul>
+        <li><strong>Unngå unødvendige verkstedbesøk:</strong> Mange problemer kan løses hjemme.</li>
+        <li><strong>Direkte kontakt med fagfolk:</strong> Få råd om startproblemer, lyder, lukter og mer.</li>
+        <li><strong>Spar penger:</strong> Få innsikt før du bruker tid og penger på verksted.</li>
+        <li><strong>Alltid tilgjengelig:</strong> Alt skjer digitalt – ingen nedlasting, ingen kø.</li>
+      </ul>
     </section>
 
     <section id="faq" class="box">
       <h2>Ofte stilte spørsmål</h2>
       <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
         <h3>Hvordan fungerer tjenesten?</h3>
-        <div class="faq-answer">Du velger en tjeneste, og får hjelp gjennom gratis eller betalt veiledning.</div>
+        <div class="faq-answer">Du velger om du vil ha gratis eller betalt veiledning. Deretter starter du samtalen i nettleseren, der du får hjelp av fagpersoner med bilteknisk bakgrunn.</div>
       </div>
       <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
         <h3>Må jeg laste ned noe?</h3>
-        <div class="faq-answer">Nei, alt skjer i nettleseren.</div>
+        <div class="faq-answer">Nei, du trenger bare en nettleser og internettforbindelse. Alt skjer i nettleseren.</div>
+      </div>
+      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
+        <h3>Hva koster det?</h3>
+        <div class="faq-answer">Gratis chat er kostnadsfri. Betalt chat og videoveiledning har faste priser som oppgis før betaling.</div>
+      </div>
+      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
+        <h3>Hvem hjelper meg?</h3>
+        <div class="faq-answer">Du får hjelp av fagpersoner med lang erfaring fra bilverksted og diagnose. Vi tilbyr ærlig og praktisk rådgivning.</div>
       </div>
     </section>
 
@@ -271,7 +283,7 @@
 
   <button class="theme-toggle" onclick="toggleTheme()">Bytt tema</button>
   <button class="chat-button" onclick="Tawk_API.maximize();">Gratis chat</button>
-  <button class="premium-chat-button" onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Betalt chat</button>
+  <button class="premium-chat-button" onclick="window.location.href='https://vipps.no/checkout/nettverkstedet-betalt-chat'">Betalt chat</button>
 
   <footer>
     &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
