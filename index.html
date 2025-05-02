@@ -205,4 +205,52 @@
   </script>
 </head>
 <body>
-<!-- resten av innholdet beholdes uendret -->
+  <header>
+    <h1>Digital Veihjelp</h1>
+    <p>Rask og enkel bilrådgivning – rett fra nettleseren</p>
+  </header>
+
+  <nav>
+    <a href="#tjenester">Tjenester</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <main>
+    <section id="tjenester" class="box">
+      <h2>Våre Tjenester</h2>
+      <p>Vi tilbyr digital veihjelp og rådgivningstjenester via video og chat:</p>
+      <div class="tjeneste-knapper">
+        <button onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Start Chat (med betaling)</button>
+        <button onclick="window.location.href='https://buy.stripe.com/test_14kaGV9sK9zk64AaEE'">Start Video (med betaling)</button>
+      </div>
+    </section>
+
+    <section id="faq" class="box">
+      <h2>Ofte stilte spørsmål</h2>
+      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
+        <h3>Hvordan fungerer tjenesten?</h3>
+        <div class="faq-answer">Du velger en tjeneste, betaler med Vipps, og får tilgang til live hjelp.</div>
+      </div>
+      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
+        <h3>Må jeg laste ned noe?</h3>
+        <div class="faq-answer">Nei, alt skjer i nettleseren.</div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="box">
+      <h2>Kontakt Oss</h2>
+      <p>Har du spørsmål? Send oss en e-post: <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+    </section>
+  </main>
+
+  <button class="theme-toggle" onclick="toggleTheme()">Bytt tema</button>
+  <button class="chat-button" onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">
+    Chat nå
+  </button>
+
+  <footer>
+    &copy; 2025 Digital Veihjelp. Alle rettigheter reservert.
+  </footer>
+</body>
+</html>
