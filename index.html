@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital Veihjelp</title>
+  <title>Bilmekaniker på nett</title>
 
   <!-- SEO Metadata -->
-  <meta name="description" content="Digital veihjelp på nett – få rask og enkel hjelp via chat og video. Betal med Vipps. Ingen nedlasting kreves.">
-  <meta name="keywords" content="digital veihjelp, bilhjelp, nettbasert bilservice, bilrådgivning, vipps veihjelp">
-  <meta name="author" content="Digital Veihjelp">
+  <meta name="description" content="Bilmekaniker på nett – få rask og enkel hjelp via chat og video. Betal med Vipps. Ingen nedlasting kreves.">
+  <meta name="keywords" content="bilmekaniker på nett, digital bilhjelp, bilrådgivning, bilservice online, vipps veihjelp">
+  <meta name="author" content="Bilmekaniker på nett">
 
   <!-- Open Graph Metadata -->
-  <meta property="og:title" content="Digital Veihjelp" />
+  <meta property="og:title" content="Bilmekaniker på nett" />
   <meta property="og:description" content="Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps." />
   <meta property="og:url" content="https://digitalveihjelp.github.io/" />
   <meta property="og:type" content="website" />
@@ -121,9 +121,23 @@
 
     .chat-button {
       position: fixed;
-      bottom: 20px;
+      bottom: 90px;
       right: 20px;
       background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .premium-chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff6600;
       color: white;
       border: none;
       padding: 14px 20px;
@@ -193,34 +207,21 @@
 
   <!-- Tawk.to Live Chat -->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function() {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/your-property-id/1hxxxxxxx';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/68148681c915a4190c8c02d6/1iq82qqse';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
   </script>
 </head>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68148681c915a4190c8c02d6/1iq82qqse';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 <body>
   <header>
-    <h1>404- under utvikling</h1>
-    <p>Info kommer snart</p>
+    <h1>Bilmekaniker på nett</h1>
+    <p>Rask og enkel bilrådgivning – rett fra nettleseren</p>
   </header>
 
   <nav>
@@ -232,18 +233,29 @@ s0.parentNode.insertBefore(s1,s0);
   <main>
     <section id="tjenester" class="box">
       <h2>Våre Tjenester</h2>
-      <p>info kommer:</p>
+      <p>Vi tilbyr både gratis og betalt rådgivning via chat og video:</p>
       <div class="tjeneste-knapper">
-        <button onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Start Chat (med betaling)</button>
-        <button onclick="window.location.href='https://buy.stripe.com/test_14kaGV9sK9zk64AaEE'">Start Video (med betaling)</button>
+        <button onclick="Tawk_API.maximize();">Start gratis chat</button>
+        <button onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Start betalt chat</button>
+        <button onclick="window.location.href='https://buy.stripe.com/test_14kaGV9sK9zk64AaEE'">Start videorådgivning</button>
       </div>
+    </section>
+
+    <section class="box">
+      <h2>Hvorfor velge oss?</h2>
+      <p>
+        Ikke alle bilproblemer krever et kostbart verkstedsbesøk. Mange utfordringer – som rare lyder, merkelige lukter, startproblemer, dårlig batteri eller ujevn motorgange – kan i første omgang håndteres med riktig veiledning.
+      </p>
+      <p>
+        Vår tjeneste hjelper deg med å forstå hva som er galt, og hvor det kan være lurt å starte. Kanskje trenger du bare en enkel sjekk du kan gjøre selv, eller et råd som sparer deg for både tid og penger. Vi gir deg innsikten du trenger, slik at du kan ta riktige valg – uten å møte opp på verksted med en gang.
+      </p>
     </section>
 
     <section id="faq" class="box">
       <h2>Ofte stilte spørsmål</h2>
       <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
         <h3>Hvordan fungerer tjenesten?</h3>
-        <div class="faq-answer">Du velger en tjeneste, betaler med Vipps, og får tilgang til live hjelp.</div>
+        <div class="faq-answer">Du velger en tjeneste, og får hjelp gjennom gratis eller betalt veiledning.</div>
       </div>
       <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
         <h3>Må jeg laste ned noe?</h3>
@@ -258,12 +270,11 @@ s0.parentNode.insertBefore(s1,s0);
   </main>
 
   <button class="theme-toggle" onclick="toggleTheme()">Bytt tema</button>
-  <button class="chat-button" onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">
-    Chat nå
-  </button>
+  <button class="chat-button" onclick="Tawk_API.maximize();">Gratis chat</button>
+  <button class="premium-chat-button" onclick="window.location.href='https://buy.stripe.com/test_00g3ev6VEe9A7cc9AA'">Betalt chat</button>
 
   <footer>
-    &copy; 2025 Digital Veihjelp. Alle rettigheter reservert.
+    &copy; 2025 Bilmekaniker på nett. Alle rettigheter reservert.
   </footer>
 </body>
 </html>
