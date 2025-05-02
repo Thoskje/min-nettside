@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="no" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   <style>
     :root {
-      --bg-color: #f0f4f8;
-      --text-color: #333;
-      --primary-color: #004080;
-      --card-bg: #fff;
-    }
-
-    [data-theme="dark"] {
       --bg-color: #121212;
       --text-color: #e0e0e0;
       --primary-color: #1e90ff;
       --card-bg: #1e1e1e;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f0f4f8;
+      --text-color: #333;
+      --primary-color: #004080;
+      --card-bg: #fff;
     }
 
     * {
@@ -197,108 +197,85 @@
       font-size: 0.95em;
     }
   </style>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('preferred-theme', newTheme);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('preferred-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    });
+  </script>
 </head>
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+  <button class="theme-toggle" onclick="toggleTheme()">Bytt tema</button>
   <header>
-    <h1><i class="fas fa-tools"></i> Veihjelpen</h1>
-    <p>Hjelp fra erfarne bilmekanikere – nå digitalt</p>
-    <p>Digital veihjelp & rådgivning</p>
+    <h1>Digital Veihjelp</h1>
+    <p>Rask og enkel hjelp på nett når bilen streiker</p>
   </header>
-
   <nav>
-    <a href="#">Hjem</a>
     <a href="#tjenester">Tjenester</a>
     <a href="#faq">FAQ</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
-
   <main>
-    <div class="box" id="tjenester">
-      <h2>Våre tjenester</h2>
-      <p>Velg det som passer deg best:</p>
+    <section id="tjenester" class="box">
+      <h2>Våre Tjenester</h2>
+      <p>Vi tilbyr digital veihjelp og rådgivning når du trenger det som mest. Klikk på en tjeneste for å bestille:</p>
       <div class="tjeneste-knapper">
-        <button onclick="alert('Du vil bli sendt til Vipps for betaling og får deretter tilgang til chat i 15 minutter.')">
-          💬 Chat med bilmekaniker (15 min via Vipps)
-        </button>
-        <button onclick="openBookingModal()">
-          📅 Avtal time for grundig gjennomgang
-        </button>
-        <button onclick="alert('Vi hjelper deg med detaljert rådgivning og vedlikeholdsinformasjon.')">
-          🛠️ Bestill detaljert rådgivning
-        </button>
+        <button onclick="window.location.href='https://vipps.no'">Start samtale (Vipps)</button>
+        <button onclick="alert('Denne funksjonen kommer snart!')">Diagnose via video</button>
       </div>
-    </div>
-
-    <div class="box" id="faq">
+    </section>
+    <section id="faq" class="box">
       <h2>Ofte stilte spørsmål</h2>
-      <div class="faq-item" onclick="toggleAnswer(this)">
-        <h3>Hva slags hjelp kan jeg få?</h3>
-        <p class="faq-answer">Vi gir teknisk rådgivning, feilsøking, og generelle råd om vedlikehold og reparasjoner.</p>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <h3>Hvordan fungerer digital veihjelp?</h3>
+        <div class="faq-answer">Du tar kontakt med oss via nettsiden, og vi hjelper deg digitalt med råd og veiledning for bilproblemet ditt.</div>
       </div>
-      <div class="faq-item" onclick="toggleAnswer(this)">
-        <h3>Hvordan fungerer betaling via Vipps?</h3>
-        <p class="faq-answer">Du klikker på chat-knappen, betaler via Vipps og får tilgang til en 15 minutters samtale med en mekaniker.</p>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <h3>Må jeg laste ned noe?</h3>
+        <div class="faq-answer">Nei, alt skjer direkte i nettleseren din.</div>
       </div>
-      <div class="faq-item" onclick="toggleAnswer(this)">
-        <h3>Er dette en erstatning for fysisk verksted?</h3>
-        <p class="faq-answer">Nei, vi tilbyr digital rådgivning. For fysiske reparasjoner anbefaler vi verkstedbesøk.</p>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <h3>Hvordan betaler jeg?</h3>
+        <div class="faq-answer">Du betaler enkelt med Vipps før samtalen starter.</div>
       </div>
-    </div>
+    </section>
+    <section id="kontakt" class="box">
+      <h2>Kontakt oss</h2>
+      <p>Send oss en e-post på <a href="mailto:hjelp@digitalveihjelp.no">hjelp@digitalveihjelp.no</a> eller bruk chat-knappen nede i høyre hjørne.</p>
+    </section>
   </main>
+  <footer>
+    &copy; 2025 Digital Veihjelp. Alle rettigheter reservert.
+  </footer>
 
-  <div id="bookingModal" class="chat-box">
-    <div class="chat-header">Avtal time</div>
+  <button class="chat-button" onclick="toggleChat()">Chat</button>
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">Chat med oss</div>
     <div class="chat-messages">
-      <form id="bookingForm">
-        <label>Navn:</label>
-        <input type="text" name="navn" required />
-        <label>E-post:</label>
-        <input type="email" name="epost" required />
-        <label>Ønsket tidspunkt:</label>
-        <input type="datetime-local" name="tidspunkt" required />
-        <label>Kommentar:</label>
-        <input type="text" name="kommentar" placeholder="Beskriv gjerne problemet" />
-        <button type="submit">Send forespørsel</button>
-      </form>
+      <input type="text" placeholder="Skriv meldingen din her..." />
+      <button onclick="alert('Du må betale med Vipps før du kan chatte')">Send</button>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 Digital Veihjelp. Skapt av bilmekanikere – for deg på veien.
-  </footer>
-
   <script>
-    function toggleTheme() {
-      document.documentElement.dataset.theme = 
-        document.documentElement.dataset.theme === "dark" ? "" : "dark";
+    function toggleChat() {
+      const box = document.getElementById('chatBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const navn = this.navn.value;
-      const epost = this.epost.value;
-      const tidspunkt = this.tidspunkt.value;
-
-      alert(`Takk, ${navn}! Du vil få en e-post med lenke til vår meldingstjeneste.\nTidspunkt: ${tidspunkt}`);
-      document.getElementById('bookingModal').style.display = 'none';
-
-      console.log("Send e-post til:", epost);
-    });
-
-    function openBookingModal() {
-      document.getElementById('bookingModal').style.display = 'block';
-    }
-
-    function toggleAnswer(element) {
+    function toggleFaq(element) {
       const answer = element.querySelector('.faq-answer');
       answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-    }
-
-    window.onclick = function(event) {
-      if (event.target === document.getElementById('bookingModal')) {
-        document.getElementById('bookingModal').style.display = "none";
-      }
     }
   </script>
 </body>
