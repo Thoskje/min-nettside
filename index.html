@@ -4,152 +4,202 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Veihjelp</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-jQK1nmhX5VrRcyV2dyDr+/38EMWxfL6l0v9KkEvJvv+eDyo/8slL6ejlgnzKZV5MchDIsbxX3a+jgyCG/gW2nA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f4f8;
-      color: #333;
+    :root {
+      --bg-color: #f0f4f8;
+      --text-color: #333;
+      --primary-color: #004080;
+      --card-bg: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #1e90ff;
+      --card-bg: #1e1e1e;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
     header {
-      background-color: #004080;
+      background-color: var(--primary-color);
       color: white;
-      padding: 20px;
+      padding: 30px 20px;
       text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      background-color: var(--card-bg);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
     main {
-      padding: 20px;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
     }
+
     .box {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
     footer {
       background-color: #ddd;
-      padding: 10px;
+      padding: 15px;
       text-align: center;
       font-size: 0.9em;
+      color: #444;
     }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
     .chat-button {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #004080;
+      background-color: var(--primary-color);
       color: white;
       border: none;
-      padding: 12px 16px;
+      padding: 14px 20px;
       border-radius: 50px;
       cursor: pointer;
       font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
+
     .chat-box {
       display: none;
       position: fixed;
-      bottom: 80px;
+      bottom: 90px;
       right: 20px;
-      width: 300px;
-      background: white;
+      width: 320px;
+      background: var(--card-bg);
       border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
       overflow: hidden;
       z-index: 1000;
     }
+
     .chat-header {
-      background-color: #004080;
+      background-color: var(--primary-color);
       color: white;
-      padding: 10px;
+      padding: 12px;
       font-weight: bold;
+      text-align: center;
     }
+
     .chat-messages {
-      height: 220px;
-      padding: 10px;
+      height: 240px;
+      padding: 12px;
       overflow-y: auto;
-      font-size: 0.9em;
+      font-size: 0.95em;
     }
+
     .chat-input {
       display: flex;
       border-top: 1px solid #ccc;
     }
+
     .chat-input input {
       flex: 1;
       border: none;
-      padding: 10px;
+      padding: 12px;
+      background: transparent;
+      color: var(--text-color);
     }
+
     .chat-input button {
-      background-color: #004080;
+      background-color: var(--primary-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 12px 16px;
       cursor: pointer;
     }
+
     .typing {
       font-style: italic;
-      color: #666;
+      color: #888;
     }
-    #darkModeToggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 8px 12px;
-      background-color: #004080;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 999;
-    }
-    body.dark-mode {
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-    body.dark-mode header {
-      background-color: #1f1f1f;
-      color: #e0e0e0;
-    }
-    body.dark-mode .box {
-      background-color: #2a2a2a;
-      color: #e0e0e0;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    }
-    body.dark-mode footer {
-      background-color: #1f1f1f;
-      color: #aaa;
-    }
-    body.dark-mode .chat-box {
-      background-color: #1f1f1f;
-      color: #e0e0e0;
-      border: 1px solid #555;
-    }
-    body.dark-mode .chat-input input {
-      background-color: #333;
-      color: white;
-    }
-    body.dark-mode .chat-input button {
-      background-color: #0066cc;
-    }
+
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <button id="darkModeToggle">🌙 Mørk modus</button>
-
+  <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
   <header>
-    <h1>Veihjelpen</h1>
+    <h1><i class="fas fa-tools"></i> Veihjelpen</h1>
     <p>Hjelp fra erfarne bilmekanikere – nå digitalt</p>
     <p>Digital veihjelp & rådgivning</p>
   </header>
 
+  <nav>
+    <a href="#">Hjem</a>
+    <a href="#tjenester">Tjenester</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
   <main>
-    <div class="box">
+    <div class="box" id="tjenester">
       <h2>Visste du at?</h2>
       <ul>
-        <li>I de fleste tilfeller kan du:</li>
-        <li>Enkelt fikse problemet selv</li>
+        <li>I de fleste tilfeller kan du enkelt fikse problemet selv</li>
         <li>Unngå høye uforutsette verkstedsregninger</li>
         <li>Spare tid og bekymringer</li>
       </ul>
@@ -160,17 +210,17 @@
       <ul>
         <li>Digital veihjelp – Rask feilsøking og veiledning over chat når uhellet er ute.</li>
         <li>Avtalt veiledning – Meldingstjeneste med mulighet for oppringing, video eller bildedeling.</li>
-        <li>Uavhengig rådgivning – Råd om vedlikehold og reparasjoner for å unngå unødvendige kostnader.</li>
+        <li>Uavhengig rådgivning – Råd om vedlikehold og reparasjoner som sparer deg for kostnader.</li>
       </ul>
     </div>
 
-    <div class="box">
+    <div class="box" id="faq">
       <h2>Ofte stilte spørsmål</h2>
-      <p><strong>💬 Koster det noe?</strong><br>Vi tilbyr både gratis og betalte tjenester.</p>
-      <p><strong>💬 Hvordan fungerer det?</strong><br>1. Chat – Gratis i starten. 2. Vipps for videre hjelp. 3. Avtal tid eller bestill rådgivning.</p>
+      <p><strong>Koster det noe?</strong><br>Vi tilbyr både gratis og betalte tjenester. Enkel rådgivning er gratis. Mer avansert hjelp krever betaling.</p>
+      <p><strong>Hvordan fungerer det?</strong><br>Du chatter med oss, og hvis problemet er mer omfattende får du tilgang til mer hjelp via betaling.</p>
     </div>
 
-    <div class="box">
+    <div class="box" id="kontakt">
       <h2>Kontakt oss</h2>
       <p>Send e-post til <a href="mailto:din-epost@eksempel.no">din-epost@eksempel.no</a> eller bruk chattefunksjonen nederst til høyre.</p>
     </div>
@@ -180,11 +230,11 @@
     &copy; 2025 Digital Veihjelp. Skapt av bilmekanikere – for deg på veien.
   </footer>
 
-  <button class="chat-button" onclick="toggleChat()">Chat</button>
+  <button class="chat-button" onclick="toggleChat()"><i class="fas fa-comment"></i> Chat</button>
   <div class="chat-box" id="chatBox">
     <div class="chat-header">Snakk med Veihjelpen</div>
     <div class="chat-messages" id="chatMessages">
-      <p><em>Hei :-) Stil et spørsmål, så svarer vi så godt vi kan. Første tre svar er gratis.</em></p>
+      <p><em>Hei! Stil et spørsmål til Veihjelpen. Etter tre svar får du info om våre betalte tjenester.</em></p>
     </div>
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="Skriv her..." />
@@ -196,6 +246,11 @@
     let responseCount = 0;
     const maxFreeResponses = 3;
 
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
     function toggleChat() {
       const box = document.getElementById('chatBox');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
@@ -205,7 +260,6 @@
       const input = document.getElementById('chatInput');
       const messages = document.getElementById('chatMessages');
       const userText = input.value.trim();
-
       if (userText === '') return;
 
       const userMsg = document.createElement('p');
@@ -217,7 +271,7 @@
 
       if (responseCount >= maxFreeResponses) {
         const stopMsg = document.createElement('p');
-        stopMsg.innerHTML = 'Veihjelpen: <em>Gratisgrensen er nådd. Vennligst benytt betalt tjeneste for videre hjelp.</em>';
+        stopMsg.innerHTML = 'Veihjelpen: <em>Du har brukt opp dine tre gratis svar. For videre hjelp tilbyr vi betalte tjenester. Kontakt oss for mer informasjon.</em>';
         messages.appendChild(stopMsg);
         messages.scrollTop = messages.scrollHeight;
         return;
@@ -236,39 +290,25 @@
         messages.appendChild(botReply);
         messages.scrollTop = messages.scrollHeight;
         responseCount++;
-      }, 10000);
+      }, 1000);
     }
 
     function getReply(text) {
       const lower = text.toLowerCase();
       if (lower.includes('pris') || lower.includes('koster')) {
-        return 'Vi tilbyr både gratis og betalte tjenester. Enkelt svar er gratis. Vipps for mer hjelp.';
+        return 'Vi tilbyr både gratis og betalte tjenester. Enkel veiledning er gratis, mens spesialrådgivning krever betaling.';
       } else if (lower.includes('elbil')) {
-        return 'Ja, vi har erfaring med både elbiler og fossilbiler.';
+        return 'Vi har erfaring med både elbiler og fossilbiler.';
       } else if (lower.includes('hvordan fungerer')) {
-        return 'Still spørsmål, så svarer vi. Betalt tjeneste starter etter 3 svar.';
+        return 'Du stiller spørsmål, og vi svarer. Om det kreves mer hjelp tilbyr vi betalte tjenester.';
       } else if (lower.includes('tilgjengelig')) {
-        return 'Vi er tilgjengelige fra kl. 08–22 hver dag.';
-      } else if (lower.includes('tilbud') || lower.includes('tjeneste')) {
-        return 'Vi tilbyr digital veihjelp, rådgivning og feilsøking.';
+        return 'Vi er tilgjengelig fra 08:00 til 22:00 hver dag.';
+      } else if (lower.includes('tjeneste')) {
+        return 'Vi tilbyr digital veihjelp, rådgivning og feilsøking via nett.';
       } else {
-        return 'Beklager, det forstod vi ikke helt. Prøv gjerne på en annen måte.';
+        return 'Beklager, det forstod vi ikke helt. Prøv gjerne å stille spørsmålet på en annen måte.';
       }
     }
-
-    // Dark mode toggle
-    const toggleButton = document.getElementById("darkModeToggle");
-    const prefersDark = localStorage.getItem("darkMode") === "true";
-    if (prefersDark) {
-      document.body.classList.add("dark-mode");
-      toggleButton.textContent = "☀️ Lys modus";
-    }
-    toggleButton.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      const dark = document.body.classList.contains("dark-mode");
-      localStorage.setItem("darkMode", dark);
-      toggleButton.textContent = dark ? "☀️ Lys modus" : "🌙 Mørk modus";
-    });
   </script>
 </body>
 </html>
