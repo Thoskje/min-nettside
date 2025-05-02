@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="no" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
 
   <!-- SEO Metadata -->
@@ -11,12 +11,28 @@
   <meta name="author" content="Nettverkstedet">
 
   <!-- Open Graph Metadata -->
-  <meta property="og:title" content="Nettverkstedet" />
-  <meta property="og:description" content="Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps." />
-  <meta property="og:url" content="https://digitalveihjelp.github.io/" />
-  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Nettverkstedet">
+  <meta property="og:description" content="Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps.">
+  <meta property="og:url" content="https://digitalveihjelp.github.io/">
+  <meta property="og:type" content="website">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <!-- Strukturert data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Nettverkstedet",
+    "url": "https://digitalveihjelp.github.io/",
+    "description": "Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "kontakt@digitalveihjelp.no"
+    }
+  }
+  </script>
+
   <style>
     :root {
       --bg-color: #121212;
@@ -44,6 +60,7 @@
       color: var(--text-color);
       line-height: 1.6;
       padding-bottom: 100px;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     header {
@@ -52,11 +69,6 @@
       padding: 30px 20px;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
     }
 
     nav {
@@ -117,176 +129,58 @@
       border-radius: 20px;
       cursor: pointer;
       z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-button, .premium-chat-button {
+      position: fixed;
+      right: 20px;
+      padding: 14px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .chat-button {
-      position: fixed;
       bottom: 90px;
-      right: 20px;
       background-color: var(--primary-color);
       color: white;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .premium-chat-button {
-      position: fixed;
       bottom: 20px;
-      right: 20px;
       background-color: #ff6600;
       color: white;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
+    }
+
+    details {
+      margin-bottom: 15px;
+      background: var(--card-bg);
+      padding: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .tjeneste-knapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .tjeneste-knapper button {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .tjeneste-knapper button:hover {
-      background-color: #0066cc;
+    summary {
+      font-weight: bold;
+      color: var(--primary-color);
     }
 
     a { color: var(--primary-color); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    .faq-item {
-      margin-bottom: 15px;
-      cursor: pointer;
-    }
-
-    .faq-item h3 {
-      margin-bottom: 5px;
-      color: var(--primary-color);
-    }
-
-    .faq-answer {
-      display: none;
-      padding-left: 10px;
-      font-size: 0.95em;
-    }
-
-    .faq-answer-show {
-      display: block;
+    @media (max-width: 600px) {
+      body { font-size: 14px; }
+      nav { flex-direction: column; align-items: center; }
     }
   </style>
+
   <script>
     function toggleTheme() {
       const html = document.documentElement;
       const current = html.getAttribute('data-theme');
       const newTheme = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('preferred-theme', newTheme);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('preferred-theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-    });
-  </script>
-
-  <!-- Tawk.to Live Chat -->
-  <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/68148681c915a4190c8c02d6/1iq82qqse';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
-  </script>
-</head>
-<body>
-  <header>
-    <h1>Nettverkstedet</h1>
-    <p>Rask og enkel bilrådgivning – rett fra nettleseren</p>
-  </header>
-
-  <nav>
-    <a href="#tjenester">Tjenester</a>
-    <a href="#faq">FAQ</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-
-  <main>
-    <section id="tjenester" class="box">
-      <h2>Våre Tjenester</h2>
-      <p>Vi tilbyr både gratis og betalt rådgivning via chat og video:</p>
-      <div class="tjeneste-knapper">
-        <button onclick="Tawk_API.maximize();">Start gratis chat</button>
-        <button onclick="window.location.href='https://vipps.no/checkout/nettverkstedet-betalt-chat'">Start betalt chat</button>
-        <button onclick="window.location.href='https://buy.stripe.com/test_14kaGV9sK9zk64AaEE'">Start videorådgivning</button>
-      </div>
-    </section>
-
-    <section class="box">
-      <h2>Hvorfor velge oss?</h2>
-      <ul>
-        <li><strong>Unngå unødvendige verkstedbesøk:</strong> Mange problemer kan løses hjemme.</li>
-        <li><strong>Direkte kontakt med fagfolk:</strong> Få råd om startproblemer, lyder, lukter og mer.</li>
-        <li><strong>Spar penger:</strong> Få innsikt før du bruker tid og penger på verksted.</li>
-        <li><strong>Alltid tilgjengelig:</strong> Alt skjer digitalt – ingen nedlasting, ingen kø.</li>
-      </ul>
-    </section>
-
-    <section id="faq" class="box">
-      <h2>Ofte stilte spørsmål</h2>
-      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
-        <h3>Hvordan fungerer tjenesten?</h3>
-        <div class="faq-answer">Du velger om du vil ha gratis eller betalt veiledning. Deretter starter du samtalen i nettleseren, der du får hjelp av fagpersoner med bilteknisk bakgrunn.</div>
-      </div>
-      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
-        <h3>Må jeg laste ned noe?</h3>
-        <div class="faq-answer">Nei, du trenger bare en nettleser og internettforbindelse. Alt skjer i nettleseren.</div>
-      </div>
-      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
-        <h3>Hva koster det?</h3>
-        <div class="faq-answer">Gratis chat er kostnadsfri. Betalt chat og videoveiledning har faste priser som oppgis før betaling.</div>
-      </div>
-      <div class="faq-item" onclick="this.querySelector('.faq-answer').classList.toggle('faq-answer-show')">
-        <h3>Hvem hjelper meg?</h3>
-        <div class="faq-answer">Du får hjelp av fagpersoner med lang erfaring fra bilverksted og diagnose. Vi tilbyr ærlig og praktisk rådgivning.</div>
-      </div>
-    </section>
-
-    <section id="kontakt" class="box">
-      <h2>Kontakt Oss</h2>
-      <p>Har du spørsmål? Send oss en e-post: <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-    </section>
-  </main>
-
-  <button class="theme-toggle" onclick="toggleTheme()">Bytt tema</button>
-  <button class="chat-button" onclick="Tawk_API.maximize();">Gratis chat</button>
-  <button class="premium-chat-button" onclick="window.location.href='https://vipps.no/checkout/nettverkstedet-betalt-chat'">Betalt chat</button>
-
-  <footer>
-    &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-  </footer>
-</body>
-</html>
+      html.setAttribute('data-theme', newTheme
