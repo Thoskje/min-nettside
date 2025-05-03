@@ -7,127 +7,110 @@
   <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
   <style>
-    :root[data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #e0e0e0;
-      --primary-color: #1e90ff;
-      --card-bg: #1e1e1e;
-      --button-bg: #1e90ff;
+    :root {
+      --bg-light: #f5f7fa;
+      --text-light: #222;
+      --bg-dark: #121212;
+      --text-dark: #e0e0e0;
+      --primary: #1e90ff;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1e1e1e;
     }
-
-    :root[data-theme="light"] {
-      --bg-color: #f7f9fb;
-      --text-color: #2c2c2c;
-      --primary-color: #005bb5;
-      --card-bg: #ffffff;
-      --button-bg: #005bb5;
+    [data-theme="dark"] {
+      --bg-color: var(--bg-dark);
+      --text-color: var(--text-dark);
+      --card-bg: var(--card-bg-dark);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    [data-theme="light"] {
+      --bg-color: var(--bg-light);
+      --text-color: var(--text-light);
+      --card-bg: var(--card-bg-light);
     }
-
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
+      background: var(--bg-color);
       color: var(--text-color);
-      line-height: 1.6;
-      transition: background-color 0.3s, color 0.3s;
-      padding: 20px;
+      transition: all 0.3s ease;
     }
-
     .hidden {
       display: none;
     }
-
     .auth-box {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
       padding: 20px;
+      text-align: center;
     }
-
     .auth-box input {
       padding: 10px;
       margin-top: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-
     .auth-box button {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: var(--button-bg);
+      background-color: var(--primary);
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-
     .auth-error {
       color: red;
       margin-top: 10px;
     }
-
+    .theme-toggle {
+      margin: 20px auto;
+      display: block;
+      padding: 10px 18px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
     header, main, footer {
       max-width: 800px;
-      margin: 0 auto;
+      margin: auto;
       padding: 20px;
     }
-
-    header, footer {
-      text-align: center;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-    }
-
     nav {
       text-align: center;
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
-
     nav a {
       margin: 0 10px;
       text-decoration: none;
-      color: var(--primary-color);
+      color: var(--primary);
     }
-
     main section {
-      margin-bottom: 30px;
-    }
-
-    .theme-toggle {
-      margin: 10px auto;
-      display: block;
-      padding: 8px 14px;
       background-color: var(--card-bg);
-      border: 1px solid var(--primary-color);
-      color: var(--text-color);
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
-      width: fit-content;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
     }
-
     button {
-      padding: 10px 20px;
-      background-color: var(--button-bg);
+      padding: 10px 16px;
+      margin: 10px 10px 0 0;
+      background-color: var(--primary);
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin: 5px;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      margin-top: 40px;
     }
   </style>
   <script>
+    // Bruk systemvalg som standard tema
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
   </script>
@@ -139,7 +122,7 @@
     <h1>🔒 Beskyttet side</h1>
     <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
     <input type="password" id="kodeInput" placeholder="Tilgangskode">
-    <button onclick="sjekkKode()">Fortsett</button>
+    <button id="fortsettBtn">Fortsett</button>
     <div class="auth-error" id="feilmelding"></div>
   </div>
 
@@ -183,10 +166,8 @@
         <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
       </section>
 
-      <div style="text-align: center;">
-        <button>Start Gratis Chat</button>
-        <button>Kjøp Premium Chat</button>
-      </div>
+      <button>Start Gratis Chat</button>
+      <button>Kjøp Premium Chat</button>
     </main>
 
     <footer>
@@ -196,6 +177,15 @@
 
   <script>
     const KODE = "Thoskje";
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+
+      const tema = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent =
+        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
 
     function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
@@ -209,15 +199,6 @@
       }
     }
 
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent =
-        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
     function toggleTheme() {
       const html = document.documentElement;
       const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -226,6 +207,10 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
+    // Koble til knappen
+    document.getElementById("fortsettBtn").addEventListener("click", sjekkKode);
+
+    // Automatisk tilgang hvis tidligere godkjent
     window.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
