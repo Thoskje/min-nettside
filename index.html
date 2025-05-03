@@ -163,8 +163,6 @@
       document.getElementById("auth").classList.add("hidden");
       document.getElementById("innhold").classList.remove("hidden");
 
-      document.querySelectorAll("header, nav, main, footer, .chat-button, .premium-chat-button, .theme-toggle")
-        .forEach(el => el.style.display = "block");
 
       const tema = document.documentElement.getAttribute("data-theme");
       document.getElementById("theme-text").textContent =
