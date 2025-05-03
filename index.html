@@ -4,245 +4,172 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettverkstedet</title>
-
-  <!-- SEO Metadata -->
-  <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps. Ingen nedlasting kreves.">
-  <meta name="keywords" content="nettverkstedet, digital bilhjelp, bilrådgivning, bilservice online, vipps veihjelp">
-  <meta name="author" content="Nettverkstedet">
-
-  <!-- Open Graph Metadata -->
-  <meta property="og:title" content="Nettverkstedet">
-  <meta property="og:description" content="Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps.">
-  <meta property="og:url" content="https://digitalveihjelp.github.io/">
-  <meta property="og:type" content="website">
-
-  <!-- Ikoner -->
+  <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-  <!-- Tema starter etter brukerens preferanse -->
   <script>
-    const foretrekkerMørkt = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", foretrekkerMørkt ? "dark" : "light");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
   </script>
 
   <style>
-    /* Mørkt og lyst tema */
     [data-theme="dark"] {
       --bg-color: #121212;
       --text-color: #e0e0e0;
       --primary-color: #1e90ff;
       --card-bg: #1e1e1e;
     }
-
     [data-theme="light"] {
       --bg-color: #f0f4f8;
       --text-color: #333;
       --primary-color: #004080;
       --card-bg: #fff;
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
-      padding-bottom: 100px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
-
-    header {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    nav {
-      background-color: var(--card-bg);
-      padding: 15px 20px;
+    .hidden { display: none; }
+    .auth-box {
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      flex-wrap: wrap;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
     }
-
-    nav a {
-      color: var(--text-color);
-      text-decoration: none;
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 5px;
+    .auth-box input {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
-
-    nav a:hover {
+    .auth-box button {
+      margin-top: 10px;
+      padding: 10px 20px;
       background-color: var(--primary-color);
-      color: white;
-    }
-
-    main {
-      padding: 50px 20px;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    .box {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      margin-bottom: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .chat-button, .premium-chat-button {
-      position: fixed;
-      right: 20px;
-      padding: 14px 20px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .chat-button {
-      bottom: 90px;
-      background-color: var(--primary-color);
-      color: white;
-    }
-
-    .premium-chat-button {
-      bottom: 20px;
-      background-color: #ff6600;
-      color: white;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--primary-color);
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 20px;
+      border-radius: 6px;
       cursor: pointer;
-      z-index: 1000;
     }
-
-    footer {
-      background-color: var(--card-bg);
-      color: var(--text-color);
-      text-align: center;
-      padding: 20px;
+    .auth-error {
+      color: red;
+      margin-top: 10px;
     }
-
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-      }
+    header, nav, main, footer, .chat-button, .premium-chat-button, .theme-toggle {
+      display: none;
     }
   </style>
 </head>
+<body>
+
+  <!-- Kode-skjema -->
+  <div id="auth" class="auth-box">
+    <h1>🔒 Beskyttet side</h1>
+    <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
+    <input type="password" id="kodeInput" placeholder="Tilgangskode" />
+    <button onclick="sjekkKode()">Fortsett</button>
+    <div class="auth-error" id="feilmelding"></div>
+  </div>
+
+  <!-- Alt innhold skjult ved lasting, vises etter godkjent kode -->
+  <div id="innhold" class="hidden">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-text">🌙 Mørkt tema</span>
+    </button>
+
+    <header>
+      <h1>Nettverkstedet</h1>
+      <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
+    </header>
+
+    <nav>
+      <a href="index.html">Hjem</a>
+      <a href="kurs.html">Nybegynnerkurs</a>
+      <a href="#tjenester">Tjenester</a>
+      <a href="premium.html">Premium-tjenester</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <main>
+      <section id="tjenester" class="box">
+        <h2>Våre Tjenester</h2>
+        <ul>
+          <li>Digital veihjelp via chat og video</li>
+          <li>Teknisk rådgivning</li>
+          <li>Feilsøking og kjøpsråd</li>
+        </ul>
+      </section>
+
+      <section id="faq" class="box">
+        <h2>Ofte stilte spørsmål</h2>
+        <details><summary>Trenger jeg å laste ned noe?</summary><p>Nei, du bruker kun nettleseren.</p></details>
+        <details><summary>Hvordan betaler jeg?</summary><p>Via Vipps – du får lenke i chatten.</p></details>
+      </section>
+
+      <section id="kontakt" class="box">
+        <h2>Kontakt oss</h2>
+        <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+      </section>
+    </main>
+
+    <button class="chat-button">Start Gratis Chat</button>
+    <button class="premium-chat-button">Kjøp Premium Chat</button>
+
+    <footer>
+      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+    </footer>
+  </div>
 
   <script>
-  // Enkel "kodebeskyttelse"
-  (function() {
-    const tillattKode = "hemmelig123";
-    const queryParams = new URLSearchParams(window.location.search);
-    const kode = queryParams.get("kode");
+    const KODE = "Thoskje";
 
-    // Hvis feil eller ingen kode – vis låst side
-    if (kode !== tillattKode) {
-      document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;font-family:sans-serif;">
-          <h1>🚧 Nettsiden er under utvikling</h1>
-          <p>Tilgang er begrenset. Legg til <code>?kode=hemmelig123</code> i adressefeltet for å se innholdet.</p>
-        </div>
-      `;
-      document.title = "Låst side";
-    }
-  })();
-</script>
-
-  <body>
-  <button class="theme-toggle" onclick="toggleTheme()">
-    <span id="theme-text">🌙 Mørkt tema</span>
-  </button>
-
-  <header>
-    <h1>Nettverkstedet</h1>
-    <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
-  </header>
-  
-  
-  <nav>
-    <a href="index.html">Hjem</a>
-    <a href="kurs.html">Nybegynnerkurs</a>
-    <a href="#tjenester">Tjenester</a>
-    <a href="premium.html">Premium-tjenester</a>
-    <a href="#faq">FAQ</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-
-  <main>
-    <section id="tjenester" class="box">
-      <h2>Våre Tjenester</h2>
-      <ul>
-        <li>Digital veihjelp via chat og video</li>
-        <li>Teknisk rådgivning</li>
-        <li>Feilsøking og kjøpsråd</li>
-      </ul>
-    </section>
-
-    <section id="faq" class="box">
-      <h2>Ofte stilte spørsmål</h2>
-      <details>
-        <summary>Trenger jeg å laste ned noe?</summary>
-        <p>Nei, du bruker kun nettleseren.</p>
-      </details>
-      <details>
-        <summary>Hvordan betaler jeg?</summary>
-        <p>Via Vipps – du får lenke i chatten.</p>
-      </details>
-    </section>
-
-    <section id="kontakt" class="box">
-      <h2>Kontakt oss</h2>
-      <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-    </section>
-  </main>
-
-  <button class="chat-button">Start Gratis Chat</button>
-  <button class="premium-chat-button">Kjøp Premium Chat</button>
-
-  <footer>
-    &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-  </footer>
-
-  <script>
     function toggleTheme() {
       const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const newTheme = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      document.getElementById("theme-text").textContent = 
-        newTheme === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+      const ny = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', ny);
+      document.getElementById("theme-text").textContent =
+        ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
-    // Sett riktig tekst på knapp ved lasting
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value;
+      const feil = document.getElementById("feilmelding");
+
+      if (input === KODE) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+
+      document.querySelectorAll("header, nav, main, footer, .chat-button, .premium-chat-button, .theme-toggle")
+        .forEach(el => el.style.display = "block");
+
+      const tema = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent =
+        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
-      const current = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent = 
-        current === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
     });
   </script>
 </body>
