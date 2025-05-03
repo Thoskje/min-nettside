@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no" data-theme="dark">
+<html lang="no">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,12 +16,19 @@
   <meta property="og:url" content="https://digitalveihjelp.github.io/">
   <meta property="og:type" content="website">
 
+  <!-- Ikoner -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <!-- Tema starter etter brukerens preferanse -->
+  <script>
+    const foretrekkerMørkt = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", foretrekkerMørkt ? "dark" : "light");
+  </script>
 
   <style>
     /* Mørkt og lyst tema */
     [data-theme="dark"] {
-     --bg-color: #242424; /* Lysere mørk farge */
+      --bg-color: #121212;
       --text-color: #e0e0e0;
       --primary-color: #1e90ff;
       --card-bg: #1e1e1e;
@@ -40,11 +47,14 @@
       padding: 0;
     }
 
-   body {
-  background-color: var(--bg-color, #242424);
-  color: var(--text-color, white);
-}
-
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-bottom: 100px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
     header {
       background-color: var(--primary-color);
@@ -84,4 +94,134 @@
     }
 
     .box {
-      background
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .chat-button, .premium-chat-button {
+      position: fixed;
+      right: 20px;
+      padding: 14px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .chat-button {
+      bottom: 90px;
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .premium-chat-button {
+      bottom: 20px;
+      background-color: #ff6600;
+      color: white;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      text-align: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <span id="theme-text">🌙 Mørkt tema</span>
+  </button>
+
+  <header>
+    <h1>Nettverkstedet</h1>
+    <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
+  </header>
+  
+  <nav>
+    <a href="index.html">Hjem</a>
+    <a href="kurs.html">Nybegynnerkurs</a>
+    <a href="#tjenester">Tjenester</a>
+    <a href="premium.html">Premium-tjenester</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <main>
+    <section id="tjenester" class="box">
+      <h2>Våre Tjenester</h2>
+      <ul>
+        <li>Digital veihjelp via chat og video</li>
+        <li>Teknisk rådgivning</li>
+        <li>Feilsøking og kjøpsråd</li>
+      </ul>
+    </section>
+
+    <section id="faq" class="box">
+      <h2>Ofte stilte spørsmål</h2>
+      <details>
+        <summary>Trenger jeg å laste ned noe?</summary>
+        <p>Nei, du bruker kun nettleseren.</p>
+      </details>
+      <details>
+        <summary>Hvordan betaler jeg?</summary>
+        <p>Via Vipps – du får lenke i chatten.</p>
+      </details>
+    </section>
+
+    <section id="kontakt" class="box">
+      <h2>Kontakt oss</h2>
+      <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+    </section>
+  </main>
+
+  <button class="chat-button">Start Gratis Chat</button>
+  <button class="premium-chat-button">Kjøp Premium Chat</button>
+
+  <footer>
+    &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      document.getElementById("theme-text").textContent = 
+        newTheme === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
+    // Sett riktig tekst på knapp ved lasting
+    window.addEventListener("DOMContentLoaded", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent = 
+        current === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    });
+  </script>
+</body>
+</html>
