@@ -8,94 +8,120 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
   <style>
     :root {
-      --primary-color: #004080;
-      --text-color-light: #333;
-      --text-color-dark: #e0e0e0;
-      --bg-light: #e9f0f6;
-      --bg-dark: #121212;
-      --card-bg-light: #fff;
-      --card-bg-dark: #1e1e1e;
+      --max-width: 800px;
+      --spacing: 1.5rem;
+      --border-radius: 12px;
     }
+
     [data-theme="dark"] {
-      --bg-color: var(--bg-dark);
-      --text-color: var(--text-color-dark);
-      --card-bg: var(--card-bg-dark);
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #1e90ff;
+      --card-bg: #1e1e1e;
+      --button-bg: #1e90ff;
     }
+
     [data-theme="light"] {
-      --bg-color: var(--bg-light);
-      --text-color: var(--text-color-light);
-      --card-bg: var(--card-bg-light);
+      --bg-color: #f0f4f8;
+      --text-color: #333;
+      --primary-color: #004080;
+      --card-bg: #ffffff;
+      --button-bg: #004080;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
+      padding: var(--spacing);
       transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      justify-content: center;
     }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
     .hidden {
       display: none;
     }
-    .auth-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      padding: 20px;
+
+    .auth-box, .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: var(--spacing);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin: var(--spacing) 0;
     }
-    .auth-box input, .auth-box button {
+
+    .auth-box input {
       padding: 10px;
       margin-top: 10px;
+      width: 100%;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-    .auth-box button {
-      background-color: var(--primary-color);
+
+    .auth-box button, .button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: var(--button-bg);
       color: white;
       border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
+
     .auth-error {
       color: red;
       margin-top: 10px;
     }
-    header, main, footer {
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
+
     header, footer {
       text-align: center;
+      margin-bottom: var(--spacing);
     }
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-    }
+
     nav {
       text-align: center;
-      margin: 20px 0;
+      margin: var(--spacing) 0;
     }
+
     nav a {
       margin: 0 10px;
       text-decoration: none;
       color: var(--primary-color);
     }
+
     .theme-toggle {
       margin: 10px auto;
+      display: block;
       padding: 8px 14px;
-      background-color: var(--card-bg);
+      background-color: transparent;
       border: 1px solid var(--primary-color);
       color: var(--text-color);
       border-radius: 8px;
       cursor: pointer;
-      display: block;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .button-row .button {
+      flex: 1;
+      text-align: center;
     }
   </style>
   <script>
@@ -104,61 +130,67 @@
   </script>
 </head>
 <body>
+  <div class="container">
 
-  <div id="auth" class="auth-box">
-    <h1>🔒 Beskyttet side</h1>
-    <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-    <input type="password" id="kodeInput" placeholder="Tilgangskode">
-    <button id="fortsettBtn">Fortsett</button>
-    <div class="auth-error" id="feilmelding"></div>
-  </div>
+    <!-- Passordbeskyttet visning -->
+    <div id="auth" class="auth-box">
+      <h1>🔒 Beskyttet side</h1>
+      <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
+      <input type="password" id="kodeInput" placeholder="Tilgangskode">
+      <button onclick="sjekkKode()">Fortsett</button>
+      <div class="auth-error" id="feilmelding"></div>
+    </div>
 
-  <div id="innhold" class="hidden">
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-text">🌙 Mørkt tema</span>
-    </button>
+    <!-- Innhold som vises etter riktig kode -->
+    <div id="innhold" class="hidden">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-text">🌙 Mørkt tema</span>
+      </button>
 
-    <header>
-      <h1>Nettverkstedet</h1>
-      <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
-    </header>
+      <header>
+        <h1>Nettverkstedet</h1>
+        <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
+      </header>
 
-    <nav>
-      <a href="#">Hjem</a>
-      <a href="#">Tjenester</a>
-      <a href="#">Premium</a>
-      <a href="#">FAQ</a>
-      <a href="#">Kontakt</a>
-    </nav>
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#">Tjenester</a>
+        <a href="#">Premium</a>
+        <a href="#">FAQ</a>
+        <a href="#">Kontakt</a>
+      </nav>
 
-    <main>
-      <section>
-        <h2>Våre Tjenester</h2>
-        <ul>
-          <li>Digital veihjelp via chat og video</li>
-          <li>Teknisk rådgivning</li>
-          <li>Feilsøking og kjøpsråd</li>
-        </ul>
-      </section>
+      <main>
+        <div class="card">
+          <h2>Våre Tjenester</h2>
+          <ul>
+            <li>Digital veihjelp via chat og video</li>
+            <li>Teknisk rådgivning</li>
+            <li>Feilsøking og kjøpsråd</li>
+          </ul>
+        </div>
 
-      <section>
-        <h2>FAQ</h2>
-        <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
-        <p><strong>Hvordan betaler jeg?</strong> Via Vipps – du får lenke i chatten.</p>
-      </section>
+        <div class="card">
+          <h2>FAQ</h2>
+          <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
+          <p><strong>Hvordan betaler jeg?</strong> Via Vipps – du får lenke i chatten.</p>
+        </div>
 
-      <section>
-        <h2>Kontakt</h2>
-        <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-      </section>
+        <div class="card">
+          <h2>Kontakt</h2>
+          <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+        </div>
 
-      <button>Start Gratis Chat</button>
-      <button>Kjøp Premium Chat</button>
-    </main>
+        <div class="button-row">
+          <button class="button">Start Gratis Chat</button>
+          <button class="button">Kjøp Premium Chat</button>
+        </div>
+      </main>
 
-    <footer>
-      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-    </footer>
+      <footer>
+        &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+      </footer>
+    </div>
   </div>
 
   <script>
@@ -179,6 +211,7 @@
     function visInnhold() {
       document.getElementById("auth").classList.add("hidden");
       document.getElementById("innhold").classList.remove("hidden");
+
       const tema = document.documentElement.getAttribute("data-theme");
       document.getElementById("theme-text").textContent =
         tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
@@ -192,14 +225,11 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
-    document.getElementById("fortsettBtn").addEventListener("click", sjekkKode);
-
     window.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
       }
     });
   </script>
-
 </body>
 </html>
