@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
   <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
@@ -77,11 +77,11 @@
 </head>
 <body>
 
-  <!-- Kodebeskyttet visning -->
+  <!-- Passordbeskyttet visning -->
   <div id="auth" class="auth-box">
     <h1>🔒 Beskyttet side</h1>
     <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-    <input type="password" id="kodeInput" placeholder="Tilgangskode" />
+    <input type="password" id="kodeInput" placeholder="Tilgangskode">
     <button onclick="sjekkKode()">Fortsett</button>
     <div class="auth-error" id="feilmelding"></div>
   </div>
@@ -149,11 +149,8 @@
     }
 
     function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent =
-        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+      document.getElementById("auth").style.display = "none"; // Skjul passordsiden
+      document.getElementById("innhold").classList.remove("hidden"); // Vis innholdet
     }
 
     function toggleTheme() {
@@ -165,7 +162,7 @@
     }
 
     // Automatisk innlogging hvis tidligere godkjent
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("load", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
       }
