@@ -137,10 +137,10 @@
     const KODE = "Thoskje";
 
     function sjekkKode() {
-      const input = document.getElementById("kodeInput").value;
+      const input = document.getElementById("kodeInput").value.trim();
       const feil = document.getElementById("feilmelding");
 
-      if (input === KODE) {
+      if (input.toLowerCase() === KODE.toLowerCase()) {
         sessionStorage.setItem("godkjent", "ja");
         visInnhold();
       } else {
