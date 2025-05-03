@@ -31,6 +31,9 @@
       line-height: 1.6;
       transition: background-color 0.3s, color 0.3s;
     }
+    .hidden {
+      display: none;
+    }
     .auth-box {
       display: flex;
       flex-direction: column;
@@ -92,6 +95,15 @@
       margin-left: auto;
       margin-right: auto;
     }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--primary-color);
+      color: white;
+      cursor: pointer;
+    }
   </style>
   <script>
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -110,7 +122,7 @@
   </div>
 
   <!-- Innhold som vises etter riktig kode -->
-  <div id="innhold" style="display: none;">
+  <div id="innhold" class="hidden">
     <button class="theme-toggle" onclick="toggleTheme()">
       <span id="theme-text">🌙 Mørkt tema</span>
     </button>
@@ -174,8 +186,8 @@
     }
 
     function visInnhold() {
-      document.getElementById("auth").style.display = "none";
-      document.getElementById("innhold").style.display = "block";
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
 
       const tema = document.documentElement.getAttribute("data-theme");
       document.getElementById("theme-text").textContent =
@@ -190,6 +202,7 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
+    // Automatisk innlogging hvis tidligere godkjent
     window.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
