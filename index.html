@@ -6,12 +6,6 @@
   <title>Nettverkstedet</title>
   <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
-
-  <script>
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  </script>
-
   <style>
     [data-theme="dark"] {
       --bg-color: #121212;
@@ -67,24 +61,34 @@
       color: red;
       margin-top: 10px;
     }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+    main {
+      padding: 20px;
+    }
   </style>
+  <script>
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+  </script>
 </head>
 <body>
 
-  <!-- Kode-skjema -->
+  <!-- Kodebeskyttet visning -->
   <div id="auth" class="auth-box">
     <h1>🔒 Beskyttet side</h1>
     <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
     <input type="password" id="kodeInput" placeholder="Tilgangskode" />
-    <button type="button" onclick="sjekkKode()">Fortsett</button>
+    <button onclick="sjekkKode()">Fortsett</button>
     <div class="auth-error" id="feilmelding"></div>
   </div>
 
-  <!-- Alt innhold skjult ved lasting, vises etter godkjent kode -->
+  <!-- Innhold som vises etter riktig kode -->
   <div id="innhold" class="hidden">
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-text">🌙 Mørkt tema</span>
-    </button>
+    <button onclick="toggleTheme()"><span id="theme-text">🌙 Mørkt tema</span></button>
 
     <header>
       <h1>Nettverkstedet</h1>
@@ -92,16 +96,15 @@
     </header>
 
     <nav>
-      <a href="index.html">Hjem</a>
-      <a href="kurs.html">Nybegynnerkurs</a>
-      <a href="#tjenester">Tjenester</a>
-      <a href="premium.html">Premium-tjenester</a>
-      <a href="#faq">FAQ</a>
-      <a href="#kontakt">Kontakt</a>
+      <a href="#">Hjem</a>
+      <a href="#">Tjenester</a>
+      <a href="#">Premium</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
     </nav>
 
     <main>
-      <section id="tjenester" class="box">
+      <section>
         <h2>Våre Tjenester</h2>
         <ul>
           <li>Digital veihjelp via chat og video</li>
@@ -110,29 +113,48 @@
         </ul>
       </section>
 
-      <section id="faq" class="box">
-        <h2>Ofte stilte spørsmål</h2>
-        <details><summary>Trenger jeg å laste ned noe?</summary><p>Nei, du bruker kun nettleseren.</p></details>
-        <details><summary>Hvordan betaler jeg?</summary><p>Via Vipps – du får lenke i chatten.</p></details>
+      <section>
+        <h2>FAQ</h2>
+        <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
+        <p><strong>Hvordan betaler jeg?</strong> Via Vipps – du får lenke i chatten.</p>
       </section>
 
-      <section id="kontakt" class="box">
-        <h2>Kontakt oss</h2>
+      <section>
+        <h2>Kontakt</h2>
         <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
       </section>
-    </main>
 
-    <button class="chat-button">Start Gratis Chat</button>
-    <button class="premium-chat-button">Kjøp Premium Chat</button>
+      <button>Start Gratis Chat</button>
+      <button>Kjøp Premium Chat</button>
+    </main>
 
     <footer>
       &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
     </footer>
   </div>
 
-  <!-- JavaScript (én ren blokk) -->
   <script>
     const KODE = "Thoskje";
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value;
+      const feil = document.getElementById("feilmelding");
+
+      if (input === KODE) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+      const tema = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent =
+        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
 
     function toggleTheme() {
       const html = document.documentElement;
@@ -142,37 +164,13 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
-    function sjekkKode() {
-      try {
-        const input = document.getElementById("kodeInput").value;
-        const feil = document.getElementById("feilmelding");
-
-        if (input === KODE) {
-          sessionStorage.setItem("godkjent", "ja");
-          visInnhold();
-        } else {
-          feil.textContent = "Feil kode. Prøv igjen.";
-        }
-      } catch (error) {
-        console.error("Feil i sjekkKode():", error);
-        alert("Det oppstod en teknisk feil. Sjekk konsollen (F12) for mer informasjon.");
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent =
-        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
+    // Automatisk innlogging hvis tidligere godkjent
     window.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
       }
     });
   </script>
+
 </body>
 </html>
