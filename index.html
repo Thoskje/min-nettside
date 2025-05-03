@@ -4,103 +4,226 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
-  <meta name="description" content="Nettverkstedet – Få ekspertråd direkte fra fagfolk. Betal enkelt med Vipps.">
+  <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
   <style>
+    :root {
+      --max-width: 800px;
+      --spacing: 1.5rem;
+      --border-radius: 12px;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #1e90ff;
+      --card-bg: #1e1e1e;
+      --button-bg: #1e90ff;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f0f4f8;
+      --text-color: #333;
+      --primary-color: #004080;
+      --card-bg: #ffffff;
+      --button-bg: #004080;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      background-color: #0a0a0a;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      transition: background-image 1s ease-in-out;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: var(--spacing);
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      justify-content: center;
     }
 
     .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.6); /* Semi-transparent bakgrunn for lesbarhet */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      border-radius: 12px;
+      width: 100%;
+      max-width: var(--max-width);
     }
 
-    header {
-      margin-bottom: 20px;
+    .hidden {
+      display: none;
     }
 
-    .button {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #ff6600;
+    .auth-box, .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: var(--spacing);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin: var(--spacing) 0;
+    }
+
+    .auth-box input {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .auth-box button, .button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: var(--button-bg);
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-      margin: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    footer {
-      margin-top: 20px;
-      font-size: 14px;
+    .auth-error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    header, footer {
+      text-align: center;
+      margin-bottom: var(--spacing);
     }
 
     nav {
-      margin: 20px 0;
+      text-align: center;
+      margin: var(--spacing) 0;
     }
 
     nav a {
       margin: 0 10px;
       text-decoration: none;
-      color: #fff;
-      font-size: 18px;
-      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .theme-toggle {
+      margin: 10px auto;
+      display: block;
+      padding: 8px 14px;
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--text-color);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .button-row .button {
+      flex: 1;
+      text-align: center;
     }
   </style>
+  <script>
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+  </script>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>Nettverkstedet</h1>
-      <p>Få ekspertråd direkte fra fagfolk – betal enkelt med Vipps</p>
-    </header>
+    <div id="auth" class="auth-box">
+      <h1>🔒 Beskyttet side</h1>
+      <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
+      <input type="password" id="kodeInput" placeholder="Tilgangskode">
+      <button onclick="sjekkKode()">Fortsett</button>
+      <div class="auth-error" id="feilmelding"></div>
+    </div>
 
-    <nav>
-      <a href="#">Hjem</a>
-      <a href="#">Tjenester</a>
-      <a href="#">Premium</a>
-      <a href="#">FAQ</a>
-      <a href="#">Kontakt</a>
-    </nav>
+    <div id="innhold" class="hidden">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-text">🌙 Mørkt tema</span>
+      </button>
 
-    <a href="#" class="button">Start Gratis Chat</a>
-    <a href="#" class="button">Kjøp Premium Chat</a>
+      <header>
+        <h1>Nettverkstedet</h1>
+        <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
+      </header>
 
-    <footer>
-      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-    </footer>
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#">Tjenester</a>
+        <a href="#">Premium</a>
+        <a href="#">FAQ</a>
+        <a href="#">Kontakt</a>
+      </nav>
+
+      <main>
+        <div class="card">
+          <h2>Våre Tjenester</h2>
+          <ul>
+            <li>Digital veihjelp via chat og video</li>
+            <li>Teknisk rådgivning</li>
+            <li>Feilsøking og kjøpsråd</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>FAQ</h2>
+          <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
+          <p><strong>Hvordan betaler jeg?</strong> Via Vipps – du får lenke i chatten.</p>
+        </div>
+
+        <div class="card">
+          <h2>Kontakt</h2>
+          <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+        </div>
+
+        <div class="button-row">
+          <button class="button">Start Gratis Chat</button>
+          <button class="button">Kjøp Premium Chat</button>
+        </div>
+      </main>
+
+      <footer>
+        &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+      </footer>
+    </div>
   </div>
 
   <script>
-    const images = [
-      "https://github.com/Thoskje/min-nettside/blob/main/A%20professional%20website%20design%20for%20a%20car%20service%20platform,%20inspired%20by%20Bosch%20or%20Statens%20Vegvesen.%20The%20design%20includes%20a%20hero%20banner%20with%20a%20mechanic%20and%20a%20car,%20a%20dark%20blue%20and%20white%20color%20palette,%20and%20sections%20for%20free%20and%20premium%20services%20with%20icon….png?raw=true",
-      "https://github.com/Thoskje/min-nettside/blob/main/Create%20an%20image%20of%20a%20car%20mechanic%20using%20a%20computer%20and%20digital%20tools,%20wearing%20a%20headset.%20The%20setting%20should%20be%20a%20modern%20garage%20with%20a%20focus%20on%20technology%20and%20connectivity..png?raw=true",
-      "https://github.com/Thoskje/min-nettside/blob/main/Create%20an%20image%20showing%20a%20woman%20filming%20under%20the%20hood%20of%20her%20car,%20while%20a%20mechanic%20is%20visible%20in%20a%20smaller%20inset%20providing%20advice%20and%20guidance.%20The%20mechanic%20should%20appear%20professional%20and%20approachable,%20using%20a%20headset%20and%20digital%20tools..png?raw=true"
-    ];
-    
-    let index = 0;
-    
-    function byttBakgrunn() {
-      document.body.style.backgroundImage = `url(${images[index]})`;
-      index = (index + 1) % images.length;
+    const KODE = "Thoskje";
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
     }
 
-    setInterval(byttBakgrunn, 10000); // Endre bilde hvert 10. sekund
-    byttBakgrunn(); // Sett første bakgrunn umiddelbart
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+      const tema = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent = tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", ny);
+      document.getElementById("theme-text").textContent = ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
   </script>
 </body>
 </html>
