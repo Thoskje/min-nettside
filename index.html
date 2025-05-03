@@ -172,5 +172,49 @@ function visInnhold() {
       }
     });
   </script>
+  <script>
+  const KODE = "Thoskje";
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", ny);
+    document.getElementById("theme-text").textContent =
+      ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+  }
+
+  function sjekkKode() {
+    try {
+      const input = document.getElementById("kodeInput").value;
+      const feil = document.getElementById("feilmelding");
+
+      if (input === KODE) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    } catch (error) {
+      console.error("Feil i sjekkKode():", error);
+      alert("Det oppstod en teknisk feil. Sjekk konsollen (F12) for mer informasjon.");
+    }
+  }
+
+  function visInnhold() {
+    document.getElementById("auth").classList.add("hidden");
+    document.getElementById("innhold").classList.remove("hidden");
+
+    const tema = document.documentElement.getAttribute("data-theme");
+    document.getElementById("theme-text").textContent =
+      tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("godkjent") === "ja") {
+      visInnhold();
+    }
+  });
+</script>
+
 </body>
 </html>
