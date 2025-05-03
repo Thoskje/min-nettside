@@ -141,16 +141,23 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value;
-      const feil = document.getElementById("feilmelding");
+  function sjekkKode() {
+  try {
+    const input = document.getElementById("kodeInput").value;
+    const feil = document.getElementById("feilmelding");
 
-      if (input === KODE) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
+    if (input === KODE) {
+      sessionStorage.setItem("godkjent", "ja");
+      visInnhold();
+    } else {
+      feil.textContent = "Feil kode. Prøv igjen.";
+    }
+  } catch (error) {
+    console.error("Feil i sjekkKode():", error);
+    alert("Det oppstod en teknisk feil. Sjekk konsollen (F12) for mer informasjon.");
+  }
+}
+
     }
 
     function visInnhold() {
