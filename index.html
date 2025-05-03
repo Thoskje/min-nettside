@@ -55,73 +55,6 @@
       display: none;
     }
 
-    .auth-box, .card {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      padding: var(--spacing);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      margin: var(--spacing) 0;
-    }
-
-    .auth-box input {
-      padding: 10px;
-      margin-top: 10px;
-      width: 100%;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .auth-box button, .button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    header, footer {
-      text-align: center;
-      margin-bottom: var(--spacing);
-    }
-
-    nav {
-      text-align: center;
-      margin: var(--spacing) 0;
-    }
-
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: var(--primary-color);
-      font-weight: bold;
-    }
-
-    .theme-toggle {
-      margin: 10px auto;
-      display: block;
-      padding: 8px 14px;
-      background-color: transparent;
-      border: 1px solid var(--primary-color);
-      color: var(--text-color);
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .button-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 1rem;
-    }
-
-    .button-row .button {
-      flex: 1;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    /* Bildeveksling */
     .image-container {
       position: relative;
       width: 100%;
@@ -136,114 +69,30 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
   </style>
-  <script>
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  </script>
 </head>
 <body>
   <div class="container">
+    <header>
+      <h1>Nettverkstedet</h1>
+      <p>Få ekspertråd direkte fra fagfolk – betal enkelt med Vipps</p>
+    </header>
 
-    <!-- Passordbeskyttet visning -->
-    <div id="auth" class="auth-box">
-      <h1>🔒 Beskyttet side</h1>
-      <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-      <input type="password" id="kodeInput" placeholder="Tilgangskode">
-      <button onclick="sjekkKode()">Fortsett</button>
-      <div class="auth-error" id="feilmelding"></div>
+    <!-- Bildeveksling med OneDrive-bilder -->
+    <div class="image-container">
+      <img id="image" src="https://1drv.ms/i/c/b3c4c9bcc638a743/ESA9M0ti8SJCi9h2YIKzklkB3cjRsGip7GcVaGOxD253mQ?e=QD8kCL" alt="Digital mekaniker gir råd">
     </div>
 
-    <!-- Innhold som vises etter riktig kode -->
-    <div id="innhold" class="hidden">
-      <button class="theme-toggle" onclick="toggleTheme()">
-        <span id="theme-text">🌙 Mørkt tema</span>
-      </button>
-
-      <header>
-        <h1>Nettverkstedet</h1>
-        <p>Få ekspertråd direkte fra fagfolk – betal enkelt med Vipps</p>
-      </header>
-
-      <!-- Bildeveksling -->
-      <div class="image-container">
-        <img id="image" src="bilde1.jpg" alt="Digital mekaniker gir råd">
-      </div>
-
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Premium</a>
-        <a href="#">FAQ</a>
-        <a href="#">Kontakt</a>
-      </nav>
-
-      <main>
-        <div class="card">
-          <h2>Våre Tjenester</h2>
-          <ul>
-            <li>🔹 Gratis chat – Still enkle spørsmål</li>
-            <li>💼 Premium rådgivning – Få spesifikke løsninger</li>
-            <li>🏆 Eksklusiv veiledning – Timebestilt eksperthjelp</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>FAQ</h2>
-          <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
-          <p><strong>Hvordan betaler jeg?</strong> Via Vipps eller ApplePay.</p>
-        </div>
-
-        <div class="card">
-          <h2>Kontakt</h2>
-          <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-        </div>
-
-        <div class="button-row">
-          <button class="button">Start Gratis Chat</button>
-          <button class="button">Kjøp Premium Chat</button>
-        </div>
-      </main>
-
-      <footer>
-        &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-      </footer>
-    </div>
+    <footer>
+      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+    </footer>
   </div>
 
   <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", ny);
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
-
-    // Bildeveksling
-    const images = ["bilde1.jpg", "bilde2.jpg"];
+    const images = [
+      "https://1drv.ms/i/c/b3c4c9bcc638a743/ESA9M0ti8SJCi9h2YIKzklkB3cjRsGip7GcVaGOxD253mQ?e=QD8kCL",
+      "https://1drv.ms/i/c/b3c4c9bcc638a743/EXhnd-5__ilLgcj3O1QmV48Bo0vonakMBnMNuVTkEW1B3w?e=HG0yGK",
+      "https://1drv.ms/i/c/b3c4c9bcc638a743/EVHQOAiPVqtMha178EAKQaUBRpZYb-XXMyF4Zh-cz7c8qg?e=fm9ZF6"
+    ];
     let index = 0;
 
     setInterval(() => {
