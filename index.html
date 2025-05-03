@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="no" data-theme="dark">
 <head>
-  
-  <script>
-  const passord = prompt("Skriv inn passord for å se siden:");
-  if (passord !== "Thoskje") {
-    document.body.innerHTML = "<h1>Ingen tilgang</h1>";
-  }
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettverkstedet</title>
@@ -26,22 +18,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-  <!-- Strukturert data for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Nettverkstedet",
-    "url": "https://digitalveihjelp.github.io/",
-    "description": "Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps.",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "kontakt@digitalveihjelp.no"
-    }
-  }
-  </script>
-
   <style>
+    /* Mørkt og lyst tema */
     [data-theme="dark"] {
       --bg-color: #121212;
       --text-color: #e0e0e0;
@@ -86,167 +64,27 @@
       justify-content: center;
       gap: 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
     }
 
     nav a {
       color: var(--text-color);
       text-decoration: none;
       font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 5px;
     }
 
     nav a:hover {
-      color: var(--primary-color);
-    }
-
-    main {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .box {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      margin-bottom: 30px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    ul {
-      list-style: disc;
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    footer {
-      background-color: #ddd;
-      padding: 15px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #444;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .chat-button, .premium-chat-button {
-      position: fixed;
-      right: 20px;
-      padding: 14px 20px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .chat-button {
-      bottom: 90px;
       background-color: var(--primary-color);
       color: white;
     }
 
-    .premium-chat-button {
-      bottom: 20px;
-      background-color: #ff6600;
-      color: white;
+    main {
+      padding: 50px 20px;
+      max-width: 960px;
+      margin: auto;
     }
 
-    details {
-      margin-bottom: 15px;
-      background: var(--card-bg);
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    summary {
-      font-weight: bold;
-      color: var(--primary-color);
-    }
-
-    a { color: var(--primary-color); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    @media (max-width: 600px) {
-      body { font-size: 14px; }
-      nav { flex-direction: column; align-items: center; }
-    }
-  </style>
-
-</head>
-<body>
-  <button class="theme-toggle" onclick="toggleTheme()">
-    <i class="fas fa-adjust"></i> Bytt tema
-  </button>
-
-  <header>
-    <h1>Nettverkstedet</h1>
-    <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
-  </header>
-  
-  <nav>
-      <a href="index.html">Hjem</a>
-    <a href="#tjenester">Tjenester</a>
-  <a href="kurs.html">Nybegynnerkurs</a>
-     <a href="#faq">FAQ</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-
-  <main>
-    <section id="tjenester" class="box">
-      <h2>Våre Tjenester</h2>
-      <ul>
-        <li>Digital veihjelp via chat og video</li>
-        <li>Teknisk rådgivning</li>
-        <li>Feilsøking og kjøpsråd</li>
-      </ul>
-    </section>
-
-    <section id="faq" class="box">
-      <h2>Ofte stilte spørsmål</h2>
-      <details>
-        <summary>Trenger jeg å laste ned noe?</summary>
-        <p>Nei, du bruker kun nettleseren.</p>
-      </details>
-      <details>
-        <summary>Hvordan betaler jeg?</summary>
-        <p>Via Vipps – du får lenke i chatten.</p>
-      </details>
-    </section>
-
-    <section id="kontakt" class="box">
-      <h2>Kontakt oss</h2>
-      <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-    </section>
-  </main>
-
-  <button class="chat-button">Start Gratis Chat</button>
-  <button class="premium-chat-button">Kjøp Premium Chat</button>
-
-  <footer>
-    &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-  </footer>
-
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const newTheme = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-    }
-  </script>
-</body>
-</html>
+    .box {
+      background
