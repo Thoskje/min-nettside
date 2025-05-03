@@ -158,15 +158,15 @@
   }
 }
 
+function visInnhold() {
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("innhold").classList.remove("hidden");
 
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
+  const tema = document.documentElement.getAttribute("data-theme");
+  document.getElementById("theme-text").textContent =
+    tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+}
 
-
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent =
-        tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
     window.addEventListener("DOMContentLoaded", () => {
