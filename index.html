@@ -31,9 +31,6 @@
       line-height: 1.6;
       transition: background-color 0.3s, color 0.3s;
     }
-    .hidden {
-      display: none;
-    }
     .auth-box {
       display: flex;
       flex-direction: column;
@@ -121,8 +118,8 @@
     <div class="auth-error" id="feilmelding"></div>
   </div>
 
-  <!-- Innhold som vises etter riktig kode -->
-  <div id="innhold" class="hidden">
+  <!-- Innhold skjult i starten -->
+  <div id="innhold" style="display:none;">
     <button class="theme-toggle" onclick="toggleTheme()">
       <span id="theme-text">🌙 Mørkt tema</span>
     </button>
@@ -186,8 +183,8 @@
     }
 
     function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
+      document.getElementById("auth").style.display = "none";
+      document.getElementById("innhold").style.display = "block";
 
       const tema = document.documentElement.getAttribute("data-theme");
       document.getElementById("theme-text").textContent =
@@ -202,7 +199,6 @@
         ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
     }
 
-    // Automatisk innlogging hvis tidligere godkjent
     window.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("godkjent") === "ja") {
         visInnhold();
