@@ -2,207 +2,311 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nettverkstedet</title>
-  <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nettverkstedet – Digital Veihjelp</title>
+  <meta name="description" content="Rask og enkel bilhjelp på nett – betal med Vipps.">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --primary-color: #002147;
-      --accent-color: #f29c1f;
-      --bg-light: #ffffff;
-      --bg-dark: #0d1b2a;
-      --text-light: #ffffff;
-      --text-dark: #1a1a1a;
-      --max-width: 1000px;
+      --primary: #001933;
+      --secondary: #ffffff;
+      --accent: #dbe4ee;
+      --highlight: #ffcc00;
+      --font: 'Roboto', sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg-color: var(--bg-dark);
-      --text-color: var(--text-light);
-    }
-
-    [data-theme="light"] {
-      --bg-color: var(--bg-light);
-      --text-color: var(--text-dark);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      --bg-color: #001933;
+      --text-color: #ffffff;
+      --card-bg: #0a1f33;
+      --button-bg: #ffcc00;
+      --button-text: #001933;
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg-color);
       color: var(--text-color);
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: var(--primary-color);
-      padding: 1rem 2rem;
-      color: white;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 1rem;
-    }
-
-    .buy-button {
-      background-color: var(--accent-color);
-      color: white;
-      padding: 0.6rem 1rem;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .hero {
-      background: url('hero.jpg') center/cover no-repeat;
-      padding: 6rem 2rem;
-      color: white;
-      text-align: left;
-      background-blend-mode: overlay;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero .button {
-      background-color: var(--accent-color);
-      padding: 0.8rem 1.5rem;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    main {
-      max-width: var(--max-width);
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    .services {
-      display: flex;
-      gap: 2rem;
-      text-align: center;
       justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .service {
-      flex: 1;
-      padding: 1.5rem;
-    }
-
-    .service i {
-      font-size: 2rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    footer {
-      text-align: center;
       padding: 1rem;
-      background-color: #f0f0f0;
-      color: #555;
-      margin-top: 3rem;
     }
 
-    .theme-toggle {
-      display: block;
-      margin: 1rem auto;
-      background: none;
-      border: 1px solid var(--primary-color);
-      color: var(--primary-color);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .auth-box {
-      max-width: 400px;
-      margin: 5rem auto;
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .auth-box input, .auth-box button {
+    .container {
       width: 100%;
-      padding: 10px;
-      margin-top: 1rem;
-      border-radius: 6px;
-    }
-
-    .auth-error {
-      color: red;
-      margin-top: 0.5rem;
+      max-width: 1200px;
     }
 
     .hidden {
       display: none;
     }
+
+    .auth-box {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .auth-box input,
+    .auth-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .auth-box button {
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .hero {
+      background-color: #001933;
+      padding: 6rem 2rem;
+      color: white;
+      text-align: left;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-buttons .button {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    nav .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    nav .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--card-bg);
+      min-width: 160px;
+      z-index: 1;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    nav .dropdown-content a {
+      color: var(--text-color);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    nav .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .button-row {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .button {
+      background: var(--button-bg);
+      color: var(--button-text);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .button i {
+      font-size: 1.2rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
   </style>
   <script>
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", "dark");
   </script>
 </head>
 <body>
-  <div id="auth" class="auth-box">
-    <h2>🔒 Beskyttet side</h2>
-    <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-    <input type="password" id="kodeInput" placeholder="Tilgangskode">
-    <button onclick="sjekkKode()">Fortsett</button>
-    <div class="auth-error" id="feilmelding"></div>
-  </div>
+  <div style="height: 6px; background: var(--highlight); width: 100%;"></div>
+  <div class="container">
+    <div id="auth" class="auth-box">
+      <h2>🔒 Beskyttet side</h2>
+      <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
+      <input type="password" id="kodeInput" placeholder="Tilgangskode" />
+      <button onclick="sjekkKode()">Fortsett</button>
+      <div class="auth-error" id="feilmelding"></div>
+    </div>
 
-  <div id="innhold" class="hidden">
-    <header>
-      <div><strong>NETTVERKSTEDET</strong></div>
+    <div id="innhold" class="hidden">
+      <header>
+        <h1>Nettverkstedet</h1>
+        <img src="https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=600&q=80" alt="Bil og mekaniker">
+      </header>
+
+      <section class="hero">
+        <h2>Få ekspertråd direkte fra fagfolk</h2>
+        <p>Digital hjelp der du er – betal enkelt med Vipps</p>
+        <div class="hero-buttons">
+          <button class="button"><i class="fas fa-comments"></i> Start Gratis Chat</button>
+          <button class="button"><i class="fas fa-star"></i> Kjøp Premium Chat</button>
+        </div>
+      </section>
+
       <nav>
         <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
+        <div class="dropdown">
+          <a href="#">Tjenester</a>
+          <div class="dropdown-content">
+            <a href="#">Digital veihjelp</a>
+            <a href="#">Teknisk rådgivning</a>
+            <a href="#">Kjøpsråd</a>
+          </div>
+        </div>
         <a href="#">Premium</a>
-        <a href="#">Om oss</a>
+        <a href="#">FAQ</a>
         <a href="#">Kontakt</a>
-        <a href="#" class="buy-button">Kjøp Premium</a>
       </nav>
-    </header>
 
-    <section class="hero">
-      <h1>Få ekspertråd direkte fra fagfolk.</h1>
-      <p>Betal enkelt med Vipps.</p>
-      <button class="button">Start Gratis Chat</button>
-    </section>
+      <main>
+        <div class="card">
+          <h2>Våre Tjenester</h2>
+          <ul>
+            <li>Digital veihjelp via chat og video</li>
+            <li>Teknisk rådgivning</li>
+            <li>Feilsøking og kjøpsråd</li>
+          </ul>
+        </div>
 
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-text">🌙 Mørkt tema</span>
-    </button>
+        <div class="card">
+          <h2>FAQ</h2>
+          <p><strong>Trenger jeg å laste ned noe?</strong> Nei, du bruker kun nettleseren.</p>
+          <p><strong>Hvordan betaler jeg?</strong> Via Vipps – du får lenke i chatten.</p>
+        </div>
 
-    <footer>
-      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-    </footer>
+        <div class="card">
+          <h2>Kontakt</h2>
+          <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
+        </div>
+      </main>
+
+      <footer>
+        &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+      </footer>
+    </div>
   </div>
+
+  <script>
+    const KODE = "Thoskje";
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") visInnhold();
+    });
+  </script>
 </body>
 </html>
