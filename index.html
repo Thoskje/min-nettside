@@ -2,122 +2,100 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettverkstedet</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #0a1628;
-      color: white;
     }
 
-    header {
-      background-color: #051024;
+    .header {
+      background-color: #00264d;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
+      padding: 15px 40px;
     }
 
-    header h1 {
-      font-size: 20px;
-      font-weight: bold;
-      color: white;
-    }
-
-    nav a {
+    .header nav a {
       color: white;
       margin-left: 20px;
       text-decoration: none;
     }
 
-    .premium-btn {
-      background-color: #ffaa33;
+    .header .cta {
+      background-color: #28a745;
       color: white;
       padding: 10px 16px;
-      border-radius: 8px;
-      margin-left: 20px;
+      border-radius: 6px;
       font-weight: bold;
-      text-decoration: none;
     }
 
     .hero {
       position: relative;
-      background-image: url('https://raw.githubusercontent.com/Thoskje/min-nettside/main/bilde-1.png');
+      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true');
       background-size: cover;
-      background-position: center;
+      background-position: right center;
       height: 100vh;
+      color: white;
       display: flex;
       align-items: center;
-      padding-left: 5%;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 2;
       max-width: 600px;
+      padding-left: 5%;
+      background: rgba(0, 0, 0, 0.4); /* optional dark overlay for better text visibility */
+      padding: 40px;
+      border-radius: 12px;
     }
 
     .hero h1 {
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 20px;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
     }
 
     .hero p {
-      font-size: 20px;
-      margin-bottom: 30px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
     }
 
-    .cta-button {
-      background-color: #00B386;
+    .hero .btn {
+      background-color: #ffa726;
       color: white;
-      padding: 14px 28px;
-      text-decoration: none;
-      border-radius: 6px;
       font-weight: bold;
-      font-size: 18px;
-      transition: background-color 0.3s;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
     }
 
-    .cta-button:hover {
-      background-color: #009970;
+    .hero .btn:hover {
+      background-color: #fb8c00;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>NETTVERKSTEDET</h1>
+  <header class="header">
+    <div style="font-weight: bold; font-size: 1.2rem;">NETTVERKSTEDET</div>
     <nav>
       <a href="#">Hjem</a>
       <a href="#">Tjenester</a>
       <a href="#">Om oss</a>
-      <a href="#" class="premium-btn">Kjøp Premium</a>
+      <a href="#">Kontakt</a>
+      <a href="#" class="cta">Start Gratis Chat</a>
     </nav>
   </header>
 
   <section class="hero">
     <div class="hero-content">
       <h1>Få ekspertråd direkte fra fagfolk.</h1>
-      <p>Betal enkelt med Vipps.</p>
-      <a href="#kontakt" class="cta-button">Start Gratis Chat</a>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button class="btn">Start digital råd og veiledning</button>
     </div>
   </section>
-
 </body>
 </html>
