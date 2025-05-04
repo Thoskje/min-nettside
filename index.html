@@ -200,65 +200,9 @@
       <span id="theme-text">🌙 Mørkt tema</span>
     </button>
 
-    <main>
-      <div class="services">
-        <div class="service">
-          <i class="fas fa-check-circle"></i>
-          <h3>Gratis chat</h3>
-          <p>Still enkle spørsmål</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-briefcase"></i>
-          <h3>Premium rådgivning</h3>
-          <p>Få spesifikke løsninger</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-trophy"></i>
-          <h3>Eksklusiv veiledning</h3>
-          <p>Timebestilt eksperthjelp</p>
-        </div>
-      </div>
-    </main>
-
     <footer>
       &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
     </footer>
   </div>
-
-  <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent = tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", ny);
-      document.getElementById("theme-text").textContent = ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
-  </script>
 </body>
 </html>
