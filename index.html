@@ -1,53 +1,71 @@
-<section class="hero">
-  <div class="hero-content">
-    <h1>Få ekspertråd <br> direkte fra fagfolk.</h1>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nettverkstedet</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') center center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 3px black;
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero button {
+      background-color: #f29c1f;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Få ekspertråd direkte fra fagfolk</h1>
     <p>Betal enkelt med Vipps eller Apple Pay.</p>
-    <a href="#kontakt" class="cta-button">Start digital råd og veiledning</a>
-  </div>
-</section>
+    <button>Start digital råd og veiledning</button>
+  </section>
 
-<style>
-.hero {
-  position: relative;
-  background-image: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true');
-  background-size: cover;
-  background-position: 75% center; /* Justert for å vise ansiktet bedre */
-  height: 100vh;
-  color: white;
-  display: flex;
-  align-items: center;
-  padding-left: 5%;
-}
-
-.hero-content {
-  max-width: 600px;
-  background-color: rgba(0, 0, 0, 0.6); /* Litt mørkere bakgrunn for lesbar tekst */
-  padding: 2rem;
-  border-radius: 12px;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-}
-
-.cta-button {
-  display: inline-block;
-  background-color: #f6a623;
-  color: white;
-  padding: 1rem 2rem;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #d48806;
-}
-</style>
+</body>
+</html>
