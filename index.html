@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
     }
@@ -15,57 +19,77 @@
     .hero {
       position: relative;
       height: 100vh;
-      width: 100%;
       background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') center center / cover no-repeat;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       justify-content: center;
+      align-items: center;
       color: white;
-      text-shadow: 1px 1px 3px black;
-      padding-left: 5vw;
-      padding-right: 5vw;
+      text-align: center;
     }
 
     .hero h1 {
       font-size: 3rem;
-      margin: 0 0 1rem 0;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
     }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       margin-bottom: 2rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
     }
 
     .hero button {
       background-color: #f29c1f;
-      color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
       font-weight: bold;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
+    nav {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      display: flex;
+      gap: 1rem;
+    }
 
-      .hero p {
-        font-size: 1rem;
-      }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-green {
+      background-color: #28a745;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-
   <section class="hero">
+    <nav>
+      <a href="#">Hjem</a>
+      <a href="#">Tjenester</a>
+      <a href="#">Om oss</a>
+      <a href="#">Kontakt</a>
+      <a href="#" class="btn-green">Start Gratis Chat</a>
+    </nav>
+
     <h1>Få ekspertråd direkte fra fagfolk</h1>
     <p>Betal enkelt med Vipps eller Apple Pay.</p>
     <button>Start digital råd og veiledning</button>
   </section>
-
 </body>
 </html>
