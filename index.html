@@ -4,231 +4,129 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
-  <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --primary-color: #002147;
-      --accent-color: #f29c1f;
-      --bg-light: #ffffff;
-      --bg-dark: #0d1b2a;
-      --text-light: #ffffff;
-      --text-dark: #1a1a1a;
-      --max-width: 1000px;
-    }
-
-    [data-theme="dark"] {
-      --bg-color: var(--bg-dark);
-      --text-color: var(--text-light);
-    }
-
-    [data-theme="light"] {
-      --bg-color: var(--bg-light);
-      --text-color: var(--text-dark);
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     header {
-      background-color: var(--primary-color);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       padding: 1rem 2rem;
+      background-color: rgba(0, 33, 71, 0.95); /* semi-transparent mørkeblå */
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      z-index: 10;
     }
 
     header nav a {
       color: white;
       text-decoration: none;
-      margin: 0 1rem;
+      margin-left: 1.5rem;
+      font-weight: 500;
     }
 
     .btn-green {
       background-color: #28a745;
-      color: white;
-      padding: 0.6rem 1rem;
-      border: none;
+      padding: 0.5rem 1rem;
       border-radius: 5px;
+      color: white;
       font-weight: bold;
-      text-decoration: none;
+      margin-left: 1.5rem;
     }
 
     .hero {
       position: relative;
+      width: 100%;
       height: 100vh;
+      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde%201.png?raw=true') center center / contain no-repeat;
+      background-color: #0d1b2a;
+      background-size: cover;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding: 3rem 4rem;
+      padding: 2rem;
       color: white;
       z-index: 1;
-      overflow: hidden;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    .hero::before {
-      content: "";
+    .overlay {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-        url('https://github.com/Thoskje/min-nettside/blob/main/Bilde%201.png?raw=true') center center / cover no-repeat;
-      z-index: -1;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 2;
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
+    .hero-content {
+      position: relative;
+      z-index: 3;
       max-width: 600px;
+    }
+
+    h1 {
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
 
-    .hero p {
-      font-size: 1.25rem;
+    p {
+      font-size: 1.1rem;
       margin-bottom: 2rem;
     }
 
-    .hero button {
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      background-color: var(--accent-color);
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
+    .cta-btn {
+      background-color: #f29c1f;
       color: white;
-      cursor: pointer;
-      max-width: 300px;
-    }
-
-    .theme-toggle {
-      display: block;
-      margin: 1rem auto;
-      background: none;
-      border: 1px solid var(--primary-color);
-      color: var(--primary-color);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .auth-box {
-      max-width: 400px;
-      margin: 5rem auto;
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .auth-box input, .auth-box button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 1rem;
-      border-radius: 6px;
-    }
-
-    .auth-error {
-      color: red;
-      margin-top: 0.5rem;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    footer {
-      text-align: center;
+      border: none;
       padding: 1rem;
-      background-color: #f0f0f0;
-      color: #555;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
     }
   </style>
-
-  <script>
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  </script>
 </head>
 <body>
-  <div id="auth" class="auth-box">
-    <h2>🔒 Beskyttet side</h2>
-    <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-    <input type="password" id="kodeInput" placeholder="Tilgangskode">
-    <button onclick="sjekkKode()">Fortsett</button>
-    <div class="auth-error" id="feilmelding"></div>
-  </div>
 
-  <div id="innhold" class="hidden">
-    <header>
-      <div><strong>NETTVERKSTEDET</strong></div>
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-        <a href="#" class="btn-green">Start Gratis Chat</a>
-      </nav>
-    </header>
+  <header>
+    <div><strong>NETTVERKSTEDET</strong></div>
+    <nav>
+      <a href="#">Hjem</a>
+      <a href="#">Tjenester</a>
+      <a href="#">Om oss</a>
+      <a href="#">Kontakt</a>
+      <a href="#" class="btn-green">Start Gratis Chat</a>
+    </nav>
+  </header>
 
-    <section class="hero">
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
       <h1>Få ekspertråd direkte fra fagfolk</h1>
       <p>Betal enkelt med Vipps eller Apple Pay.</p>
-      <button>Start digital råd og veiledning</button>
-    </section>
+      <button class="cta-btn">Start digital råd og veiledning</button>
+    </div>
+  </section>
 
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-text">🌙 Mørkt tema</span>
-    </button>
-
-    <footer>
-      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-    </footer>
-  </div>
-
-  <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent = tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", ny);
-      document.getElementById("theme-text").textContent = ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
-  </script>
 </body>
 </html>
