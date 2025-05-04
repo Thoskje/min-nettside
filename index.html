@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
   <style>
     :root {
-      --max-width: 1000px;
-      --spacing: 1.5rem;
-      --border-radius: 12px;
-    }
-
-    [data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #e0e0e0;
-      --primary-color: #1e90ff;
-      --card-bg: #1e1e1e;
-      --button-bg: #1e90ff;
-    }
-
-    [data-theme="light"] {
-      --bg-color: #f0f4f8;
-      --text-color: #333;
-      --primary-color: #004080;
+      --primary-color: #003366;
+      --secondary-color: #ffffff;
+      --accent-color: #ffcc00;
+      --bg-color: #f4f7fa;
       --card-bg: #ffffff;
-      --button-bg: #004080;
+      --border-radius: 12px;
+      --spacing: 1.5rem;
+      --max-width: 1000px;
     }
 
     * {
@@ -38,12 +27,10 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding: var(--spacing);
-      transition: background-color 0.3s, color 0.3s;
+      color: var(--primary-color);
       display: flex;
       justify-content: center;
+      padding: var(--spacing);
     }
 
     .container {
@@ -59,9 +46,7 @@
       background: var(--card-bg);
       border-radius: var(--border-radius);
       padding: var(--spacing);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      margin: var(--spacing) auto;
-      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
     }
 
@@ -76,7 +61,7 @@
     .auth-box button {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: var(--button-bg);
+      background-color: var(--primary-color);
       color: white;
       border: none;
       border-radius: 6px;
@@ -88,54 +73,76 @@
       margin-top: 10px;
     }
 
-    header.hero {
-      background: url('https://images.unsplash.com/photo-1588776814546-ec7bdc33b1c5?auto=format&fit=crop&w=1400&q=80') no-repeat center center;
-      background-size: cover;
-      border-radius: var(--border-radius);
-      padding: 4rem 2rem;
-      color: white;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    header {
       text-align: center;
+      margin-bottom: var(--spacing);
     }
 
-    header.hero h1 {
-      font-size: 2.5rem;
+    .hero {
+      width: 100%;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin-bottom: var(--spacing);
     }
 
-    .button-row {
-      margin-top: 1.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
+    .hero img {
+      width: 100%;
+      display: block;
+      height: auto;
     }
 
-    .button-row .button {
-      padding: 0.75rem 1.5rem;
-      background-color: var(--button-bg);
+    nav {
+      background-color: var(--primary-color);
+      padding: 1rem;
+      text-align: center;
+      border-radius: var(--border-radius);
+      margin-bottom: var(--spacing);
+    }
+
+    nav a {
       color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .card {
-      background: var(--card-bg);
+      background-color: var(--card-bg);
       border-radius: var(--border-radius);
       padding: var(--spacing);
+      margin-bottom: var(--spacing);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      flex: 1;
+      padding: 12px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
       margin-top: var(--spacing);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
-  <script>
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  </script>
 </head>
 <body>
   <div class="container">
-
-    <!-- Passordbeskyttelse -->
     <div id="auth" class="auth-box">
       <h1>🔒 Beskyttet side</h1>
       <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
@@ -144,24 +151,30 @@
       <div class="auth-error" id="feilmelding"></div>
     </div>
 
-    <!-- Innhold vises etter kode -->
     <div id="innhold" class="hidden">
-      <header class="hero">
-        <h1>Nettverkstedet</h1>
-        <p>Rask digital veihjelp og rådgivning – betal enkelt med Vipps</p>
-        <div class="button-row">
-          <button class="button">Start Gratis Chat</button>
-          <button class="button">Kjøp Premium Chat</button>
+      <header>
+        <div class="hero">
+          <img src="https://via.placeholder.com/1000x300?text=Bil+og+Mekaniker" alt="Hero-bilde">
         </div>
+        <h1>Nettverkstedet</h1>
+        <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
       </header>
+
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#">Tjenester</a>
+        <a href="#">Premium</a>
+        <a href="#">FAQ</a>
+        <a href="#">Kontakt</a>
+      </nav>
 
       <main>
         <div class="card">
           <h2>Våre Tjenester</h2>
           <ul>
-            <li>Digital veihjelp via chat og video</li>
-            <li>Teknisk rådgivning</li>
-            <li>Feilsøking og kjøpsråd</li>
+            <li>🔧 Digital veihjelp via chat og video</li>
+            <li>💡 Teknisk rådgivning</li>
+            <li>🛒 Feilsøking og kjøpsråd</li>
           </ul>
         </div>
 
@@ -175,7 +188,16 @@
           <h2>Kontakt</h2>
           <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
         </div>
+
+        <div class="button-row">
+          <button class="button">Start Gratis Chat</button>
+          <button class="button">Kjøp Premium Chat</button>
+        </div>
       </main>
+
+      <footer>
+        &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
+      </footer>
     </div>
   </div>
 
