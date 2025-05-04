@@ -11,120 +11,111 @@
       box-sizing: border-box;
     }
 
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0a1628;
+      color: white;
     }
 
     header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1rem 2rem;
-      background-color: rgba(0, 33, 71, 0.95); /* semi-transparent mørkeblå */
-      color: white;
+      background-color: #051024;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 10;
+      padding: 20px 40px;
     }
 
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 500;
-    }
-
-    .btn-green {
-      background-color: #28a745;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      color: white;
+    header h1 {
+      font-size: 20px;
       font-weight: bold;
-      margin-left: 1.5rem;
+      color: white;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+    }
+
+    .premium-btn {
+      background-color: #ffaa33;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin-left: 20px;
+      font-weight: bold;
+      text-decoration: none;
     }
 
     .hero {
       position: relative;
-      width: 100%;
-      height: 100vh;
-      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde%201.png?raw=true') center center / contain no-repeat;
-      background-color: #0d1b2a;
+      background-image: url('https://raw.githubusercontent.com/Thoskje/min-nettside/main/bilde-1.png');
       background-size: cover;
+      background-position: center;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem;
-      color: white;
-      z-index: 1;
+      align-items: center;
+      padding-left: 5%;
     }
 
-    .overlay {
+    .hero::before {
+      content: "";
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.4);
-      z-index: 2;
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
-      z-index: 3;
+      z-index: 2;
       max-width: 600px;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-
-    .cta-btn {
-      background-color: #f29c1f;
-      color: white;
-      border: none;
-      padding: 1rem;
-      font-size: 1rem;
+    .hero h1 {
+      font-size: 48px;
       font-weight: bold;
-      border-radius: 5px;
-      width: 100%;
-      max-width: 600px;
+      margin-bottom: 20px;
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      p {
-        font-size: 1rem;
-      }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .cta-button {
+      background-color: #00B386;
+      color: white;
+      padding: 14px 28px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #009970;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div><strong>NETTVERKSTEDET</strong></div>
+    <h1>NETTVERKSTEDET</h1>
     <nav>
       <a href="#">Hjem</a>
       <a href="#">Tjenester</a>
       <a href="#">Om oss</a>
-      <a href="#">Kontakt</a>
-      <a href="#" class="btn-green">Start Gratis Chat</a>
+      <a href="#" class="premium-btn">Kjøp Premium</a>
     </nav>
   </header>
 
   <section class="hero">
-    <div class="overlay"></div>
     <div class="hero-content">
-      <h1>Få ekspertråd direkte fra fagfolk</h1>
-      <p>Betal enkelt med Vipps eller Apple Pay.</p>
-      <button class="cta-btn">Start digital råd og veiledning</button>
+      <h1>Få ekspertråd direkte fra fagfolk.</h1>
+      <p>Betal enkelt med Vipps.</p>
+      <a href="#kontakt" class="cta-button">Start Gratis Chat</a>
     </div>
   </section>
 
