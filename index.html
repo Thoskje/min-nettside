@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nettverkstedet</title>
+  <title>Nettverkstedet – Digital Veihjelp</title>
   <meta name="description" content="Rask og enkel bilhjelp på nett – betal med Vipps.">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
@@ -12,7 +14,7 @@
       --secondary: #ffffff;
       --accent: #dbe4ee;
       --highlight: #ffcc00;
-      --font: 'Segoe UI', sans-serif;
+      --font: 'Roboto', sans-serif;
     }
 
     [data-theme="dark"] {
@@ -83,6 +85,7 @@
       padding: 2rem;
       border-radius: 16px;
       margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     header h1 {
@@ -102,8 +105,8 @@
       text-align: left;
       border-radius: 12px;
       margin-bottom: 2rem;
-      background-blend-mode: overlay;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-blend-mode: darken;
+      background-color: rgba(0, 38, 77, 0.7);
     }
 
     .hero h2 {
@@ -175,9 +178,11 @@
       color: var(--button-text);
       padding: 1rem 2rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 1rem;
       font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       display: flex;
@@ -202,6 +207,7 @@
   </script>
 </head>
 <body>
+  <div style="height: 6px; background: var(--primary); width: 100%;"></div>
   <div class="container">
     <div id="auth" class="auth-box">
       <h2>🔒 Beskyttet side</h2>
