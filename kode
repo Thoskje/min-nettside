@@ -165,6 +165,17 @@
     .hidden {
       display: none;
     }
+   
+    .btn-green {
+  background-color: #28a745; /* grønn */
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
   </style>
   <script>
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -186,17 +197,17 @@
       <nav>
         <a href="#">Hjem</a>
         <a href="#">Tjenester</a>
-        <a href="#">Premium</a>
         <a href="#">Om oss</a>
         <a href="#">Kontakt</a>
-        <a href="#" class="buy-button">Kjøp Premium</a>
+     <a href="#" class="btn-green">Start Gratis Chat</a>
+
       </nav>
     </header>
 
     <section class="hero">
       <h1>Få ekspertråd direkte fra fagfolk.</h1>
-      <p>Betal enkelt med Vipps.</p>
-      <button class="button">Start Gratis Chat</button>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button class="button">Start digital råd og veiledning</button>
     </section>
 
     <button class="theme-toggle" onclick="toggleTheme()">
@@ -212,13 +223,13 @@
         </div>
         <div class="service">
           <i class="fas fa-briefcase"></i>
-          <h3>Premium rådgivning</h3>
-          <p>Få spesifikke løsninger</p>
+          <h3>Rådspør faglærte bilmekanikere direkte</h3>
+          <p>Tilpasset din bil og kompetanse</p>
         </div>
         <div class="service">
           <i class="fas fa-trophy"></i>
-          <h3>Eksklusiv veiledning</h3>
-          <p>Timebestilt eksperthjelp</p>
+          <h3>Avtal time med en bilmekaniker</h3>
+          <p>Skreddersydde løsninger for deg og din bil</p>
         </div>
       </div>
     </main>
