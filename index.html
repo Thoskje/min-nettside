@@ -13,124 +13,102 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    body, html {
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') center 20% / cover no-repeat;
       color: white;
-    }
-
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
     }
 
     .hero {
       position: relative;
-      z-index: 1;
+      width: 100%;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') center center no-repeat;
+      background-size: 120%; /* Zoomet litt ut */
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
     }
 
     header {
-      position: absolute;
-      top: 0;
-      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 4rem;
-      z-index: 2;
+      padding: 1.5rem 2rem;
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: bold;
-      color: white;
     }
 
     nav a {
       color: white;
       text-decoration: none;
       margin-left: 1.5rem;
-      font-weight: bold;
+      font-weight: 500;
+    }
+
+    .hero-content {
+      padding: 3rem 2rem;
+      max-width: 700px;
     }
 
     .hero h1 {
-      font-size: 2.8rem;
-      max-width: 600px;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
     }
 
     .hero p {
       font-size: 1.2rem;
-      max-width: 500px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .hero button {
+    .button {
       background-color: #f29c1f;
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1.2rem;
       border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
+      border-radius: 5px;
       font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        margin-top: 0.5rem;
-      }
-
-      .hero {
-        padding: 2rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
+      font-size: 1rem;
+      text-decoration: none;
+      width: fit-content;
+      max-width: 250px;
+      white-space: nowrap;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-
-  <header>
-    <div class="logo">NETTVERKSTEDET</div>
-    <nav>
-      <a href="#">Om oss</a>
-      <a href="#">Tjenester</a>
-      <a href="#">Kontakt</a>
-      <a href="#" style="background-color: #28a745; padding: 0.5rem 1rem; border-radius: 5px;">Start Gratis Chat</a>
-    </nav>
-  </header>
-
   <section class="hero">
-    <h1>Få ekspertråd direkte fra fagfolk</h1>
-    <p>Betal enkelt med Vipps eller Apple Pay.</p>
-    <button>Start digital råd og veiledning</button>
+    <header>
+      <div class="logo">NETTVERKSTEDET</div>
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#">Tjenester</a>
+        <a href="#">Om oss</a>
+        <a href="#">Kontakt</a>
+        <a href="#" class="button">Start Gratis Chat</a>
+      </nav>
+    </header>
+    <div class="hero-content">
+      <h1>Få ekspertråd direkte fra fagfolk</h1>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button class="button">Start digital rådgivning</button>
+    </div>
   </section>
 </body>
 </html>
