@@ -8,17 +8,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #0b2545;
+      --primary: #00264d;
       --secondary: #ffffff;
-      --accent: #e0e0e0;
+      --accent: #dbe4ee;
       --highlight: #ffcc00;
       --font: 'Segoe UI', sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg-color: #0b2545;
+      --bg-color: #00264d;
       --text-color: #ffffff;
-      --card-bg: #102e4a;
+      --card-bg: #0d2a4a;
       --button-bg: #ffcc00;
       --button-text: #000;
     }
@@ -26,8 +26,8 @@
     [data-theme="light"] {
       --bg-color: #ffffff;
       --text-color: #000000;
-      --card-bg: #f2f4f7;
-      --button-bg: #0b2545;
+      --card-bg: #f5f7fa;
+      --button-bg: #00264d;
       --button-text: #ffffff;
     }
 
@@ -43,7 +43,7 @@
 
     .container {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1200px;
     }
 
     .hidden {
@@ -76,20 +76,23 @@
     }
 
     header {
-      background: url('https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      height: 300px;
-      border-radius: 16px;
       display: flex;
-      align-items: flex-end;
-      padding: 1.5rem;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
     }
 
     header h1 {
       font-size: 2.5rem;
-      color: white;
-      background: rgba(0,0,0,0.5);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+      margin: 0;
+    }
+
+    header img {
+      max-width: 300px;
+      border-radius: 12px;
     }
 
     nav {
@@ -111,15 +114,25 @@
       border-bottom: 2px solid var(--highlight);
     }
 
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
     .card {
       background: var(--card-bg);
       padding: 2rem;
       border-radius: 12px;
-      margin-bottom: 2rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
+    .card h2 {
+      margin-top: 0;
+    }
+
     .button-row {
+      grid-column: 1 / -1;
       display: flex;
       gap: 1.5rem;
       justify-content: center;
@@ -136,6 +149,13 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .button i {
+      font-size: 1.2rem;
     }
 
     footer {
@@ -163,6 +183,7 @@
     <div id="innhold" class="hidden">
       <header>
         <h1>Nettverkstedet</h1>
+        <img src="https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=600&q=80" alt="Bil og mekaniker">
       </header>
 
       <nav>
@@ -195,8 +216,8 @@
         </div>
 
         <div class="button-row">
-          <button class="button">Start Gratis Chat</button>
-          <button class="button">Kjøp Premium Chat</button>
+          <button class="button"><i class="fas fa-comments"></i> Start Gratis Chat</button>
+          <button class="button"><i class="fas fa-star"></i> Kjøp Premium Chat</button>
         </div>
       </main>
 
