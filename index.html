@@ -15,7 +15,6 @@
 
     html, body {
       height: 100%;
-      background-color: #002147;
       font-family: 'Segoe UI', sans-serif;
       color: white;
     }
@@ -24,20 +23,21 @@
       height: 100vh;
       width: 100%;
       position: relative;
-      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') top center / contain no-repeat;
+      background: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true') top center / cover no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       padding-left: 5%;
       padding-right: 5%;
-      background-color: #000; /* fallback for bakgrunn */
+      background-color: #000; /* fallback */
     }
 
     .hero h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
       z-index: 1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .hero p {
@@ -45,6 +45,7 @@
       margin-bottom: 2rem;
       max-width: 500px;
       z-index: 1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .hero button {
@@ -74,7 +75,7 @@
     }
 
     .topnav .logo {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
     }
 
@@ -100,6 +101,7 @@
       border-radius: 5px;
       font-weight: bold;
       text-decoration: none;
+      color: white;
     }
   </style>
 </head>
