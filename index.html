@@ -8,24 +8,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #002b5c;
+      --primary: #0b2545;
       --secondary: #ffffff;
       --accent: #e0e0e0;
+      --highlight: #ffcc00;
       --font: 'Segoe UI', sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg-color: #0e1a2b;
+      --bg-color: #0b2545;
       --text-color: #ffffff;
-      --card-bg: #1c2b3a;
-      --button-bg: #003580;
+      --card-bg: #102e4a;
+      --button-bg: #ffcc00;
+      --button-text: #000;
     }
 
     [data-theme="light"] {
-      --bg-color: #f5f8fb;
-      --text-color: #111;
-      --card-bg: #ffffff;
-      --button-bg: #002b5c;
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --card-bg: #f2f4f7;
+      --button-bg: #0b2545;
+      --button-text: #ffffff;
     }
 
     body {
@@ -36,12 +39,11 @@
       display: flex;
       justify-content: center;
       padding: 1rem;
-      transition: background 0.3s, color 0.3s;
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
     }
 
     .hidden {
@@ -51,15 +53,15 @@
     .auth-box {
       background: var(--card-bg);
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border-radius: 12px;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     .auth-box input,
     .auth-box button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
@@ -67,69 +69,73 @@
 
     .auth-box button {
       background: var(--button-bg);
-      color: #fff;
+      color: var(--button-text);
       border: none;
+      font-weight: bold;
       cursor: pointer;
-    }
-
-    .auth-error {
-      color: red;
-      margin-top: 10px;
     }
 
     header {
       background: url('https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      height: 250px;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
+      height: 300px;
+      border-radius: 16px;
       display: flex;
       align-items: flex-end;
-      padding: 1rem;
-      color: white;
+      padding: 1.5rem;
     }
 
     header h1 {
-      margin: 0;
-      font-size: 2rem;
-      background: rgba(0, 0, 0, 0.5);
+      font-size: 2.5rem;
+      color: white;
+      background: rgba(0,0,0,0.5);
       padding: 0.5rem 1rem;
       border-radius: 8px;
     }
 
     nav {
-      text-align: center;
-      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
     }
 
     nav a {
-      margin: 0 10px;
       text-decoration: none;
-      color: var(--primary);
+      color: var(--text-color);
       font-weight: bold;
+      border-bottom: 2px solid transparent;
+      transition: border 0.2s;
+    }
+
+    nav a:hover {
+      border-bottom: 2px solid var(--highlight);
     }
 
     .card {
       background: var(--card-bg);
-      padding: 1.5rem;
+      padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .button-row {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
     }
 
     .button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
       background: var(--button-bg);
-      color: white;
+      color: var(--button-text);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     footer {
