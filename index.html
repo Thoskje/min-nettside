@@ -2,40 +2,46 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettverkstedet</title>
-  <meta name="description" content="Nettverkstedet – få rask og enkel hjelp via chat og video. Betal med Vipps.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <meta name="description" content="Rask og enkel bilhjelp på nett – betal med Vipps.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --primary-color: #003366;
-      --secondary-color: #ffffff;
-      --accent-color: #ffcc00;
-      --bg-color: #f4f7fa;
-      --card-bg: #ffffff;
-      --border-radius: 12px;
-      --spacing: 1.5rem;
-      --max-width: 1000px;
+      --primary: #002b5c;
+      --secondary: #ffffff;
+      --accent: #e0e0e0;
+      --font: 'Segoe UI', sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    [data-theme="dark"] {
+      --bg-color: #0e1a2b;
+      --text-color: #ffffff;
+      --card-bg: #1c2b3a;
+      --button-bg: #003580;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f5f8fb;
+      --text-color: #111;
+      --card-bg: #ffffff;
+      --button-bg: #002b5c;
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--primary-color);
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       justify-content: center;
-      padding: var(--spacing);
+      padding: 1rem;
+      transition: background 0.3s, color 0.3s;
     }
 
     .container {
       width: 100%;
-      max-width: var(--max-width);
+      max-width: 900px;
     }
 
     .hidden {
@@ -44,27 +50,25 @@
 
     .auth-box {
       background: var(--card-bg);
-      border-radius: var(--border-radius);
-      padding: var(--spacing);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       text-align: center;
     }
 
-    .auth-box input {
+    .auth-box input,
+    .auth-box button {
+      width: 100%;
       padding: 10px;
       margin-top: 10px;
-      width: 100%;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
 
     .auth-box button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: var(--primary-color);
-      color: white;
+      background: var(--button-bg);
+      color: #fff;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
     }
 
@@ -74,90 +78,85 @@
     }
 
     header {
-      text-align: center;
-      margin-bottom: var(--spacing);
+      background: url('https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      height: 250px;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      color: white;
     }
 
-    .hero {
-      width: 100%;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      margin-bottom: var(--spacing);
-    }
-
-    .hero img {
-      width: 100%;
-      display: block;
-      height: auto;
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
 
     nav {
-      background-color: var(--primary-color);
-      padding: 1rem;
       text-align: center;
-      border-radius: var(--border-radius);
-      margin-bottom: var(--spacing);
+      margin-bottom: 1.5rem;
     }
 
     nav a {
-      color: white;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
+      color: var(--primary);
       font-weight: bold;
     }
 
     .card {
-      background-color: var(--card-bg);
-      border-radius: var(--border-radius);
-      padding: var(--spacing);
-      margin-bottom: var(--spacing);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
     }
 
     .button-row {
       display: flex;
-      gap: 10px;
-      margin-top: 1rem;
-      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .button {
       flex: 1;
-      padding: 12px;
-      background-color: var(--primary-color);
-      color: white;
+      padding: 10px;
       border: none;
       border-radius: 6px;
-      text-align: center;
-      cursor: pointer;
+      background: var(--button-bg);
+      color: white;
       font-weight: bold;
+      cursor: pointer;
     }
 
     footer {
       text-align: center;
-      margin-top: var(--spacing);
+      margin-top: 2rem;
       font-size: 0.9rem;
-      color: #666;
+      color: #aaa;
     }
   </style>
+  <script>
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+  </script>
 </head>
 <body>
   <div class="container">
     <div id="auth" class="auth-box">
-      <h1>🔒 Beskyttet side</h1>
+      <h2>🔒 Beskyttet side</h2>
       <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-      <input type="password" id="kodeInput" placeholder="Tilgangskode">
+      <input type="password" id="kodeInput" placeholder="Tilgangskode" />
       <button onclick="sjekkKode()">Fortsett</button>
       <div class="auth-error" id="feilmelding"></div>
     </div>
 
     <div id="innhold" class="hidden">
       <header>
-        <div class="hero">
-          <img src="https://via.placeholder.com/1000x300?text=Bil+og+Mekaniker" alt="Hero-bilde">
-        </div>
         <h1>Nettverkstedet</h1>
-        <p>Rask og enkel bilhjelp direkte i nettleseren – betal med Vipps</p>
       </header>
 
       <nav>
@@ -172,9 +171,9 @@
         <div class="card">
           <h2>Våre Tjenester</h2>
           <ul>
-            <li>🔧 Digital veihjelp via chat og video</li>
-            <li>💡 Teknisk rådgivning</li>
-            <li>🛒 Feilsøking og kjøpsråd</li>
+            <li>Digital veihjelp via chat og video</li>
+            <li>Teknisk rådgivning</li>
+            <li>Feilsøking og kjøpsråd</li>
           </ul>
         </div>
 
@@ -203,11 +202,9 @@
 
   <script>
     const KODE = "Thoskje";
-
     function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
       const feil = document.getElementById("feilmelding");
-
       if (input.toLowerCase() === KODE.toLowerCase()) {
         sessionStorage.setItem("godkjent", "ja");
         visInnhold();
@@ -215,16 +212,12 @@
         feil.textContent = "Feil kode. Prøv igjen.";
       }
     }
-
     function visInnhold() {
       document.getElementById("auth").classList.add("hidden");
       document.getElementById("innhold").classList.remove("hidden");
     }
-
     window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
+      if (sessionStorage.getItem("godkjent") === "ja") visInnhold();
     });
   </script>
 </body>
