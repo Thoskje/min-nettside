@@ -95,6 +95,37 @@
       border-radius: 12px;
     }
 
+    .hero {
+      background: url('https://images.unsplash.com/photo-1586864387781-9d7b57c5886e?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      padding: 6rem 2rem;
+      color: white;
+      text-align: left;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .hero-buttons .button {
+      font-size: 1rem;
+      padding: 1rem 1.5rem;
+    }
+
     nav {
       display: flex;
       justify-content: center;
@@ -186,6 +217,15 @@
         <img src="https://images.unsplash.com/photo-1603784901640-cd207f211f6c?auto=format&fit=crop&w=600&q=80" alt="Bil og mekaniker">
       </header>
 
+      <section class="hero">
+        <h2>Få ekspertråd direkte fra fagfolk</h2>
+        <p>Digital hjelp der du er – betal enkelt med Vipps</p>
+        <div class="hero-buttons">
+          <button class="button"><i class="fas fa-comments"></i> Start Gratis Chat</button>
+          <button class="button"><i class="fas fa-star"></i> Kjøp Premium Chat</button>
+        </div>
+      </section>
+
       <nav>
         <a href="#">Hjem</a>
         <a href="#">Tjenester</a>
@@ -213,11 +253,6 @@
         <div class="card">
           <h2>Kontakt</h2>
           <p>Send e-post til <a href="mailto:kontakt@digitalveihjelp.no">kontakt@digitalveihjelp.no</a></p>
-        </div>
-
-        <div class="button-row">
-          <button class="button"><i class="fas fa-comments"></i> Start Gratis Chat</button>
-          <button class="button"><i class="fas fa-star"></i> Kjøp Premium Chat</button>
         </div>
       </main>
 
