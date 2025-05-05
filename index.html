@@ -117,4 +117,38 @@
     </div>
   </section>
 </body>
+    <script>
+    const KODE = "Thoskje";
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+      const tema = document.documentElement.getAttribute("data-theme");
+      document.getElementById("theme-text").textContent = tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", ny);
+      document.getElementById("theme-text").textContent = ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
 </html>
