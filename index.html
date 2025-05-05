@@ -5,15 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-    .hidden { display: none; }
-    #auth, #innhold { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; }
-    input { padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem; }
-    button { padding: 0.5rem 1rem; margin-top: 1rem; font-size: 1rem; cursor: pointer; }
 
+  <!-- 🔗 Ekstern CSS (Font Awesome ikoner) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- 🎨 CSS: Stil for utseendet på nettsiden -->
+  <style>
+    /* GLOBALT */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* HERO-SEKSJON MED BAKGRUNNSBILDE */
     .hero {
       position: relative;
       width: 100vw;
@@ -76,64 +87,83 @@
       max-width: 300px;
       white-space: nowrap;
     }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        padding-left: 1rem;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        margin-top: 1rem;
+      }
+    }
   </style>
 </head>
+
+<!-- 🧱 HTML: Struktur og innhold på siden -->
 <body>
+  <section class="hero">
+    <div class="top-bar">
+      <div class="logo">NETTVERKSTEDET</div>
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#">Tjenester</a>
+        <a href="#">Om oss</a>
+        <a href="#">Kontakt</a>
+        <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
+      </nav>
+    </div>
 
-  <!-- Passordskjema -->
+    <div class="hero-content">
+      <h1>Få ekspertråd direkte fra fagfolk</h1>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button>Start digital rådgivning</button>
+    </div>
+  </section>
+
+  <!-- 🔐 HTML: Passordbeskyttelse (Skjult skjema) -->
   <div id="auth">
-    <h2>Skriv inn passord</h2>
-    <input type="password" id="kodeInput" placeholder="Passord">
+    <input type="text" id="kodeInput" placeholder="Skriv inn kode">
     <button onclick="sjekkKode()">Logg inn</button>
-    <p id="feilmelding" style="color:red; margin-top: 1rem;"></p>
+    <p id="feilmelding" style="color:red;"></p>
   </div>
 
-  <!-- Hovedinnhold -->
+  <!-- 📦 HTML: Innhold som vises etter riktig passord -->
   <div id="innhold" class="hidden">
-    <section class="hero">
-      <div class="top-bar">
-        <div class="logo">NETTVERKSTEDET</div>
-        <nav>
-          <a href="#">Hjem</a>
-          <a href="#">Tjenester</a>
-          <a href="#">Om oss</a>
-          <a href="#">Kontakt</a>
-          <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
-        </nav>
-      </div>
-      <div class="hero-content">
-        <h1>Få ekspertråd direkte fra fagfolk</h1>
-        <p>Betal enkelt med Vipps eller Apple Pay.</p>
-        <button>Start digital rådgivning</button>
-      </div>
-    </section>
+    <p>Velkommen inn! Du er logget inn.</p>
   </div>
-
-  <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
-  </script>
 </body>
+
+<!-- ⚙️ JavaScript: Logikk og funksjoner -->
+<script>
+  const KODE = "Thoskje";
+
+  function sjekkKode() {
+    const input = document.getElementById("kodeInput").value.trim();
+    const feil = document.getElementById("feilmelding");
+
+    if (input.toLowerCase() === KODE.toLowerCase()) {
+      sessionStorage.setItem("godkjent", "ja");
+      visInnhold();
+    } else {
+      feil.textContent = "Feil kode. Prøv igjen.";
+    }
+  }
+
+  function visInnhold() {
+    document.getElementById("auth").classList.add("hidden");
+    document.getElementById("innhold").classList.remove("hidden");
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("godkjent") === "ja") {
+      visInnhold();
+    }
+  });
+</script>
 </html>
