@@ -137,3 +137,142 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nettverkstedet</title>
+  <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    .hidden { display: none; }
+    #auth, #innhold { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+    input { padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; font-size: 1rem; cursor: pointer; }
+
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
+                  url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      color: white;
+    }
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-weight: 500;
+    }
+
+    .hero-content {
+      margin-top: 20vh;
+      padding-left: 2rem;
+      max-width: 600px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-content button {
+      background-color: #f29c1f;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      max-width: 300px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Passordskjema -->
+  <div id="auth">
+    <h2>Skriv inn passord</h2>
+    <input type="password" id="kodeInput" placeholder="Passord">
+    <button onclick="sjekkKode()">Logg inn</button>
+    <p id="feilmelding" style="color:red; margin-top: 1rem;"></p>
+  </div>
+
+  <!-- Hovedinnhold -->
+  <div id="innhold" class="hidden">
+    <section class="hero">
+      <div class="top-bar">
+        <div class="logo">NETTVERKSTEDET</div>
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+          <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
+        </nav>
+      </div>
+      <div class="hero-content">
+        <h1>Få ekspertråd direkte fra fagfolk</h1>
+        <p>Betal enkelt med Vipps eller Apple Pay.</p>
+        <button>Start digital rådgivning</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const KODE = "Thoskje";
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
+  </script>
+</body>
+</html>
