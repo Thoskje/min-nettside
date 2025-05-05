@@ -1,278 +1,179 @@
 <!DOCTYPE html>
+
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
+
+  <!-- Ekstern CSS -->
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Ikoner (FontAwesome) -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #002147;
-      --accent-color: #f29c1f;
-      --bg-light: #ffffff;
-      --bg-dark: #0d1b2a;
-      --text-light: #ffffff;
-      --text-dark: #1a1a1a;
-      --max-width: 1000px;
-    }
 
-    [data-theme="dark"] {
-      --bg-color: var(--bg-dark);
-      --text-color: var(--text-light);
-    }
+  <!-- Passordbeskyttelse JS -->
 
-    [data-theme="light"] {
-      --bg-color: var(--bg-light);
-      --text-color: var(--text-dark);
-    }
+  <script src="js/passord.js" defer></script>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+</head>
+<body>
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
+  <!-- 🔐 Passordbeskyttelse -->
 
-    header {
-      background-color: var(--primary-color);
-      padding: 1rem 2rem;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+  <div id="auth" class="centered">
+    <h2>Skriv inn passord for å åpne siden</h2>
+    <input type="password" id="kodeInput" placeholder="Passord" />
+    <button onclick="sjekkKode()">Logg inn</button>
+    <p id="feilmelding" style="color:red;"></p>
+  </div>
 
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 1rem;
-    }
+  <!-- 🧱 Innhold vises kun hvis riktig passord -->
 
-    .buy-button {
-      background-color: var(--accent-color);
-      color: white;
-      padding: 0.6rem 1rem;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      text-decoration: none;
-    }
+  <div id="innhold" class="hidden">
+    <section class="hero">
+      <div class="top-bar">
+        <div class="logo">NETTVERKSTEDET</div>
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+          <a href="#" class="start-chat">Start Gratis Chat</a>
+        </nav>
+      </div>
+      <div class="hero-content">
+        <h1>Få ekspertråd direkte fra fagfolk</h1>
+        <p>Betal enkelt med Vipps eller Apple Pay.</p>
+        <button>Start digital rådgivning</button>
+      </div>
+    </section>
+  </div>
 
-    .hero {
-      background: url('hero.jpg') center/cover no-repeat;
-      padding: 6rem 2rem;
-      color: white;
-      text-align: left;
-      background-blend-mode: overlay;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
+</body>
+</html>
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
+/* style.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  background-color: #f0f0f0;
+}
 
-    .hero .button {
-      background-color: var(--accent-color);
-      padding: 0.8rem 1.5rem;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+.hidden {
+  display: none;
+}
 
-    main {
-      max-width: var(--max-width);
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    .services {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      text-align: center;
-      justify-content: center;
-      margin-top: 2rem;
-    }
+input, button {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+}
 
-    .service {
-      flex: 1;
-      min-width: 200px;
-      padding: 1.5rem;
-    }
-
-    .service i {
-      font-size: 2rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #f0f0f0;
-      color: #555;
-      margin-top: 3rem;
-    }
-
-    .theme-toggle {
-      display: block;
-      margin: 1rem auto;
-      background: none;
-      border: 1px solid var(--primary-color);
-      color: var(--primary-color);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .auth-box {
-      max-width: 400px;
-      margin: 5rem auto;
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .auth-box input, .auth-box button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 1rem;
-      border-radius: 6px;
-    }
-
-    .auth-error {
-      color: red;
-      margin-top: 0.5rem;
-    }
-
-    .hidden {
-      display: none;
-    }
-   
-    .btn-green {
-  background-color: #28a745; /* grønn */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
+    url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   color: white;
-  padding: 0.6rem 1rem;
+}
+
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.2rem;
+  font-weight: 500;
+}
+
+.hero-content {
+  margin-top: 20vh;
+  padding-left: 2rem;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+.hero-content button {
+  background-color: #f29c1f;
+  color: white;
+  padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 5px;
   font-weight: bold;
-  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  max-width: 300px;
+  white-space: nowrap;
 }
 
-  </style>
-  <script>
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
-  </script>
-</head>
-<body>
-  <div id="auth" class="auth-box">
-    <h2>🔒 Beskyttet side</h2>
-    <p>Skriv inn tilgangskode for å åpne Nettverkstedet</p>
-    <input type="password" id="kodeInput" placeholder="Tilgangskode">
-    <button onclick="sjekkKode()">Fortsett</button>
-    <div class="auth-error" id="feilmelding"></div>
-  </div>
+//passord.js
 
-  <div id="innhold" class="hidden">
-    <header>
-      <div><strong>NETTVERKSTEDET</strong></div>
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-     <a href="#" class="btn-green">Start Gratis Chat</a>
+const KODE = "Thoskje";
 
-      </nav>
-    </header>
+function sjekkKode() {
+  const input = document.getElementById("kodeInput").value.trim();
+  const feil = document.getElementById("feilmelding");
 
-    <section class="hero">
-      <h1>Få ekspertråd direkte fra fagfolk.</h1>
-      <p>Betal enkelt med Vipps eller Apple Pay.</p>
-      <button class="button">Start digital råd og veiledning</button>
-    </section>
+  if (input.toLowerCase() === KODE.toLowerCase()) {
+    sessionStorage.setItem("godkjent", "ja");
+    visInnhold();
+  } else {
+    feil.textContent = "Feil kode. Prøv igjen.";
+  }
+}
 
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <span id="theme-text">🌙 Mørkt tema</span>
-    </button>
+function visInnhold() {
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("innhold").classList.remove("hidden");
+}
 
-    <main>
-      <div class="services">
-        <div class="service">
-          <i class="fas fa-check-circle"></i>
-          <h3>Gratis chat</h3>
-          <p>Still enkle spørsmål</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-briefcase"></i>
-          <h3>Rådspør faglærte bilmekanikere direkte</h3>
-          <p>Tilpasset din bil og kompetanse</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-trophy"></i>
-          <h3>Avtal time med en bilmekaniker</h3>
-          <p>Skreddersydde løsninger for deg og din bil</p>
-        </div>
-      </div>
-    </main>
-
-    <footer>
-      &copy; 2025 Nettverkstedet. Alle rettigheter reservert.
-    </footer>
-  </div>
-
-  <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-      const tema = document.documentElement.getAttribute("data-theme");
-      document.getElementById("theme-text").textContent = tema === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const ny = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", ny);
-      document.getElementById("theme-text").textContent = ny === "dark" ? "🌙 Mørkt tema" : "☀️ Lyst tema";
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
-  </script>
-</body>
-</html>
+window.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("godkjent") === "ja") {
+    visInnhold();
+  }
+});
