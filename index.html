@@ -54,7 +54,7 @@
   <div id="auth" class="centered">
     <h2>Skriv inn passord for å åpne siden</h2>
     <input type="password" id="kodeInput" placeholder="Passord" />
-    <button onclick="sjekkKode()">Logg inn</button>
+    <button id="loggInnKnapp">Logg inn</button>
     <p id="feilmelding" style="color:red;"></p>
   </div>
 
@@ -106,6 +106,9 @@
         visInnhold();
       }
     });
+
+    // Koble knappen til funksjonen med eventListener
+    document.getElementById("loggInnKnapp").addEventListener("click", sjekkKode);
   </script>
 
 </body>
