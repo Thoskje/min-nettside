@@ -1,82 +1,48 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       width: 100%;
       height: 100%;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .hero {
-      position: relative;
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
-    }
-
-    .bg-img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Viser hele bildet */
+      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/Bilde1.png?raw=true');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.2); /* Juster for mer zoom */
       z-index: -1;
-    }
-
-    .hero-content {
-      position: absolute;
-      top: 50%;
-      left: 5%;
-      transform: translateY(-50%);
-      color: white;
-      max-width: 600px;
-    }
-
-    .hero-content h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-content .cta-button {
-      background-color: #f29c1f;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
+      filter: brightness(0.7);
     }
 
     header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 2;
-      background: transparent;
+      padding: 1rem 2rem;
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: bold;
       color: white;
     }
@@ -84,34 +50,71 @@
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: bold;
+      margin-left: 20px;
+      font-size: 1rem;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    .hero {
+      color: white;
+      padding: 10vh 2rem 0;
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      background-color: orange;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-button {
+      background-color: #28a745;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      margin-left: 20px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <img class="https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true" alt="Bakgrunnsbilde" />
-    
-    <header>
-      <div class="logo">NETTVERKSTEDET</div>
+  <header>
+    <div class="logo">NETTVERKSTEDET</div>
+    <div class="nav-links">
       <nav>
         <a href="#">Hjem</a>
         <a href="#">Tjenester</a>
         <a href="#">Om oss</a>
         <a href="#">Kontakt</a>
       </nav>
-    </header>
-
-    <div class="hero-content">
-      <h1>Få ekspertråd direkte fra fagfolk</h1>
-      <p>Betal enkelt med Vipps eller Apple Pay</p>
-      <button class="cta-button">Start digital rådgivning</button>
+      <button class="chat-button">Start Gratis Chat</button>
     </div>
-  </div>
+  </header>
+
+  <section class="hero">
+    <h1>Få ekspertråd direkte fra fagfolk</h1>
+    <p>Betal enkelt med Vipps eller Apple Pay.</p>
+    <button class="cta-button">Start digital rådgivning</button>
+  </section>
 </body>
 </html>
