@@ -1,109 +1,19 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <link rel="stylesheet" href="css/style.css">
-<script src="js/passord.js" defer></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
+  
+  <!-- Ekstern CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Ikoner (FontAwesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-      background-color: #f0f0f0;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .centered {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    input, button {
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .hero {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
-        url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
-      background-attachment: fixed;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      color: white;
-    }
-
-    .top-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.2rem;
-      font-weight: 500;
-    }
-
-    .hero-content {
-      margin-top: 20vh;
-      padding-left: 2rem;
-      max-width: 600px;
-    }
-
-    .hero-content h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .hero-content button {
-      background-color: #f29c1f;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      max-width: 300px;
-      white-space: nowrap;
-    }
-  </style>
+  
+  <!-- Passordbeskyttelse JS -->
+  <script src="js/passord.js" defer></script>
 </head>
 <body>
 
@@ -125,7 +35,7 @@
           <a href="#">Tjenester</a>
           <a href="#">Om oss</a>
           <a href="#">Kontakt</a>
-          <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
+          <a href="#" class="start-chat">Start Gratis Chat</a>
         </nav>
       </div>
       <div class="hero-content">
@@ -135,31 +45,6 @@
       </div>
     </section>
   </div>
-
-  <!-- ⚙️ JavaScript: Passordbeskyttelse -->
-  <script>
-    const KODE = "Thoskje";
-
-    function sjekkKode() {
-      const input = document.getElementById("kodeInput").value.trim();
-      const feil = document.getElementById("feilmelding");
-
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        document.getElementById("auth").classList.add("hidden");
-        document.getElementById("innhold").classList.remove("hidden");
-      } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        document.getElementById("auth").classList.add("hidden");
-        document.getElementById("innhold").classList.remove("hidden");
-      }
-    });
-  </script>
 
 </body>
 </html>
