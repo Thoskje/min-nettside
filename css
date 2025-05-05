@@ -1,5 +1,4 @@
-style.css
-
+/* style.css */
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +9,25 @@ body, html {
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
   overflow-x: hidden;
+  background-color: #f0f0f0;
 }
 
 .hidden {
   display: none;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+input, button {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-size: 1rem;
 }
 
 .hero {
@@ -21,7 +35,7 @@ body, html {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
-              url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
+    url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
@@ -66,7 +80,7 @@ nav a {
   margin-bottom: 1.8rem;
 }
 
-.hero-content button, .start-chat {
+.hero-content button {
   background-color: #f29c1f;
   color: white;
   padding: 0.6rem 1.2rem;
@@ -77,19 +91,4 @@ nav a {
   cursor: pointer;
   max-width: 300px;
   white-space: nowrap;
-}
-
-@media (max-width: 768px) {
-  .hero-content {
-    padding-left: 1rem;
-  }
-
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav {
-    margin-top: 1rem;
-  }
 }
