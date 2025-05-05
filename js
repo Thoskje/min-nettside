@@ -1,5 +1,4 @@
 //passord.js
-
 const KODE = "Thoskje";
 
 function sjekkKode() {
