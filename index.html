@@ -86,7 +86,12 @@
   <script>
     const KODE = "Thoskje"; // Sett passordet her
 
-    document.getElementById("loginButton").addEventListener("click", sjekkKode);
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("loginButton").addEventListener("click", sjekkKode);
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
 
     function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
@@ -101,15 +106,9 @@
     }
 
     function visInnhold() {
-      document.getElementById("auth").style.display = "none"; // Skjul passordsiden
+      document.getElementById("auth").style.display = "none"; // Skjuler passordsiden
       document.getElementById("innhold").style.display = "block"; // Viser innholdet
     }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
   </script>
 
 </body>
