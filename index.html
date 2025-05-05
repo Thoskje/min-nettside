@@ -3,90 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nettverkstedet</title>
+  <title>Nettverkstedet - Passordbeskyttet</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
       font-family: Arial, sans-serif;
-      position: relative;
-      overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
-      background-size: cover;
-      background-position: center;
-      transform: scale(1.2);
-      z-index: -1;
-      filter: brightness(0.7);
+      background-color: #f4f4f4;
     }
 
     .hidden {
       display: none;
     }
 
-    .centered {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    .auth-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
     }
 
-    input, button {
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      font-size: 1rem;
+    .auth-box input, .auth-box button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .auth-box button {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .auth-error {
+      color: red;
+      margin-top: 1rem;
+    }
+
+    .content {
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: none;
+    }
+
+    .content h1 {
+      color: #007bff;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔐 Passordbeskyttelse -->
-  <div id="auth" class="centered">
-    <h2>Skriv inn passord for å åpne siden</h2>
-    <input type="password" id="kodeInput" placeholder="Passord" />
-    <button onclick="sjekkKode()">Logg inn</button>
-    <p id="feilmelding" style="color:red;"></p>
+  <!-- Passordbeskyttelse -->
+  <div id="auth" class="auth-box">
+    <h2>🔒 Beskyttet side</h2>
+    <p>Skriv inn passord for å få tilgang</p>
+    <input type="password" id="kodeInput" placeholder="Passord">
+    <button id="loginButton">Logg inn</button>
+    <p class="auth-error" id="feilmelding"></p>
   </div>
 
-  <!-- 🧱 Innhold vises kun hvis riktig passord -->
-  <div id="innhold" class="hidden">
-    <header>
-      <div class="logo">NETTVERKSTEDET</div>
-      <div class="nav-links">
-        <nav>
-          <a href="#">Hjem</a>
-          <a href="#">Tjenester</a>
-          <a href="#">Om oss</a>
-          <a href="#">Kontakt</a>
-        </nav>
-        <button class="chat-button">Start Gratis Chat</button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <h1>Få ekspertråd direkte fra fagfolk</h1>
-      <p>Betal enkelt med Vipps eller Apple Pay.</p>
-      <button class="cta-button">Start digital rådgivning</button>
-    </section>
+  <!-- Innhold som vises etter korrekt passord -->
+  <div id="innhold" class="content">
+    <h1>Velkommen til Nettverkstedet!</h1>
+    <p>Du har nå tilgang til innholdet.</p>
   </div>
 
   <script>
-    const KODE = "Thoskje"; // Sett ønsket passord
+    const KODE = "Thoskje"; // Sett passordet her
+
+    document.getElementById("loginButton").addEventListener("click", sjekkKode);
 
     function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
@@ -96,13 +96,13 @@
         sessionStorage.setItem("godkjent", "ja");
         visInnhold();
       } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
+        feil.textContent = "Feil passord. Prøv igjen.";
       }
     }
 
     function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
+      document.getElementById("auth").style.display = "none"; // Skjul passordsiden
+      document.getElementById("innhold").style.display = "block"; // Viser innholdet
     }
 
     window.addEventListener("DOMContentLoaded", () => {
