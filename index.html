@@ -29,92 +29,88 @@
       background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
       background-size: cover;
       background-position: center;
-      transform: scale(1.2); /* Juster for mer zoom */
+      transform: scale(1.2);
       z-index: -1;
       filter: brightness(0.7);
     }
 
-    header {
+    .hidden {
+      display: none;
+    }
+
+    .centered {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding: 1rem 2rem;
+      height: 100vh;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: white;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 1rem;
-    }
-
-    .hero {
-      color: white;
-      padding: 10vh 2rem 0;
-      max-width: 600px;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .cta-button {
-      background-color: orange;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-    }
-
-    .chat-button {
-      background-color: #28a745;
-      color: white;
+    input, button {
       padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 5px;
-      margin-left: 20px;
-      cursor: pointer;
+      margin: 0.5rem;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">NETTVERKSTEDET</div>
-    <div class="nav-links">
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-      </nav>
-      <button class="chat-button">Start Gratis Chat</button>
-    </div>
-  </header>
 
-  <section class="hero">
-    <h1>Få ekspertråd direkte fra fagfolk</h1>
-    <p>Betal enkelt med Vipps eller Apple Pay.</p>
-    <button class="cta-button">Start digital rådgivning</button>
-  </section>
+  <!-- 🔐 Passordbeskyttelse -->
+  <div id="auth" class="centered">
+    <h2>Skriv inn passord for å åpne siden</h2>
+    <input type="password" id="kodeInput" placeholder="Passord" />
+    <button onclick="sjekkKode()">Logg inn</button>
+    <p id="feilmelding" style="color:red;"></p>
+  </div>
+
+  <!-- 🧱 Innhold vises kun hvis riktig passord -->
+  <div id="innhold" class="hidden">
+    <header>
+      <div class="logo">NETTVERKSTEDET</div>
+      <div class="nav-links">
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+        </nav>
+        <button class="chat-button">Start Gratis Chat</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Få ekspertråd direkte fra fagfolk</h1>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button class="cta-button">Start digital rådgivning</button>
+    </section>
+  </div>
+
+  <script>
+    const KODE = "Thoskje"; // Sett ønsket passord
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
+  </script>
+
 </body>
 </html>
