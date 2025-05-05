@@ -82,33 +82,19 @@
 
   <!-- 🚀 JavaScript-koden -->
   <script>
-    const KODE = "Thoskje"; // Sett ønsket passord
+    const KODE = "Thoskje"; // Ditt passord
 
-    function sjekkKode() {
+    document.getElementById("loggInnKnapp").addEventListener("click", function() {
       const input = document.getElementById("kodeInput").value.trim();
       const feil = document.getElementById("feilmelding");
 
-      if (input.toLowerCase() === KODE.toLowerCase()) {
-        sessionStorage.setItem("godkjent", "ja");
-        visInnhold();
+      if (input === KODE) {
+        document.getElementById("auth").classList.add("hidden");
+        document.getElementById("innhold").classList.remove("hidden");
       } else {
-        feil.textContent = "Feil kode. Prøv igjen.";
-      }
-    }
-
-    function visInnhold() {
-      document.getElementById("auth").classList.add("hidden");
-      document.getElementById("innhold").classList.remove("hidden");
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
+        feil.textContent = "Feil passord. Prøv igjen.";
       }
     });
-
-    // Koble knappen til funksjonen med eventListener
-    document.getElementById("loggInnKnapp").addEventListener("click", sjekkKode);
   </script>
 
 </body>
