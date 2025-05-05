@@ -1,4 +1,4 @@
-passord.js
+//passord.js
 
 const KODE = "Thoskje";
 
