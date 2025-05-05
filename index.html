@@ -5,13 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nettverkstedet</title>
   <meta name="description" content="Få eksperthjelp fra fagfolk direkte i nettleseren. Betal enkelt med Vipps.">
-
-  <!-- 🔗 Ekstern CSS (Font Awesome ikoner) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- 🎨 CSS: Stil for utseendet på nettsiden -->
   <style>
-    /* GLOBALT */
     * {
       margin: 0;
       padding: 0;
@@ -22,15 +18,33 @@
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
       overflow-x: hidden;
+      background-color: #f0f0f0;
     }
 
-    /* HERO-SEKSJON MED BAKGRUNNSBILDE */
+    .hidden {
+      display: none;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    input, button {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+    }
+
     .hero {
       position: relative;
       width: 100vw;
       height: 100vh;
       background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
-                  url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
+        url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') center center / 105% no-repeat;
       background-attachment: fixed;
       display: flex;
       flex-direction: column;
@@ -87,83 +101,63 @@
       max-width: 300px;
       white-space: nowrap;
     }
-
-    @media (max-width: 768px) {
-      .hero-content {
-        padding-left: 1rem;
-      }
-
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        margin-top: 1rem;
-      }
-    }
   </style>
 </head>
-
-<!-- 🧱 HTML: Struktur og innhold på siden -->
 <body>
-  <section class="hero">
-    <div class="top-bar">
-      <div class="logo">NETTVERKSTEDET</div>
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-        <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
-      </nav>
-    </div>
 
-    <div class="hero-content">
-      <h1>Få ekspertråd direkte fra fagfolk</h1>
-      <p>Betal enkelt med Vipps eller Apple Pay.</p>
-      <button>Start digital rådgivning</button>
-    </div>
-  </section>
-
-  <!-- 🔐 HTML: Passordbeskyttelse (Skjult skjema) -->
-  <div id="auth">
-    <input type="text" id="kodeInput" placeholder="Skriv inn kode">
+  <!-- 🔐 Passordbeskyttelse -->
+  <div id="auth" class="centered">
+    <h2>Skriv inn passord for å åpne siden</h2>
+    <input type="password" id="kodeInput" placeholder="Passord" />
     <button onclick="sjekkKode()">Logg inn</button>
     <p id="feilmelding" style="color:red;"></p>
   </div>
 
-  <!-- 📦 HTML: Innhold som vises etter riktig passord -->
+  <!-- 🧱 Innhold vises kun hvis riktig passord -->
   <div id="innhold" class="hidden">
-    <p>Velkommen inn! Du er logget inn.</p>
+    <section class="hero">
+      <div class="top-bar">
+        <div class="logo">NETTVERKSTEDET</div>
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+          <a href="#" style="background-color:#28a745; padding: 0.4rem 0.8rem; border-radius: 5px;">Start Gratis Chat</a>
+        </nav>
+      </div>
+      <div class="hero-content">
+        <h1>Få ekspertråd direkte fra fagfolk</h1>
+        <p>Betal enkelt med Vipps eller Apple Pay.</p>
+        <button>Start digital rådgivning</button>
+      </div>
+    </section>
   </div>
+
+  <!-- ⚙️ JavaScript: Passordbeskyttelse -->
+  <script>
+    const KODE = "Thoskje";
+
+    function sjekkKode() {
+      const input = document.getElementById("kodeInput").value.trim();
+      const feil = document.getElementById("feilmelding");
+
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        document.getElementById("auth").classList.add("hidden");
+        document.getElementById("innhold").classList.remove("hidden");
+      } else {
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        document.getElementById("auth").classList.add("hidden");
+        document.getElementById("innhold").classList.remove("hidden");
+      }
+    });
+  </script>
+
 </body>
-
-<!-- ⚙️ JavaScript: Logikk og funksjoner -->
-<script>
-  const KODE = "Thoskje";
-
-  function sjekkKode() {
-    const input = document.getElementById("kodeInput").value.trim();
-    const feil = document.getElementById("feilmelding");
-
-    if (input.toLowerCase() === KODE.toLowerCase()) {
-      sessionStorage.setItem("godkjent", "ja");
-      visInnhold();
-    } else {
-      feil.textContent = "Feil kode. Prøv igjen.";
-    }
-  }
-
-  function visInnhold() {
-    document.getElementById("auth").classList.add("hidden");
-    document.getElementById("innhold").classList.remove("hidden");
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    if (sessionStorage.getItem("godkjent") === "ja") {
-      visInnhold();
-    }
-  });
-</script>
 </html>
