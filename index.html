@@ -18,6 +18,7 @@
       position: relative;
       overflow-x: hidden;
       scroll-behavior: smooth; /* 🚀 Gir smooth scrolling */
+      background-color: black; /* 🖤 Hindrer hvitt blink */
     }
 
     body::before {
@@ -30,9 +31,10 @@
       background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
       background-size: cover;
       background-position: center;
-      transform: scale(1.1); /* 🔄 Justert zoom for bedre visning */
+      transform: scale(1.1); /* 🔄 Justert zoom */
       z-index: -1;
       filter: brightness(0.7);
+      background-attachment: fixed; /* 🚫 Forhindrer bakgrunnsblink */
     }
 
     header {
@@ -53,7 +55,7 @@
       text-decoration: none;
       margin-left: 20px;
       font-size: 1rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* 🔥 Bedre lesbarhet */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
 
     .hero {
@@ -81,7 +83,7 @@
       font-size: 1rem;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s ease-in-out; /* ⚡ Gir dynamisk effekt */
+      transition: 0.3s ease-in-out;
     }
 
     .cta-button:hover {
@@ -102,14 +104,13 @@
       border-radius: 5px;
       margin-left: 20px;
       cursor: pointer;
-      transition: 0.3s ease-in-out; /* ⚡ Gir dynamisk effekt */
+      transition: 0.3s ease-in-out;
     }
 
     .chat-button:hover {
       transform: scale(1.05);
       opacity: 0.9;
     }
-
   </style>
 </head>
 <body>
