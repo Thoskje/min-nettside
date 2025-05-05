@@ -3,133 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nettverkstedet - Passordbeskyttet</title>
+  <title>Nettverkstedet</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
     }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
       height: 100vh;
-      background-color: #f4f4f4;
+      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.2);
+      z-index: -1;
+      filter: brightness(0.7);
     }
 
     .hidden {
       display: none;
     }
 
-    .auth-box {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      text-align: center;
+    .centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
-    .auth-box input, .auth-box button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .auth-box button {
-      background: #007bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .auth-error {
-      color: red;
-      margin-top: 1rem;
-    }
-
-    .content {
-      text-align: center;
-      padding: 2rem;
-      background: white;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      border-radius: 8px;
-      display: none;
-    }
-
-    .content h1 {
-      color: #007bff;
+    input, button {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Passordbeskyttelse -->
-  <div id="auth" class="auth-box">
-    <h2>🔒 Beskyttet side</h2>
-    <p>Skriv inn passord for å få tilgang</p>
-    <input type="password" id="kodeInput" placeholder="Passord">
-    <button id="loginButton">Logg inn</button>
-    <p class="auth-error" id="feilmelding"></p>
+  <!-- 🔐 Passordbeskyttelse -->
+  <div id="auth" class="centered">
+    <h2>Skriv inn passord for å åpne siden</h2>
+    <input type="password" id="kodeInput" placeholder="Passord" />
+    <button onclick="sjekkKode()">Logg inn</button>
+    <p id="feilmelding" style="color:red;"></p>
   </div>
 
-  <!-- Innhold som vises etter korrekt passord -->
-  <div id="innhold" class="content">
+  <!-- 🧱 Innhold vises kun hvis riktig passord -->
+  <div id="innhold" class="hidden">
     <header>
       <div class="logo">NETTVERKSTEDET</div>
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-      </nav>
-      <button class="chat-button">Start Gratis Chat</button>
+      <div class="nav-links">
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+        </nav>
+        <button class="chat-button">Start Gratis Chat</button>
+      </div>
     </header>
 
     <section class="hero">
-      <h1>Velkommen til Nettverkstedet!</h1>
-      <p>Du har nå tilgang til eksperthjelp direkte i nettleseren.</p>
+      <h1>Få ekspertråd direkte fra fagfolk</h1>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
       <button class="cta-button">Start digital rådgivning</button>
     </section>
-
-    <main>
-      <section class="services">
-        <div class="service">
-          <i class="fas fa-tools"></i>
-          <h3>Bilmekanikerhjelp</h3>
-          <p>Få råd fra faglærte bilmekanikere.</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-comments"></i>
-          <h3>Direkte chat</h3>
-          <p>Still spørsmål gratis og få raske svar.</p>
-        </div>
-        <div class="service">
-          <i class="fas fa-clock"></i>
-          <h3>Bestill time</h3>
-          <p>Avtal direkte med en mekaniker.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert.</p>
-    </footer>
   </div>
 
   <script>
-    const KODE = "Thoskje";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("loginButton").addEventListener("click", sjekkKode);
-      if (sessionStorage.getItem("godkjent") === "ja") {
-        visInnhold();
-      }
-    });
+    const KODE = "Thoskje"; // Sett ønsket passord
 
     function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
@@ -139,14 +96,20 @@
         sessionStorage.setItem("godkjent", "ja");
         visInnhold();
       } else {
-        feil.textContent = "Feil passord. Prøv igjen.";
+        feil.textContent = "Feil kode. Prøv igjen.";
       }
     }
 
     function visInnhold() {
-      document.getElementById("auth").style.display = "none";
-      document.getElementById("innhold").style.display = "block";
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
     }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
+      }
+    });
   </script>
 
 </body>
