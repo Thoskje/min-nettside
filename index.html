@@ -19,6 +19,21 @@
       overflow-x: hidden;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.2);
+      z-index: -1;
+      filter: brightness(0.7);
+    }
+
     .hidden {
       display: none;
     }
@@ -36,12 +51,6 @@
       margin: 0.5rem;
       font-size: 1rem;
     }
-
-    #innhold {
-      display: none;
-      position: relative;
-      z-index: 1;
-    }
   </style>
 </head>
 <body>
@@ -50,36 +59,55 @@
   <div id="auth" class="centered">
     <h2>Skriv inn passord for å åpne siden</h2>
     <input type="password" id="kodeInput" placeholder="Passord" />
-    <button id="loggInnKnapp">Logg inn</button>
+    <button onclick="sjekkKode()">Logg inn</button>
     <p id="feilmelding" style="color:red;"></p>
   </div>
 
-  <!-- 🧱 Skjult innhold -->
-  <div id="innhold">
+  <!-- 🧱 Innhold vises kun hvis riktig passord -->
+  <div id="innhold" class="hidden">
     <header>
       <div class="logo">NETTVERKSTEDET</div>
-      <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-      </nav>
+      <div class="nav-links">
+        <nav>
+          <a href="#">Hjem</a>
+          <a href="#">Tjenester</a>
+          <a href="#">Om oss</a>
+          <a href="#">Kontakt</a>
+        </nav>
+        <button class="chat-button">Start Gratis Chat</button>
+      </div>
     </header>
+
+    <section class="hero">
+      <h1>Få ekspertråd direkte fra fagfolk</h1>
+      <p>Betal enkelt med Vipps eller Apple Pay.</p>
+      <button class="cta-button">Start digital rådgivning</button>
+    </section>
   </div>
 
-  <!-- 🚀 JavaScript-koden -->
   <script>
-    const KODE = "Thoskje"; // Ditt passord
+    const KODE = "Thoskje"; // Sett ønsket passord
 
-    document.getElementById("loggInnKnapp").addEventListener("click", function() {
+    function sjekkKode() {
       const input = document.getElementById("kodeInput").value.trim();
       const feil = document.getElementById("feilmelding");
 
-      if (input === KODE) {
-        document.getElementById("auth").classList.add("hidden");
-        document.getElementById("innhold").classList.remove("hidden");
+      if (input.toLowerCase() === KODE.toLowerCase()) {
+        sessionStorage.setItem("godkjent", "ja");
+        visInnhold();
       } else {
-        feil.textContent = "Feil passord. Prøv igjen.";
+        feil.textContent = "Feil kode. Prøv igjen.";
+      }
+    }
+
+    function visInnhold() {
+      document.getElementById("auth").classList.add("hidden");
+      document.getElementById("innhold").classList.remove("hidden");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("godkjent") === "ja") {
+        visInnhold();
       }
     });
   </script>
