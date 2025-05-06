@@ -5,34 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
   <style>
-    
     .cookie-banner {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #0c1a2a;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-  display: none;
-  z-index: 1000;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
-}
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #0c1a2a;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+    }
 
-.cookie-banner button {
-  background-color: #ff9900;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
+    .cookie-banner button {
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-.cookie-banner a {
-  color: #ff9900;
-  text-decoration: underline;
-}
+    .cookie-banner a {
+      color: #ff9900;
+      text-decoration: underline;
+    }
 
     * {
       box-sizing: border-box;
@@ -99,8 +98,8 @@
       color: #ffffff;
       text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
       display: flex;
-      flex-direction: column;  /* Plasser knappene vertikalt */
-      gap: 15px; /* Legger til mellomrom mellom knappene */
+      flex-direction: column;
+      gap: 15px;
     }
 
     .hero h1 {
@@ -155,12 +154,12 @@
     }
 
     footer {
-      background-color: #0c1a2a;  /* Samme som bakgrunnsfarge for å matche designet ditt */
+      background-color: #0c1a2a;
       color: white;
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
-      margin-top: auto; /* Tvinger footeren til å være nederst */
+      margin-top: auto;
     }
 
     footer a {
@@ -174,13 +173,12 @@
     }
   </style>
 </head>
-  
-  <div id="cookie-banner" class="cookie-banner">
-  <p>Vi bruker cookies for å forbedre brukeropplevelsen. <a href="personvern.html">Les mer</a></p>
-  <button id="accept-cookies">Godta</button>
-</div>
-
 <body>
+  <div id="cookie-banner" class="cookie-banner">
+    <p>Vi bruker cookies for å forbedre brukeropplevelsen. <a href="cookies.html">Les mer</a></p>
+    <button id="accept-cookies">Godta</button>
+  </div>
+
   <header>
     <div class="logo">NETTVERKSTEDET</div>
     <div class="nav-links">
@@ -202,24 +200,23 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvernserklæring</a></p>
+    <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a></p>
   </footer>
 
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const banner = document.getElementById('cookie-banner');
-    const button = document.getElementById('accept-cookies');
+    document.addEventListener('DOMContentLoaded', function () {
+      const banner = document.getElementById('cookie-banner');
+      const button = document.getElementById('accept-cookies');
 
-    if (!localStorage.getItem('cookiesAccepted')) {
-      banner.style.display = 'block';
-    }
+      if (!localStorage.getItem('cookiesAccepted')) {
+        banner.style.display = 'block';
+      }
 
-    button.addEventListener('click', function () {
-      localStorage.setItem('cookiesAccepted', 'true');
-      banner.style.display = 'none';
+      button.addEventListener('click', function () {
+        localStorage.setItem('cookiesAccepted', 'true');
+        banner.style.display = 'none';
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
