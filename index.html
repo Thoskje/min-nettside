@@ -216,34 +216,73 @@
     <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a></p>
   </footer>
 
+  <div id="cookie-settings-modal" style="display:none; position:fixed; bottom:20%; left:50%; transform:translateX(-50%);
+ background:#0c1a2a; color:white; padding:2rem; border-radius:10px; z-index:1100; width:90%; max-width:400px; box-shadow:0 5px 15px rgba(0,0,0,0.5);">
+  <h3>Administrer cookies</h3>
+  <form id="cookie-settings-form">
+    <label><input type="checkbox" name="necessary" checked disabled> Nødvendige (påkrevd)</label><br><br>
+    <label><input type="checkbox" name="analytics"> Statistikk (Google Analytics, etc)</label><br><br>
+    <label><input type="checkbox" name="marketing"> Markedsføring (annonser, etc)</label><br><br>
+    <button type="submit" style="margin-top:1rem; padding:0.5rem 1rem; background:#ff9900; color:white; border:none; border-radius:5px;">Lagre valg</button>
+    <button type="button" id="close-settings" style="margin-left:1rem; padding:0.5rem 1rem; background:gray; color:white; border:none; border-radius:5px;">Avbryt</button>
+  </form>
+</div>
+  
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   const banner = document.getElementById('cookie-banner');
   const acceptButton = document.getElementById('accept-cookies');
   const rejectButton = document.getElementById('reject-cookies');
   const manageButton = document.getElementById('manage-cookies');
+  const modal = document.getElementById('cookie-settings-modal');
+  const closeSettings = document.getElementById('close-settings');
+  const form = document.getElementById('cookie-settings-form');
 
   const urlParams = new URLSearchParams(window.location.search);
   const forceShow = urlParams.get('cookies') === 'show';
 
-  if (!localStorage.getItem('cookiesAccepted') || forceShow) {
+  if (!localStorage.getItem('cookiePreferences') || forceShow) {
     banner.style.display = 'block';
   }
 
   acceptButton.addEventListener('click', function () {
-    localStorage.setItem('cookiesAccepted', 'true');
+    localStorage.setItem('cookiePreferences', JSON.stringify({
+      necessary: true,
+      analytics: true,
+      marketing: true
+    }));
     banner.style.display = 'none';
   });
 
   rejectButton.addEventListener('click', function () {
-    localStorage.setItem('cookiesAccepted', 'false');
+    localStorage.setItem('cookiePreferences', JSON.stringify({
+      necessary: true,
+      analytics: false,
+      marketing: false
+    }));
     banner.style.display = 'none';
   });
 
   manageButton.addEventListener('click', function () {
-    alert("Administrer cookies funksjon er ikke implementert ennå.");
+    modal.style.display = 'block';
   });
-    });
+
+  closeSettings.addEventListener('click', function () {
+    modal.style.display = 'none';
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const preferences = {
+      necessary: true,
+      analytics: form.analytics.checked,
+      marketing: form.marketing.checked
+    };
+    localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+    modal.style.display = 'none';
+    banner.style.display = 'none';
+  });
+});
 </script>
 </body>
 </html>
