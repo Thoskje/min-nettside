@@ -59,22 +59,22 @@
       margin-bottom: 2rem;
     }
 
-    .cta-button {
-      background-color: orange;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s ease-in-out;
-    }
+   .cta-button {
+  background-color: #ff6600; /* kraftigere oransje */
+  color: white;
+  padding: 0.9rem 1.7rem;
+  font-weight: bold;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
 
-    .cta-button:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
 
     .nav-links {
       display: flex;
