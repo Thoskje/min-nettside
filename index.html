@@ -171,12 +171,25 @@
     footer a:hover {
       color: #ff6600;
     }
+
+    .cookie-options {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
   <div id="cookie-banner" class="cookie-banner">
     <p>Vi bruker cookies for å forbedre brukeropplevelsen. <a href="cookies.html">Les mer</a></p>
-    <button id="accept-cookies">Godta</button>
+    <div class="cookie-options">
+      <button id="accept-cookies">Godta alle</button>
+      <button id="reject-cookies">Avslå</button>
+    </div>
+    <div class="cookie-options">
+      <button id="manage-cookies">Administrer cookies</button>
+    </div>
   </div>
 
   <header>
@@ -206,15 +219,26 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const banner = document.getElementById('cookie-banner');
-      const button = document.getElementById('accept-cookies');
+      const acceptButton = document.getElementById('accept-cookies');
+      const rejectButton = document.getElementById('reject-cookies');
+      const manageButton = document.getElementById('manage-cookies');
 
       if (!localStorage.getItem('cookiesAccepted')) {
         banner.style.display = 'block';
       }
 
-      button.addEventListener('click', function () {
+      acceptButton.addEventListener('click', function () {
         localStorage.setItem('cookiesAccepted', 'true');
         banner.style.display = 'none';
+      });
+
+      rejectButton.addEventListener('click', function () {
+        localStorage.setItem('cookiesAccepted', 'false');
+        banner.style.display = 'none';
+      });
+
+      manageButton.addEventListener('click', function () {
+        alert("Administrer cookies funksjon er ikke implementert ennå.");
       });
     });
   </script>
