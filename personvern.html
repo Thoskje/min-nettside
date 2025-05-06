@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Informasjon om cookies</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personvernserklæring</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -46,11 +46,35 @@
 
     h2 {
       font-size: 1.2rem;
+      background-color: #142638;
+      padding: 1rem;
+      cursor: pointer;
+      border: none;
+      outline: none;
       margin-top: 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    h2:hover {
+      background-color: #1f3b57;
+    }
+
+    .dropdown-content {
+      display: none;
+      padding: 1rem;
+      background-color: #1c2d40;
+      border-left: 4px solid #ff9900;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 6px;
     }
 
     ul {
       margin-left: 1.5rem;
+    }
+
+    a {
+      color: #ff9900;
     }
 
     .back-button {
@@ -64,7 +88,7 @@
       margin: 1rem 0;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: background-color 0.2s ease;
-      width: 100px;
+      width: 100px; 
     }
 
     .back-button:hover {
@@ -73,32 +97,97 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-button">Tilbake</a>
-  <h1>Cookie-erklæring</h1>
-  <main>
-    <p>Vi bruker informasjonskapsler (cookies) for å forbedre brukeropplevelsen, analysere trafikk og tilpasse innhold. Du kan tilpasse dine preferanser via vårt cookie-banner.</p>
-
-    <h2>1. Hva er cookies?</h2>
-    <p>Cookies er små tekstfiler som lagres på enheten din når du besøker et nettsted. De hjelper oss å huske innstillinger og gir innsikt i hvordan nettstedet brukes.</p>
-
-    <h2>2. Hvilke typer cookies bruker vi?</h2>
+  <a href="index.html" class="back-button">Tilbake til forsiden</a>
+  <h1>Personvernserklæring for Nettverkstedet</h1>
+<main>
+  <h2 onclick="toggleDropdown('del1')">1. Hvilke personopplysninger samler vi inn?</h2>
+  <div id="del1" class="dropdown-content">
+    <p>Vi kan samle inn følgende personopplysninger:</p>
     <ul>
-      <li><strong>Nødvendige cookies:</strong> For grunnleggende funksjoner som innlogging og sikkerhet. Disse kan ikke slås av.</li>
-      <li><strong>Analysecookies:</strong> For å forstå hvordan besøkende bruker nettstedet og forbedre funksjonalitet. Krever samtykke.</li>
-      <li><strong>Markedsføringscookies:</strong> For å vise relevante annonser og måle effektivitet. Krever samtykke.</li>
+      <li>Navn</li>
+      <li>E-postadresse</li>
+      <li>Telefonnummer</li>
+      <li>Betalingsinformasjon (via Vipps/Apple Pay)</li>
+      <li>IP-adresse og brukeraktivitet (cookies)</li>
     </ul>
+  </div>
 
-    <h2>3. Juridisk grunnlag og samtykke</h2>
-    <p>Bruk av cookies som ikke er strengt nødvendige for nettstedets funksjon krever ditt forhåndssamtykke, i henhold til ePrivacy-direktivet og GDPR. Du gir samtykke via vårt cookie-banner.</p>
+  <h2 onclick="toggleDropdown('del2')">2. Hvordan bruker vi personopplysningene?</h2>
+  <div id="del2" class="dropdown-content">
+    <ul>
+      <li>Levere tjenester som chat, video og timeavtaler</li>
+      <li>Behandle betalinger via tredjeparts betalingsløsninger</li>
+      <li>Sende bekreftelser og informasjon</li>
+      <li>Forbedre nettsidens brukeropplevelse</li>
+      <li>Overholde rettslige krav</li>
+    </ul>
+  </div>
 
-    <h2>4. Hvordan kontrollere cookies?</h2>
-    <p>Du kan når som helst trekke tilbake eller endre ditt samtykke via innstillinger i nettleseren din eller via vårt cookie-banner. Se hjelpesidene for nettleseren du bruker for mer informasjon.</p>
+  <h2 onclick="toggleDropdown('del3')">3. Hvordan beskytter vi personopplysningene dine?</h2>
+  <div id="del3" class="dropdown-content">
+    <ul>
+      <li>Kryptering av data</li>
+      <li>Begrenset tilgang internt</li>
+      <li>Regelmessige sikkerhetsvurderinger</li>
+    </ul>
+  </div>
 
-    <h2>5. Kontakt</h2>
-    <p>For spørsmål om cookies, kontakt oss på <a href="mailto:kontakt@nettverkstedet.no">kontakt@nettverkstedet.no</a>.</p>
-  </main>
-  <footer>
-    &copy; 2025 Nettverkstedet. <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a>
-  </footer>
+  <h2 onclick="toggleDropdown('del4')">4. Dine rettigheter</h2>
+  <div id="del4" class="dropdown-content">
+    <ul>
+      <li>Innsyn, retting og sletting av opplysninger</li>
+      <li>Begrensning og dataportabilitet</li>
+      <li>Trekk samtykke når som helst</li>
+    </ul>
+    <p>Kontakt oss på <a href="mailto:kontakt@nettverkstedet.no">kontakt@nettverkstedet.no</a> for å utøve dine rettigheter.</p>
+  </div>
+
+  <h2 onclick="toggleDropdown('del5')">5. Tredjepartsleverandører</h2>
+  <div id="del5" class="dropdown-content">
+    <p>Vi benytter følgende leverandører:</p>
+    <ul>
+      <li>Vipps og Apple Pay (betaling)</li>
+      <li>Zoom eller lignende (videokonsultasjon)</li>
+      <li>Google Analytics (webanalyse)</li>
+    </ul>
+  </div>
+
+  <h2 onclick="toggleDropdown('del6')">6. Bruk av cookies</h2>
+  <div id="del6" class="dropdown-content">
+    <p>Vi bruker:</p>
+    <ul>
+      <li>Nødvendige cookies (pålogging, sessions)</li>
+      <li>Analysecookies (bruksdata)</li>
+      <li>Markedsføringscookies (relevante annonser)</li>
+    </ul>
+    <p>Les mer i vår <a href="cookies.html">cookie-policy</a>.</p>
+  </div>
+
+  <h2 onclick="toggleDropdown('del7')">7. Lagring av personopplysninger</h2>
+  <div id="del7" class="dropdown-content">
+    <p>Vi lagrer opplysninger så lenge det er nødvendig for formålet, og sletter dem sikkert når de ikke lenger er nødvendige.</p>
+  </div>
+
+  <h2 onclick="toggleDropdown('del8')">8. Endringer i erklæringen</h2>
+  <div id="del8" class="dropdown-content">
+    <p>Vi kan oppdatere denne erklæringen. Siste versjon er alltid tilgjengelig her. Dato for siste oppdatering: 06.05.2025.</p>
+  </div>
+
+  <h2 onclick="toggleDropdown('del9')">9. Kontaktinformasjon</h2>
+  <div id="del9" class="dropdown-content">
+    <p>Har du spørsmål?</p>
+    <p>E-post: <a href="mailto:kontakt@nettverkstedet.no">kontakt@nettverkstedet.no</a></p>
+    <p>Adresse: Postboks ****</p>
+  </div>
+</main>
+<footer>
+  &copy; 2025 Nettverkstedet. <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a>
+</footer>
+<script>
+  function toggleDropdown(id) {
+    const element = document.getElementById(id);
+    element.style.display = element.style.display === "block" ? "none" : "block";
+  }
+</script>
 </body>
 </html>
