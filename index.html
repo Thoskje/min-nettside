@@ -24,6 +24,12 @@
       color: #f4f4f4;
       scroll-behavior: smooth;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      flex-grow: 1;
     }
 
     header {
@@ -79,7 +85,7 @@
       margin-bottom: 2rem;  
     }
 
-      .cta-button {
+    .cta-button {
       background-color: orange;
       font-size: 1rem;
       font-weight: bold;
@@ -118,24 +124,25 @@
       box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
       background-color: #ff9900;
     }
+
     footer {
-  background-color: #0c1a2a;  /* Samme som bakgrunnsfarge for å matche designet ditt */
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
+      background-color: #0c1a2a;  /* Samme som bakgrunnsfarge for å matche designet ditt */
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: auto; /* Tvinger footeren til å være nederst */
+    }
 
-footer a {
-  color: #ff9900;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
+    footer a {
+      color: #ff9900;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
 
-footer a:hover {
-  color: #ff6600;
-}
-
+    footer a:hover {
+      color: #ff6600;
+    }
   </style>
 </head>
 <body>
@@ -156,10 +163,11 @@ footer a:hover {
     <h1>Få ekspertråd direkte fra fagfolk</h1>
     <p>Betal enkelt med Vipps eller Apple Pay.</p>
     <button class="cta-button">Chat med bilmekaniker</button>
-       <button class="cta-button">Timeavtale</button>
+    <button class="cta-button">Timeavtale</button>
   </section>
+
   <footer>
-  <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvernserklæring</a></p>
-</footer>
+    <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvernserklæring</a></p>
+  </footer>
 </body>
 </html>
