@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nettverkstedet</title>
   <style>
+    
+    .cookie-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #0c1a2a;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cookie-banner button {
+  background-color: #ff9900;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cookie-banner a {
+  color: #ff9900;
+  text-decoration: underline;
+}
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -145,6 +174,12 @@
     }
   </style>
 </head>
+  
+  <div id="cookie-banner" class="cookie-banner">
+  <p>Vi bruker cookies for å forbedre brukeropplevelsen. <a href="personvern.html">Les mer</a></p>
+  <button id="accept-cookies">Godta</button>
+</div>
+
 <body>
   <header>
     <div class="logo">NETTVERKSTEDET</div>
@@ -169,5 +204,22 @@
   <footer>
     <p>&copy; 2025 Nettverkstedet. Alle rettigheter reservert. | <a href="personvern.html">Personvernserklæring</a></p>
   </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const banner = document.getElementById('cookie-banner');
+    const button = document.getElementById('accept-cookies');
+
+    if (!localStorage.getItem('cookiesAccepted')) {
+      banner.style.display = 'block';
+    }
+
+    button.addEventListener('click', function () {
+      localStorage.setItem('cookiesAccepted', 'true');
+      banner.style.display = 'none';
+    });
+  });
+</script>
+
 </body>
 </html>
