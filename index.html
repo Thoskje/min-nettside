@@ -14,12 +14,16 @@
     html, body {
       width: 100%;
       height: 100%;
-      font-family: Arial, sans-serif;
-      position: relative;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      background: black url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true') no-repeat center center fixed;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: #0c1a2a;
+      background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilde1.png?raw=true');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
+      color: #f4f4f4;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     header {
@@ -27,30 +31,44 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
     }
 
     .logo {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
-      color: white;
+      color: #ffffff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
 
     nav a {
-      color: #f8f9fa;
+      color: #ffffff;
       text-decoration: none;
-      margin-left: 20px;
+      margin-left: 24px;
       font-size: 1rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #ff9900;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
     }
 
     .hero {
-      color: white;
-      padding: 10vh 2rem 0;
+      padding: 12vh 2rem 0;
       max-width: 600px;
+      color: #ffffff;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
+      font-weight: 700;
       margin-bottom: 1rem;
     }
 
@@ -59,45 +77,44 @@
       margin-bottom: 2rem;
     }
 
-   .cta-button {
-  background-color: #ff6600; /* kraftigere oransje */
-  color: white;
-  padding: 0.9rem 1.7rem;
-  font-weight: bold;
-  font-size: 1.05rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-
-    .nav-links {
-      display: flex;
-      align-items: center;
+    .cta-button {
+      background-color: #ff6600;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.9rem 1.7rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-   .chat-button {
-  background-color: #28a745; /* Bootstrap-grønn */
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-.chat-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
-}
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      background-color: #e65c00;
+    }
 
+    .chat-button {
+      background-color: #28a745;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-left: 20px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
@@ -121,4 +138,3 @@
   </section>
 </body>
 </html>
-
