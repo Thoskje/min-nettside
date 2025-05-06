@@ -217,30 +217,33 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const banner = document.getElementById('cookie-banner');
-      const acceptButton = document.getElementById('accept-cookies');
-      const rejectButton = document.getElementById('reject-cookies');
-      const manageButton = document.getElementById('manage-cookies');
+  document.addEventListener('DOMContentLoaded', function () {
+  const banner = document.getElementById('cookie-banner');
+  const acceptButton = document.getElementById('accept-cookies');
+  const rejectButton = document.getElementById('reject-cookies');
+  const manageButton = document.getElementById('manage-cookies');
 
-      if (!localStorage.getItem('cookiesAccepted')) {
-        banner.style.display = 'block';
-      }
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceShow = urlParams.get('cookies') === 'show';
 
-      acceptButton.addEventListener('click', function () {
-        localStorage.setItem('cookiesAccepted', 'true');
-        banner.style.display = 'none';
-      });
+  if (!localStorage.getItem('cookiesAccepted') || forceShow) {
+    banner.style.display = 'block';
+  }
 
-      rejectButton.addEventListener('click', function () {
-        localStorage.setItem('cookiesAccepted', 'false');
-        banner.style.display = 'none';
-      });
+  acceptButton.addEventListener('click', function () {
+    localStorage.setItem('cookiesAccepted', 'true');
+    banner.style.display = 'none';
+  });
 
-      manageButton.addEventListener('click', function () {
-        alert("Administrer cookies funksjon er ikke implementert ennå.");
-      });
-    });
+  rejectButton.addEventListener('click', function () {
+    localStorage.setItem('cookiesAccepted', 'false');
+    banner.style.display = 'none';
+  });
+
+  manageButton.addEventListener('click', function () {
+    alert("Administrer cookies funksjon er ikke implementert ennå.");
+  });
   </script>
+  
 </body>
 </html>
