@@ -14,7 +14,7 @@ html, body {
   background-repeat: no-repeat;
   background-position: 70% center;
   background-attachment: fixed;
-  background-size: 400px auto; /* Du kan justere størrelsen her */
+  background-size: 200px auto; /* Du kan justere størrelsen her */
   color: #f4f4f4;
   scroll-behavior: smooth;
   overflow-x: hidden;
