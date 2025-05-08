@@ -13,7 +13,7 @@ html, body {
   
   background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilder/bilde1.png?raw=true');
   background-repeat: no-repeat;
-  background-position: 70% center;
+  background-position: 100% center;
   background-attachment: fixed;
   background-size: 300px auto; /* Du kan justere størrelsen her */
   color: #f4f4f4;
@@ -30,15 +30,17 @@ body {
 /* Topptekst */
 header {
   display: flex;
+  background-color: #0c1a2a;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
 }
 
 .logo {
-  font-size: 2rem;
+  font-family: Arial, Helvetica, sans-serif
+  font-size: 1rem;
   font-weight: bold;
-  color: #ffffff;
+  color: 
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -52,7 +54,7 @@ nav a {
   text-decoration: none;
   margin-left: 24px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   transition: color 0.2s ease;
 }
 
@@ -61,17 +63,18 @@ nav a:hover {
 }
 
 .chat-button {
-  background-color: #28a745;
+  background-color: #535353;
   color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  color:white;
+  padding: 0.9rem 1.7rem;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-left: 20px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 250px;
 }
 
 .chat-button:hover {
@@ -82,24 +85,29 @@ nav a:hover {
 
 /* Heltopp / Hero seksjon */
 .hero {
-  padding: 25vh 2rem 0;
+  padding: 5vh 2rem 0;
   max-width: 600px;
-  color: #ffffff;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  color: #0c1a2a;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 60px;
 }
 
 .hero h1 {
   font-size: 2.8rem;
-  font-weight: 700;
+  font-weight: bold;
   margin-bottom: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;  
+  margin-bottom:0,1rem;  
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+color: #0c1a2a;
+ 
 }
 
 .cta-button {
