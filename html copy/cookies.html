@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookie-policy</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      background-color: #0c1a2a;
+      color: #f4f4f4;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    footer {
+      background-color: #0c1a2a;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #ff9900;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #ff6600;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      background-color: #142638;
+      padding: 1rem;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      margin-top: 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    h2:hover {
+      background-color: #1f3b57;
+    }
+
+    .dropdown-content {
+      display: none;
+      padding: 1rem;
+      background-color: #1c2d40;
+      border-left: 4px solid #ff9900;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 6px;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+    }
+
+    a {
+      color: #ff9900;
+    }
+
+    .back-button {
+      display: inline-block;
+      background-color: orange;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 1rem 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background-color 0.2s ease;
+      width: 100px;
+    }
+
+    .back-button:hover {
+      background-color: #ff9900;
+    }
+
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">Tilbake til forsiden</a>
+  <h1>Cookie-policy for bilrådet</h1>
+  <main>
+    <h2 onclick="toggleDropdown('del1')">1. Hva er cookies?</h2>
+    <div id="del1" class="dropdown-content">
+      <p>Cookies er små tekstfiler som lagres på enheten din når du besøker en nettside. Disse filene brukes til å gjøre nettsiden mer effektiv, tilpasse innhold og tilby funksjoner som f.eks. pålogging, og til å samle informasjon om bruken av nettsiden.</p>
+    </div>
+
+    <h2 onclick="toggleDropdown('del2')">2. Hvilke typer cookies bruker vi?</h2>
+    <div id="del2" class="dropdown-content">
+      <p>Vi bruker følgende typer cookies:</p>
+      <ul>
+        <li><strong>Nødvendige cookies</strong> – Disse er essensielle for at nettsiden skal fungere, f.eks. for pålogging og sesjonshåndtering.</li>
+        <li><strong>Analysecookies</strong> – Disse brukes til å samle informasjon om hvordan brukere interagerer med nettsiden, som f.eks. hvilke sider som besøkes mest.</li>
+        <li><strong>Markedsføringscookies</strong> – Disse brukes for å vise relevante annonser og innhold på tvers av nettsider. De brukes til å spore dine aktiviteter og interesser.</li>
+      </ul>
+    </div>
+
+    <h2 onclick="toggleDropdown('del3')">3. Hvordan bruker vi cookies?</h2>
+    <div id="del3" class="dropdown-content">
+      <p>Cookies hjelper oss med å:</p>
+      <ul>
+        <li>Tilpasse brukeropplevelsen basert på dine preferanser.</li>
+        <li>Forbedre nettsidens funksjonalitet og ytelse.</li>
+        <li>Gi informasjon som hjelper oss med å analysere trafikken på nettsiden.</li>
+        <li>Vise relevante annonser og markedsføringsinnhold.</li>
+      </ul>
+    </div>
+
+    <h2 onclick="toggleDropdown('del4')">4. Hvordan kan du kontrollere cookies?</h2>
+    <div id="del4" class="dropdown-content">
+      <p>Du kan kontrollere og/eller slette cookies etter eget ønske. Du kan slette alle cookies som allerede er lagret på enheten din, eller blokkere cookies via nettleserinnstillingene. Vær oppmerksom på at dette kan påvirke funksjonaliteten på nettsiden.</p>
+      <p>For mer informasjon, se <a href="https://www.aboutcookies.org/" target="_blank">AboutCookies.org</a>.</p>
+    </div>
+
+    <h2 onclick="toggleDropdown('del5')">5. Hvordan kan du endre cookie-innstillingene?</h2>
+    <div id="del5" class="dropdown-content">
+      <p>Du kan velge hvilke cookies du godkjenner ved å bruke cookie-banneren som vises når du først besøker nettsiden. Hvis du ønsker å endre valgene dine, kan du gjøre det ved å besøke vår <a href="index.html?cookies=show">cookie-velger</a> på nytt.</p>
+    </div>
+
+    <h2 onclick="toggleDropdown('del6')">6. Endringer i cookie-policy</h2>
+    <div id="del6" class="dropdown-content">
+      <p>Vi kan oppdatere denne cookie-policyen fra tid til annen. Siste versjon vil alltid være tilgjengelig her på nettsiden.</p>
+      <p>Dato for siste oppdatering: 06.05.2025.</p>
+    </div>
+
+  </main>
+  <footer>
+    &copy; 2025 bilrådet. <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a>
+  </footer>
+  <script>
+    function toggleDropdown(id) {
+      const element = document.getElementById(id);
+      element.style.display = element.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
