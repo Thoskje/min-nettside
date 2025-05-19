@@ -103,11 +103,10 @@ nav a:hover {
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom:0,1rem;  
+  margin-bottom: 0.1rem;
   font-family: Arial, Helvetica, sans-serif;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-color: #0c1a2a;
- 
+  color: #0c1a2a;
 }
 
 .cta-button {
@@ -128,6 +127,54 @@ color: #0c1a2a;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   background-color: #ff9900;
+}
+
+/* Accordion kort for hver knapp */
+.accordion-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.accordion-header {
+  width: 100%;
+  background: #0c1a2a;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1.1rem 2rem;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.accordion-header:hover {
+  background: #14325a;
+}
+
+.accordion-body {
+  display: none;
+  padding: 1.2rem 2rem 2rem 2rem;
+  background: #f7f7f7;
+  color: #0c1a2a;
+  border-top: 1px solid #eee;
+  animation: fadeIn 0.3s;
+}
+
+.accordion-body.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Bunntekst */
@@ -185,3 +232,4 @@ footer a:hover {
   gap: 1rem;
   margin-top: 1rem;
 }
+
