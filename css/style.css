@@ -13,7 +13,7 @@ html, body {
   
   background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilder/bilde1.png?raw=true');
   background-repeat: no-repeat;
-  background-position: 100% center;
+  background-position: 75% center;
   background-attachment: fixed;
   background-size: 300px auto; /* Du kan justere størrelsen her */
   color: #f4f4f4;
