@@ -92,6 +92,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   gap: 60px;
+  margin: 60px;
 }
 
 .hero h1 {
