@@ -46,14 +46,14 @@
       <button class="accordion-header">Chat med bilmekaniker</button>
       <div class="accordion-body">
         <p>Få direkte kontakt med en erfaren bilmekaniker for grundigere hjelp.</p>
-        <button class="cta-button">Chat med bilmekaniker</button>
+<button class="cta-button" onclick="startCheckout()">Chat med bilmekaniker</button>
       </div>
     </div>
     <div class="accordion-card">
       <button class="accordion-header">Timeavtale</button>
       <div class="accordion-body">
         <p>Bestill time for en grundig gjennomgang eller reparasjon av bilen din.</p>
-        <button class="cta-button">Timeavtale</button>
+               <button class="cta-button" onclick="startCheckout()">Avtal time</button>
       </div>
     </div>
     <div class="hero-payment">
@@ -83,7 +83,14 @@
   </div>
 
   <!-- JavaScript-filer -->
+  <script>
+    var script = document.createElement('script');
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // <-- Bytt ut med din GA-ID
+    document.head.appendChild(script);
+  </script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="js/stripe-checkout.js" defer></script>
   <script src="js/cookie-banner.js" defer></script>
- <script src="js/main.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
