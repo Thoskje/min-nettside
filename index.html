@@ -24,14 +24,34 @@
     <div class="logo">bilrådet.no</div>
     <div class="nav-links">
       <nav>
-        <a href="#">Hjem</a>
-        <a href="#">Tjenester</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
+        <a href="#" onclick="showTab('hjem'); return false;">Hjem</a>
+        <a href="#" onclick="showTab('tjenester'); return false;">Tjenester</a>
+        <a href="#" onclick="showTab('om'); return false;">Om oss</a>
+        <a href="#" onclick="showTab('kontakt'); return false;">Kontakt</a>
       </nav>
-      
     </div>
   </header>
+
+  <!-- Faner for innhold -->
+<div id="tab-hjem" class="tab-content">Dette er forsiden</div>
+<div id="tab-tjenester" class="tab-content" style="display:none;">Tjenester-innhold</div>
+<div id="tab-om" class="tab-content" style="display:none;">
+  <h2>Om oss</h2>
+  <p>
+    Bilrådet.no er en uavhengig tjeneste for deg som ønsker raske og pålitelige svar om bilhold, vedlikehold og reparasjoner. 
+    Våre erfarne bilmekaniker hjelper deg med alt fra enkle spørsmål til mer komplekse utfordringer.
+  </p>
+  <ul>
+    <li>Lang erfaring fra bilbransjen</li>
+    <li>Rask respons – ofte svar på minutter</li>
+    <li>Uavhengige råd, tilpasset dine behov</li>
+    <li>Mulighet for både chat og timebestilling</li>
+  </ul>
+  <p>
+    Vårt mål er å gjøre bilhold enklere og tryggere for alle!
+  </p>
+</div>
+<div id="tab-kontakt" class="tab-content" style="display:none;">Kontaktinfo</div>
 
   <!-- Hero-seksjon -->
   <section class="hero">
@@ -64,6 +84,13 @@
       </div>
     </div>
   </section>
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  document.getElementById('tab-' + tab).style.display = 'block';
+}
+</script>
 
   <!-- Bunntekst -->
   <footer>
