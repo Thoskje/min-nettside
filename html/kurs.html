@@ -4,32 +4,235 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nybegynnerkurs for bileiere</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body {
+      background: #f6f9fc;
+      min-height: 100vh;
+    }
+    .kurs-hero {
+      background: #fff;
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(31,38,135,0.07);
+      max-width: 700px;
+      margin: 3rem auto 2rem auto;
+      padding: 3rem 2rem 2rem 2rem;
+      text-align: center;
+    }
+    .kurs-hero h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #0c1a2a;
+      margin-bottom: 0.7rem;
+      letter-spacing: -1px;
+    }
+    .kurs-hero p {
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 1.5rem;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      background: #e0e7ef;
+      border-radius: 1rem;
+      height: 14px;
+      margin: 1.5rem 0 1rem 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9900 60%, #ffd580 100%);
+      width: 0%;
+      border-radius: 1rem;
+      transition: width 0.5s;
+    }
+    .kurs-card {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2rem 1.5rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
+    }
+    .tips-boble {
+      background: #f6f9fc;
+      border-left: 4px solid #ff9900;
+      border-radius: 0.7rem;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      color: #0c1a2a;
+      font-size: 1rem;
+      box-shadow: 0 1px 4px rgba(31,38,135,0.04);
+    }
+    .kurs-card ul {
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+    .kurs-progresjon {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .kurs-progresjon-step {
+      background: #f6f9fc;
+      color: #0c1a2a;
+      border-radius: 1rem;
+      padding: 0.7rem 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid #e0e7ef;
+      transition: border 0.2s, color 0.2s;
+    }
+    .kurs-progresjon-step.active {
+      border: 2px solid #ff9900;
+      color: #ff9900;
+      background: #fff;
+    }
+    .alert-success {
+      background: #e6fbe6;
+      color: #1a7f1a;
+      border-radius: 0.7rem;
+      padding: 1rem;
+      margin-top: 1.2rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    .quiz {
+      margin-top: 2rem;
+      background: #fffbe6;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(255, 153, 0, 0.07);
+      text-align: left;
+    }
+    .quiz label {
+      display: block;
+      margin-bottom: 0.7rem;
+      cursor: pointer;
+    }
+    .quiz-result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    @media (max-width: 700px) {
+      .kurs-hero, .kurs-card {
+        padding: 1.2rem 0.5rem;
+        max-width: 98vw;
+      }
+      .kurs-progresjon-step {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Nybegynnerkurs for bileiere</h1>
-    <p>Lær hvordan du kan forstå og vedlikeholde bilen din.</p>
+    <div class="kurs-hero">
+      <h1>Nybegynnerkurs for bileiere</h1>
+      <p>Få full kontroll på bilen din – steg for steg, uten forkunnskaper.</p>
+      <div class="progress-bar-bg">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="kurs-progresjon">
+        <span class="kurs-progresjon-step active" id="step1-indikator">1. Grunnleggende</span>
+        <span class="kurs-progresjon-step" id="step2-indikator">2. Feilsøking</span>
+        <span class="kurs-progresjon-step" id="step3-indikator">3. Vedlikehold</span>
+        <span class="kurs-progresjon-step" id="step4-indikator">4. Viderekommen</span>
+      </div>
+    </div>
   </header>
 
-  <main id="content" style="display: none;">
-    <h2>Velkommen til kurset!</h2>
-    <p>Her lærer du grunnleggende bilvedlikehold og feilsøking.</p>
-    <ul>
-      <li>Sjekk olje og væskenivåer</li>
-      <li>Feilsøking ved startproblemer</li>
-      <li>Hva ulyder kan bety</li>
-      <li>Enkle ting du kan fikse selv</li>
-    </ul>
+  <main>
+    <section id="content" style="display: none;">
+      <div class="kurs-card" id="step1">
+        <button class="tips-toggle cta-button" data-tips="tips1" type="button" style="width:max-content;margin-bottom:1rem;">Vis tips</button>
+        <div class="tips-boble" id="tips1" style="display:none;">Tips: Du finner ofte instruksjonsboken i hanskerommet!</div>
+        <h2>Grunnleggende bilkunnskap</h2>
+        <ul>
+          <li>Hva betyr varsellampene?</li>
+          <li>Hvordan åpne panseret og sjekke olje?</li>
+          <li>Hvor finner du instruksjonsboken?</li>
+        </ul>
+        <button class="cta-button" id="next-to-step2">Neste: Feilsøking</button>
+      </div>
+      <div class="kurs-card" id="step2" style="display:none;">
+        <button class="tips-toggle cta-button" data-tips="tips2" type="button" style="width:max-content;margin-bottom:1rem;">Vis tips</button>
+        <div class="tips-boble" id="tips2" style="display:none;">Tips: Hør etter nye lyder – ofte er det småting du kan fikse selv!</div>
+        <h2>Feilsøking</h2>
+        <ul>
+          <li>Startproblemer – hva gjør du?</li>
+          <li>Ulyder og vibrasjoner</li>
+          <li>Enkle ting du kan sjekke selv</li>
+        </ul>
+        <button class="cta-button" id="next-to-step3">Neste: Vedlikehold</button>
+      </div>
+      <div class="kurs-card" id="step3" style="display:none;">
+        <button class="tips-toggle cta-button" data-tips="tips3" type="button" style="width:max-content;margin-bottom:1rem;">Vis tips</button>
+        <div class="tips-boble" id="tips3" style="display:none;">Tips: Sjekk lufttrykket i dekkene minst én gang i måneden.</div>
+        <h2>Enkelt vedlikehold</h2>
+        <ul>
+          <li>Ettersyn av dekk og lufttrykk</li>
+          <li>Påfyll av spylervæske og olje</li>
+          <li>Enkle tips for å forlenge bilens levetid</li>
+        </ul>
+        <button class="cta-button" id="next-to-step4">Neste: Viderekommen</button>
+      </div>
+      <div class="kurs-card" id="step4" style="display:none;">
+        <button class="tips-toggle cta-button" data-tips="tips4" type="button" style="width:max-content;margin-bottom:1rem;">Vis tips</button>
+        <div class="tips-boble" id="tips4" style="display:none;">Tips: Med en enkel OBD-leser kan du selv finne ut av mange feilkoder!</div>
+        <h2>Viderekommen: Ta vare på bilen som en proff</h2>
+        <ul>
+          <li>Bytte av vindusviskere og lyspærer</li>
+          <li>Enkel feilkodelesing med OBD</li>
+          <li>Rengjøring av bremseskiver og batteripoler</li>
+          <li>Tips for å unngå rust og slitasje</li>
+        </ul>
+        <div class="alert-success">Du har gjennomført hele kurset! 🚗✨</div>
+        <div class="quiz">
+          <h3>Quiz: Hva har du lært?</h3>
+          <form id="quiz-form">
+            <label>
+              <input type="radio" name="q1" value="riktig">
+              Det er lurt å sjekke lufttrykket i dekkene jevnlig
+            </label>
+            <label>
+              <input type="radio" name="q1" value="galt">
+              Du trenger aldri å sjekke olje på bilen
+            </label>
+            <label>
+              <input type="radio" name="q1" value="galt">
+              Alle varsellamper betyr at du må bytte bil
+            </label>
+            <button class="cta-button" type="submit" style="margin-top:1rem;">Sjekk svar</button>
+          </form>
+          <div class="quiz-result" id="quiz-result"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="payment-section">
+      <div class="kurs-card" style="text-align:center;">
+        <h2>Betal for tilgang</h2>
+        <p>Du må betale for å få tilgang til kurset.</p>
+        <button class="cta-button" id="pay-btn" type="button">Betal med Vipps</button>
+      </div>
+    </section>
   </main>
 
-  <div id="payment-section">
-    <h2>Betal for tilgang</h2>
-    <p>Du må betale for å få tilgang til kurset.</p>
-    <button onclick="window.location.href='https://vipps.no/checkout/nybegynnerkurs'">Betal med Vipps</button>
-  </div>
-
   <script>
+    function setProgress(step) {
+      const bar = document.getElementById('progress-bar');
+      const percent = [0, 25, 50, 75, 100][step];
+      bar.style.width = percent + '%';
+    }
+
     function checkAccess() {
       const paid = localStorage.getItem('paid');
       if (paid === 'true') {
@@ -37,7 +240,74 @@
         document.getElementById('payment-section').style.display = 'none';
       }
     }
-    checkAccess();
+
+    document.getElementById('pay-btn').addEventListener('click', function() {
+      // Simuler betaling og lagre tilgang
+      localStorage.setItem('paid', 'true');
+      checkAccess();
+      // Vis animasjon eller bekreftelse
+      alert('Takk for din betaling! Du har nå tilgang til kurset.');
+    });
+
+    // Kurs progresjon
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAccess();
+      setProgress(1);
+
+      // Steg 1 -> Steg 2
+      document.getElementById('next-to-step2').addEventListener('click', function() {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'flex';
+        document.getElementById('step1-indikator').classList.remove('active');
+        document.getElementById('step2-indikator').classList.add('active');
+        setProgress(2);
+      });
+      // Steg 2 -> Steg 3
+      document.getElementById('next-to-step3').addEventListener('click', function() {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'flex';
+        document.getElementById('step2-indikator').classList.remove('active');
+        document.getElementById('step3-indikator').classList.add('active');
+        setProgress(3);
+      });
+      // Steg 3 -> Steg 4 (Viderekommen)
+      document.getElementById('next-to-step4').addEventListener('click', function() {
+        document.getElementById('step3').style.display = 'none';
+        document.getElementById('step4').style.display = 'flex';
+        document.getElementById('step3-indikator').classList.remove('active');
+        document.getElementById('step4-indikator').classList.add('active');
+        setProgress(4);
+      });
+
+      // Quiz
+      document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const answer = document.querySelector('input[name="q1"]:checked');
+        const result = document.getElementById('quiz-result');
+        if (answer && answer.value === 'riktig') {
+          result.textContent = 'Riktig! Du har fått med deg det viktigste 👏';
+          result.style.color = '#1a7f1a';
+        } else {
+          result.textContent = 'Ikke helt riktig – prøv igjen!';
+          result.style.color = '#ff9900';
+        }
+      });
+
+      // Tips visning
+      document.querySelectorAll('.tips-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const tipsId = this.getAttribute('data-tips');
+          const tipsElem = document.getElementById(tipsId);
+          if (tipsElem.style.display === 'none' || tipsElem.style.display === '') {
+            tipsElem.style.display = 'block';
+            this.textContent = 'Skjul tips';
+          } else {
+            tipsElem.style.display = 'none';
+            this.textContent = 'Vis tips';
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>

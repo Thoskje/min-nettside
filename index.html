@@ -17,15 +17,17 @@
 
   <!-- Topptekst / Navigasjon -->
   <header>
-    <a href="#" class="logo" onclick="showTab('hjem'); return false;">bilrådet.no</a>
-    <div class="nav-links">
-      <nav>
-        <a href="#" onclick="showTab('hjem'); return false;">Hjem</a>
-        <a href="#" onclick="showTab('tjenester'); return false;">Tjenester</a>
-        <a href="#" onclick="showTab('om'); return false;">Om oss</a>
-        <a href="#" onclick="showTab('kontakt'); return false;">Kontakt</a>
-      </nav>
-    </div>
+    <a href="#" class="logo">bilrådet.no</a>
+    <button class="menu-btn" aria-label="Meny" id="menu-btn">&#9776;</button>
+    <nav class="mobile-nav" id="mobile-nav">
+      <ul>
+        <li><a href="#">Hjem</a></li>
+        <li><a href="#">Tjenester</a></li>
+        <li><a href="#">Om oss</a></li>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="html/kurs.html">Kurs</a></li>
+      </ul>
+    </nav>
   </header>
 
   <!-- Faner for innhold -->

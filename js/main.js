@@ -121,3 +121,27 @@ document.querySelectorAll('.h1-tabs').forEach(tabBar => {
   });
 });
 
+document.querySelectorAll('.hero-knapper .kurs-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    window.location.href = 'html/kurs.html';
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  menuBtn.addEventListener('click', function() {
+    mobileNav.classList.toggle('open');
+  });
+  // Lukk meny ved klikk på lenke
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileNav.classList.remove('open'));
+  });
+  // Lukk meny ved klikk utenfor
+  document.addEventListener('click', function(e) {
+    if (!mobileNav.contains(e.target) && e.target !== menuBtn) {
+      mobileNav.classList.remove('open');
+    }
+  });
+});
+
