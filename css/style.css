@@ -10,17 +10,11 @@ html, body {
   height: 100%;
   font-family: 'Segoe UI', Roboto, sans-serif;
   background-color: #ffffff;
-  
-  /* background-image: url('https://github.com/Thoskje/min-nettside/blob/main/bilder/bilde1.png?raw=true'); */
-  /* background-repeat: no-repeat; */
-  /* background-position: 75% center; */
-  /* background-attachment: fixed; */
-  /* background-size: 300px auto; */ /* Du kan justere størrelsen her */
+  /* ...resten... */
   color: #f4f4f4;
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
 }
 
 body {

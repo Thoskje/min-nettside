@@ -1,15 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("hide-header-on-scroll.js loaded");
   let lastScroll = 0;
   const header = document.querySelector('header');
-  if (!header) return;
+  if (!header) {
+    console.log("Fant ikke <header>!");
+    return;
+  }
 
   window.addEventListener('scroll', function () {
+    console.log("Scroll event fired!");
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    // For feilsøking:
+    // console.log("Scroll:", currentScroll, "Last:", lastScroll);
     if (currentScroll > lastScroll && currentScroll > 80) {
-      // Scroller ned
       header.style.transform = 'translateY(-100%)';
     } else {
-      // Scroller opp
       header.style.transform = 'translateY(0)';
     }
     lastScroll = currentScroll;
