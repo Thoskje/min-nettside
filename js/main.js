@@ -61,8 +61,22 @@ document.querySelectorAll('.h1-tabs').forEach(tabBar => {
       const tab = this.getAttribute('data-h1');
       const content = document.getElementById('h1-tab-' + tab);
       if (content) content.classList.add('active');
-      // Legg til event listeners på nytt etter bytte
-      leggTilCTAEvent();
+
+      // Endre CTA-knappene etter valgt tab
+      const chatBtn = document.querySelector('.hero-knapper .chat-btn');
+      const avtalBtn = document.querySelector('.hero-knapper .avtal-btn');
+      if (chatBtn && avtalBtn) {
+        if (tab === "1") {
+          chatBtn.style.background = "#ff9900";
+          avtalBtn.style.background = "#0c1a2a";
+        } else if (tab === "2") {
+          chatBtn.style.background = "#0c1a2a";
+          avtalBtn.style.background = "#ff9900";
+        } else if (tab === "3") {
+          chatBtn.style.background = "#0c1a2a";
+          avtalBtn.style.background = "#0c1a2a";
+        }
+      }
     });
   });
 });
