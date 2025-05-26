@@ -3,156 +3,252 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookie-policy</title>
+  <title>Cookie-innstillinger</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      height: 100%;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6f9fc;
+      color: #0c1a2a;
       margin: 0;
+      padding: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 2rem;
-      background-color: #0c1a2a;
-      color: #f4f4f4;
     }
-
-    main {
-      flex: 1;
-      padding: 2rem;
+    .container {
+      max-width: 480px;
+      margin: 3rem auto 2rem auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(31,38,135,0.08);
+      padding: 2.5rem 2rem 2rem 2rem;
     }
-
-    footer {
-      background-color: #0c1a2a;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: #ff9900;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      color: #ff6600;
-    }
-
     h1 {
       font-size: 2rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
+      font-weight: 700;
     }
-
-    h2 {
-      font-size: 1.2rem;
-      background-color: #142638;
-      padding: 1rem;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      margin-top: 1rem;
-      border-radius: 6px;
-      transition: background-color 0.2s ease;
+    .cookie-group {
+      margin-bottom: 2rem;
     }
-
-    h2:hover {
-      background-color: #1f3b57;
+    .cookie-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
     }
-
-    .dropdown-content {
-      display: none;
-      padding: 1rem;
-      background-color: #1c2d40;
-      border-left: 4px solid #ff9900;
-      margin-bottom: 1rem;
-      border-radius: 0 6px 6px 6px;
+    .cookie-row:last-child {
+      border-bottom: none;
     }
-
-    ul {
-      margin-left: 1.5rem;
+    .cookie-label {
+      font-size: 1.1rem;
+      font-weight: 500;
     }
-
-    a {
-      color: #ff9900;
+    .cookie-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-top: 0.2rem;
     }
-
-    .back-button {
+    .switch {
+      position: relative;
       display: inline-block;
-      background-color: orange;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 1rem 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: background-color 0.2s ease;
-      width: 100px;
+      width: 44px;
+      height: 24px;
     }
-
-    .back-button:hover {
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #e0e0e0;
+      transition: .3s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    input:checked + .slider {
       background-color: #ff9900;
     }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+    .save-btn {
+      width: 100%;
+      background: #ff9900;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s;
+    }
+    .save-btn:hover {
+      background: #e67c00;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      color: #ff9900;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-tooltip {
+      position: relative;
+      display: inline-block;
+      margin-left: 8px;
+      color: #ff9900;
+      font-size: 1.1em;
+      cursor: pointer;
+      vertical-align: middle;
+      /* Øk padding for større hover-område */
+      padding: 4px;
+    }
 
+    .info-tooltip .tooltip-text {
+      display: none;
+      width: 280px;
+      background: #222;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 1.2em 1em 0.7em 1em; /* Økt padding-top */
+      position: absolute;
+      z-index: 10;
+      top: 100%; /* Rett under ikonet */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.97em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .info-tooltip:hover .tooltip-text,
+    .info-tooltip:focus-within .tooltip-text {
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <a href="../index.html" class="back-button">Tilbake til forsiden</a>
-  <h1>Cookie-policy for bilrådet</h1>
-  <main>
-    <h2 onclick="toggleDropdown('del1')">1. Hva er cookies?</h2>
-    <div id="del1" class="dropdown-content">
-      <p>Cookies er små tekstfiler som lagres på enheten din når du besøker en nettside. Disse filene brukes til å gjøre nettsiden mer effektiv, tilpasse innhold og tilby funksjoner som f.eks. pålogging, og til å samle informasjon om bruken av nettsiden.</p>
-    </div>
-
-    <h2 onclick="toggleDropdown('del2')">2. Hvilke typer cookies bruker vi?</h2>
-    <div id="del2" class="dropdown-content">
-      <p>Vi bruker følgende typer cookies:</p>
-      <ul>
-        <li><strong>Nødvendige cookies</strong> – Disse er essensielle for at nettsiden skal fungere, f.eks. for pålogging og sesjonshåndtering.</li>
-        <li><strong>Analysecookies</strong> – Disse brukes til å samle informasjon om hvordan brukere interagerer med nettsiden, som f.eks. hvilke sider som besøkes mest.</li>
-        <li><strong>Markedsføringscookies</strong> – Disse brukes for å vise relevante annonser og innhold på tvers av nettsider. De brukes til å spore dine aktiviteter og interesser.</li>
-      </ul>
-    </div>
-
-    <h2 onclick="toggleDropdown('del3')">3. Hvordan bruker vi cookies?</h2>
-    <div id="del3" class="dropdown-content">
-      <p>Cookies hjelper oss med å:</p>
-      <ul>
-        <li>Tilpasse brukeropplevelsen basert på dine preferanser.</li>
-        <li>Forbedre nettsidens funksjonalitet og ytelse.</li>
-        <li>Gi informasjon som hjelper oss med å analysere trafikken på nettsiden.</li>
-        <li>Vise relevante annonser og markedsføringsinnhold.</li>
-      </ul>
-    </div>
-
-    <h2 onclick="toggleDropdown('del4')">4. Hvordan kan du kontrollere cookies?</h2>
-    <div id="del4" class="dropdown-content">
-      <p>Du kan kontrollere og/eller slette cookies etter eget ønske. Du kan slette alle cookies som allerede er lagret på enheten din, eller blokkere cookies via nettleserinnstillingene. Vær oppmerksom på at dette kan påvirke funksjonaliteten på nettsiden.</p>
-      <p>For mer informasjon, se <a href="https://www.aboutcookies.org/" target="_blank">AboutCookies.org</a>.</p>
-    </div>
-
-    <h2 onclick="toggleDropdown('del5')">5. Hvordan kan du endre cookie-innstillingene?</h2>
-    <div id="del5" class="dropdown-content">
-      <p>Du kan velge hvilke cookies du godkjenner ved å bruke cookie-banneren som vises når du først besøker nettsiden. Hvis du ønsker å endre valgene dine, kan du gjøre det ved å besøke vår <a href="../index.html?cookies=show">cookie-velger</a> på nytt.</p>
-    </div>
-
-    <h2 onclick="toggleDropdown('del6')">6. Endringer i cookie-policy</h2>
-    <div id="del6" class="dropdown-content">
-      <p>Vi kan oppdatere denne cookie-policyen fra tid til annen. Siste versjon vil alltid være tilgjengelig her på nettsiden.</p>
-      <p>Dato for siste oppdatering: 06.05.2025.</p>
-    </div>
-
-  </main>
+  <div class="container">
+    <h1>Cookie-innstillinger</h1>
+    <form id="cookie-settings-form">
+      <div class="cookie-group">
+        <div class="cookie-row">
+          <div>
+            <span class="cookie-label">Nødvendige cookies</span>
+            <span class="info-tooltip">
+              &#9432;
+              <span class="tooltip-text">
+                Disse cookiene er nødvendige for at nettsiden skal fungere og kan ikke slås av.<br><br>
+                Eksempel: Husk valg av samtykke, sikkerhet, og innlogging (hvis aktuelt).<br>
+                <b>Betaling:</b> Vi bruker Stripe for sikker betaling. Stripe kan sette egne nødvendige cookies for å gjennomføre og sikre betalingstransaksjoner. Les mer i <a href="https://stripe.com/privacy" target="_blank" style="color:#ff9900;">Stripes personvernerklæring</a>.
+              </span>
+            </span>
+            <div class="cookie-desc">Disse er alltid på for at nettsiden skal fungere.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="necessary" checked disabled>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="cookie-row">
+          <div>
+            <span class="cookie-label">Analysecookies</span>
+            <span class="info-tooltip">
+              &#9432;
+              <span class="tooltip-text">
+                Vi bruker Google Analytics for å samle anonym statistikk om besøk og bruksmønstre på nettsiden.<br><br>
+                Eksempel: Hvilke sider som besøkes, hvor lenge brukeren er på siden, og hvilke enheter som brukes.<br>
+                <b>Ingen personlig identifiserbar informasjon lagres.</b> Les mer i <a href="https://policies.google.com/privacy?hl=no" target="_blank" style="color:#ff9900;">Googles personvernregler</a>.
+              </span>
+            </span>
+            <div class="cookie-desc">Hjelper oss å forstå bruk av nettsiden.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="analytics">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="cookie-row">
+          <div>
+            <span class="cookie-label">Markedsføring</span>
+            <span class="info-tooltip">
+              &#9432;
+              <span class="tooltip-text">
+                Vi bruker markedsføringscookies for å kunne vise relevante annonser via Google Ads og Facebook Pixel.<br><br>
+                Eksempel: Spore hvilke annonser du har sett eller klikket på, og bygge anonyme interesseprofiler.<br>
+                <b>Ingen personlig identifiserbar informasjon lagres uten samtykke.</b> Les mer i <a href="https://www.facebook.com/privacy/policy/" target="_blank" style="color:#ff9900;">Facebooks personvernregler</a> og <a href="https://policies.google.com/privacy?hl=no" target="_blank" style="color:#ff9900;">Googles personvernregler</a>.
+              </span>
+            </span>
+            <div class="cookie-desc">Brukes for å vise relevante annonser.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="marketing">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="save-btn">Lagre valg</button>
+    </form>
+    <a href="../index.html" class="back-link">Tilbake til forsiden</a>
+  </div>
   <footer>
-    &copy; 2025 bilrådet. <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a>
+    &copy; 2025 bilrådet.no <a href="personvern.html">Personvern</a> | <a href="cookies.html">Cookies</a>
   </footer>
   <script>
-    function toggleDropdown(id) {
-      const element = document.getElementById(id);
-      element.style.display = element.style.display === "block" ? "none" : "block";
+    // Hent eksisterende preferanser
+    const form = document.getElementById('cookie-settings-form');
+    const analytics = form.elements['analytics'];
+    const marketing = form.elements['marketing'];
+    let prefs = null;
+    try {
+      prefs = JSON.parse(localStorage.getItem('cookiePreferences'));
+    } catch(e) {
+      prefs = null;
     }
+    if (prefs) {
+      analytics.checked = !!prefs.analytics;
+      marketing.checked = !!prefs.marketing;
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const preferences = {
+        necessary: true,
+        analytics: analytics.checked,
+        marketing: marketing.checked
+      };
+      localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+      alert('Dine valg er lagret!');
+    });
   </script>
 </body>
 </html>
