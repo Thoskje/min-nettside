@@ -6,3 +6,17 @@ document.querySelectorAll('.accordion-header').forEach(function(header) {
     body.classList.toggle('active');
   });
 });
+
+const avtalBtn = document.querySelector('.hero-knapper .avtal-btn');
+const chatBtn = document.querySelector('.hero-knapper .chat-btn');
+
+if (avtalBtn && chatBtn) {
+  avtalBtn.addEventListener('mouseenter', () => {
+    chatBtn.style.background = '#0c1a2a';
+    avtalBtn.style.background = '#ff9900';
+  });
+  avtalBtn.addEventListener('mouseleave', () => {
+    chatBtn.style.background = '#ff9900';
+    avtalBtn.style.background = '#0c1a2a';
+  });
+}
