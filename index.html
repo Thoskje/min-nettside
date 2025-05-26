@@ -21,7 +21,7 @@
 
   <!-- Topptekst / Navigasjon -->
   <header>
-    <div class="logo"><a href="#" class="logo" onclick="showTab('hjem'); return false;">bilrådet.no</a></div>
+    <a href="#" class="logo" onclick="showTab('hjem'); return false;">bilrådet.no</a>
     <div class="nav-links">
       <nav>
         <a href="#" onclick="showTab('hjem'); return false;">Hjem</a>
@@ -33,6 +33,36 @@
   </header>
 
   <!-- Faner for innhold -->
+<div class="hero-bilde-container">
+  <section class="hero">
+    <h1>Din digitale bilmekaniker</h1>
+    <p>Få raske, uavhengige råd om bilhold, service og reparasjon – direkte fra erfarne fagfolk.</p>
+    <div class="hero-knapper">
+      <button class="cta-button">Start chat</button>
+      <button class="cta-button">Avtal time</button>
+    </div>
+  </section>
+  <img src="bilder/bilde1.png" alt="Dekorativt bilde" class="bilde-ved-hero">
+</div>
+
+<div class="card-list">
+  <div class="card">
+    <h2>Chat med bilmekaniker</h2>
+    <p>Få svar på dine spørsmål – gratis og uforpliktende.</p>
+    <button class="cta-button">Start chat</button>
+  </div>
+  <div class="card">
+    <h2>Timeavtale</h2>
+    <p>Bestill tid for grundig gjennomgang eller reparasjon.</p>
+    <button class="cta-button">Avtal time</button>
+  </div>
+  <div class="card">
+    <h2>Enkel betaling</h2>
+    <p>Betal trygt med Vipps, Apple Pay eller kort.</p>
+  </div>
+</div>
+
+<!-- Flytt tab-content hit -->
 <div id="tab-hjem" class="tab-content">Dette er forsiden</div>
 <div id="tab-tjenester" class="tab-content" style="display:none;">Tjenester-innhold</div>
 <div id="tab-om" class="tab-content" style="display:none;">
@@ -52,41 +82,6 @@
   </p>
 </div>
 <div id="tab-kontakt" class="tab-content" style="display:none;">Kontaktinfo</div>
-
-<!-- Bildet vises alltid under faneinnholdet -->
-<div class="hero-bilde-container">
-  <section class="hero">
-    <div class="accordion-card">
-      <button class="accordion-header">Start Gratis Chat</button>
-      <div class="accordion-body">
-        <p>Chat gratis med en bilmekaniker og få raske svar på dine spørsmål.</p>
-        <button class="chat-button">Start Gratis Chat</button>
-      </div>
-    </div>
-    <div class="accordion-card">
-      <button class="accordion-header">Chat med bilmekaniker</button>
-      <div class="accordion-body">
-        <p>Få direkte kontakt med en erfaren bilmekaniker for grundigere hjelp.</p>
-<button class="cta-button" onclick="startCheckout()">Chat med bilmekaniker</button>
-      </div>
-    </div>
-    <div class="accordion-card">
-      <button class="accordion-header">Timeavtale</button>
-      <div class="accordion-body">
-        <p>Bestill time for en grundig gjennomgang eller reparasjon av bilen din.</p>
-               <button class="cta-button" onclick="startCheckout()">Avtal time</button>
-      </div>
-    </div>
-    <div class="hero-payment">
-      <p>Enkel betaling</p>
-      <div class="payment-logos">
-        <img src="bilder/vipps-logo.png" alt="Vipps logo" style="height:40px; margin-right:10px;">
-        <img src="bilder/apple-pay-logo.png" alt="Apple Pay logo" style="height:40px;">
-      </div>
-    </div>
-  </section>
-  <img src="bilder/bilde1.png" alt="Dekorativt bilde" class="bilde-ved-hero">
-</div>
 
 <script>
 function showTab(tab) {
