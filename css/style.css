@@ -114,7 +114,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   gap: 80px;             /* større avstand mellom elementer */
-  margin: 60px;
+  margin: 0; /* Dette er viktig! */
   flex: 1 1 400px;
   background: #fff;
   border-radius: 2rem;
@@ -327,23 +327,28 @@ footer a:hover {
 
 .hero-bilde-container {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   justify-content: center;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 3rem auto 2rem auto;
-  padding: 2rem 1rem;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  margin-top: 4rem; /* Legg til eller øk denne linjen for mer luft ned fra toppen */
 }
 
 .bilde-ved-hero {
-  max-width: 380px;
-  width: 100%;
+  flex: 0 0 auto;
+  width: 320px;
+  max-width: 100%;
   height: auto;
-  border-radius: 2rem;
-  box-shadow: 0 4px 24px rgba(31,38,135,0.08);
-  align-self: center;
-  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
   object-fit: cover;
+  background: #fff;
+  /* Juster denne verdien til å matche hero sin topp-padding/margin */
+  margin-top: 0;
+  align-self: flex-start;
+  z-index: 1;
 }
 
 .card-list {
