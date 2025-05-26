@@ -7,28 +7,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeSettings = document.getElementById('close-settings');
   const form = document.getElementById('cookie-settings-form');
 
-  // Funksjon for å laste Google Analytics kun hvis analytics er godtatt
-  function loadGoogleAnalytics() {
-    if (window.gaLoaded) return;
-    window.gaLoaded = true;
-    const script = document.createElement('script');
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // <-- Bytt ut med din GA-ID
-    script.async = true;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX'); // <-- Bytt ut med din GA-ID
-  }
-
   // Sjekk om vi skal vise banneret
-  const urlParams = new URLSearchParams(window.location.search);
-  const forceShow = urlParams.get('cookies') === 'show';
+  let prefs = null;
+  try {
+    prefs = JSON.parse(localStorage.getItem('cookiePreferences'));
+  } catch(e) {
+    prefs = null;
+  }
+  const forceShow = new URLSearchParams(window.location.search).get('cookies') === 'show';
 
-  if (!localStorage.getItem('cookiePreferences') || forceShow) {
-    banner.style.display = 'block';
+  if (!prefs || typeof prefs !== 'object' || forceShow) {
+    banner.style.display = 'flex';
+  } else {
+    banner.style.display = 'none';
   }
 
   // Godta alle
@@ -40,10 +31,15 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
     banner.style.display = 'none';
-    loadGoogleAnalytics();
+    // Fjern ?cookies=show fra URL
+    if (window.location.search.includes('cookies=show')) {
+      const url = new URL(window.location);
+      url.searchParams.delete('cookies');
+      window.history.replaceState({}, '', url.pathname + url.search);
+    }
   });
 
-  // Avslå
+  // Avslå alle unntatt nødvendige
   rejectButton.addEventListener('click', function () {
     const preferences = {
       necessary: true,
@@ -54,34 +50,35 @@ document.addEventListener('DOMContentLoaded', function () {
     banner.style.display = 'none';
   });
 
-  // Administrer cookies
+  // Åpne innstillinger
   manageButton.addEventListener('click', function () {
     modal.style.display = 'block';
   });
 
+  // Lukk innstillinger
   closeSettings.addEventListener('click', function () {
     modal.style.display = 'none';
   });
 
-  // Lagre valg fra modal
+  // Lagre innstillinger fra modal
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    const analytics = form.elements['analytics'].checked;
+    const marketing = form.elements['marketing'].checked;
     const preferences = {
       necessary: true,
-      analytics: form.querySelector('input[name="analytics"]').checked,
-      marketing: form.querySelector('input[name="marketing"]').checked,
+      analytics,
+      marketing
     };
     localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
     modal.style.display = 'none';
     banner.style.display = 'none';
-    if (preferences.analytics) {
-      loadGoogleAnalytics();
-    }
   });
 
-  // Last inn Google Analytics hvis bruker allerede har godtatt analytics
-  const prefs = JSON.parse(localStorage.getItem('cookiePreferences') || '{}');
-  if (prefs.analytics) {
-    loadGoogleAnalytics();
+  // Fjern ?cookies=show fra URL etter valg
+  if (window.location.search.includes('cookies=show')) {
+    const url = new URL(window.location);
+    url.searchParams.delete('cookies');
+    window.history.replaceState({}, '', url.pathname + url.search);
   }
 });
