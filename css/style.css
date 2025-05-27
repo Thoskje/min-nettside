@@ -260,13 +260,13 @@ footer {
 }
 
 footer a {
-  color: #ff9900;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 footer a:hover {
-  color: #ff6600;
+  color: #ffffff;
 }
 
 /* Cookie-banner */
