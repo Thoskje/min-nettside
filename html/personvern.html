@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personvernserklæring</title>
+  <link rel="stylesheet" href="../css/style.css">
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -21,6 +22,20 @@
       box-shadow: 0 4px 24px rgba(31,38,135,0.08);
       padding: 2.5rem 2rem 2rem 2rem;
       color: #0c1a2a;
+    }
+    header {
+      background: #0c1a2a;
+      padding: 1rem 3vw;
+      color: white;
+      text-align: left;
+    }
+    .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff
+      display: inline-block;
+      margin-left: 1rem;
     }
     h1 {
       font-size: 2rem;
@@ -71,23 +86,6 @@
       visibility: visible;
       opacity: 1;
     }
-    .back-button {
-      display: inline-block;
-      background-color: orange;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 1rem 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: background-color 0.2s ease;
-      width: 100px; 
-      text-align: center;
-    }
-    .back-button:hover {
-      background-color: #ff9900;
-    }
     footer {
       background-color: #0c1a2a;
       color: white;
@@ -106,7 +104,10 @@
   </style>
 </head>
 <body>
-  <a href="../index.html" class="back-button">Tilbake</a>
+  <header>
+    <a href="../index.html" class="logo">bilrådet.no</a>
+  </header>
+  
   <div class="container">
     <h1>Personvernserklæring</h1>
     <details>
@@ -154,7 +155,7 @@
       <summary>5. Tredjepartsleverandører</summary>
       <p>Vi benytter følgende leverandører:</p>
       <ul>
-        <li> Stripe, Vipps, Apple Pay og Klarna (betaling)</li>
+        <li>Stripe, Vipps, Apple Pay og Klarna (betaling)</li>
         <li>Zoom eller lignende (videokonsultasjon)</li>
         <li>Google Analytics (webanalyse, kun etter samtykke)</li>
       </ul>
