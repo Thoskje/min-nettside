@@ -184,6 +184,11 @@ nav a:hover {
   color: #fff !important;
 }
 
+.cta-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Faneinnhold */
 .tab-content {
   background: rgba(255, 255, 255, 0.4);
