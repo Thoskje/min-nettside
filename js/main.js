@@ -145,3 +145,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const icon = document.getElementById('hero-more-icon');
+  const more = document.getElementById('hero-more-text');
+  if (icon && more) {
+    icon.addEventListener('click', function() {
+      const open = more.style.display === 'inline';
+      more.style.display = open ? 'none' : 'inline';
+      icon.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+    });
+  }
+});
+

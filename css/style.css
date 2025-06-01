@@ -515,3 +515,44 @@ footer a:hover {
   header .logo { position: relative; z-index: 1202; }
 }
 
+.hero-card {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem 1.2rem;
+}
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0c1a2a;
+}
+
+/* Spesifikke stiler for hero-card innhold */
+.hero-card-content {
+  margin-top: 1rem;
+  color: #0c1a2a;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+#hero-more-icon:hover svg polyline {
+  stroke: #ffb84d;
+  filter: drop-shadow(0 2px 4px rgba(255,153,0,0.15));
+}
+#hero-more-icon svg {
+  transition: transform 0.2s;
+
+}
+#hero-more-icon svg polyline {
+  stroke: #c8c8c8; /* Alltid denne fargen */
+}
+}
+
+

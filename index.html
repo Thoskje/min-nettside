@@ -40,16 +40,25 @@
     </div>
     <div class="h1-tab-content active" id="h1-tab-1">
       <h1>Din digitale bilmekaniker</h1>
-      <p>Få raske, uavhengige råd om bilhold, service og reparasjon – direkte fra erfarne fagfolk.</p>
+      <p>
+        Få raske, uavhengige råd om bilhold, service og reparasjon – direkte fra erfarne fagfolk.
+        <span id="hero-more-icon" style="display:inline-block; cursor:pointer; vertical-align:middle; margin-left:10px; transition:transform 0.2s;">
+          <svg width="28" height="28" viewBox="0 0 28 28" style="display:block;" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="7,12 14,19 21,12" stroke="#ff9900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span id="hero-more-text" style="display:none;">
+          <br>
+          Her får du også personlig oppfølging, tips til vedlikehold, og hjelp til å forstå varsellamper, feilkoder og mye mer. Vi er her for å gjøre bilhold enkelt for alle!
+        </span>
+      </p>
+      <div class="hero-knapper">
+        <button class="cta-button chat-btn">Start chat</button>
+        <button class="cta-button avtal-btn">Avtal time</button>
+        <button class="cta-button kurs-btn">Kurs</button>
+      </div>
     </div>
-    <div class="h1-tab-content" id="h1-tab-2">
-      <h1>Få uavhengige råd om bilhold</h1>
-      <p>Vi gir deg ærlige, uavhengige råd om alt innen bilhold – fra kjøp til vedlikehold.</p>
-    </div>
-    <div class="h1-tab-content" id="h1-tab-3">
-      <h1>Bestill tid med fagfolk</h1>
-      <p>Book en time med våre erfarne bilmekanikere for personlig veiledning eller hjelp.</p>
-    </div>
+    <div class="h1-tab-content" id="
     <div class="hero-knapper">
       <button class="cta-button chat-btn">Start chat</button>
       <button class="cta-button avtal-btn">Avtal time</button>
@@ -57,35 +66,7 @@
     </div>
   </section>
   <img src="bilder/bilde1.png" alt="Dekorativt bilde" class="bilde-ved-hero">
-</div>
-
-<!-- Flytt tab-content hit -->
-<div id="tab-hjem" class="tab-content">Dette er forsiden</div>
-<div id="tab-tjenester" class="tab-content" style="display:none;">Tjenester-innhold</div>
-<div id="tab-om" class="tab-content" style="display:none;">
-  <h2>Om oss</h2>
-  <p>
-    Bilrådet.no er en uavhengig tjeneste for deg som ønsker raske og pålitelige svar om bilhold, vedlikehold og reparasjoner. 
-    Våre erfarne bilmekaniker hjelper deg med alt fra enkle spørsmål til mer komplekse utfordringer.
-  </p>
-  <ul>
-    <li>Lang erfaring fra bilbransjen</li>
-    <li>Rask respons – ofte svar på minutter</li>
-    <li>Uavhengige råd, tilpasset dine behov</li>
-    <li>Mulighet for både chat og timebestilling</li>
-  </ul>
-  <p>
-    Vårt mål er å gjøre bilhold enklere og tryggere for alle!
-  </p>
-</div>
-<div id="tab-kontakt" class="tab-content" style="display:none;">Kontaktinfo</div>
-
-<script>
-function showTab(tab) {
-  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-  document.getElementById('tab-' + tab).style.display = 'block';
-}
-</script>
+</div> <!-- hero-bilde-container slutt -->
 
   <!-- Bunntekst -->
   <footer>
@@ -115,5 +96,20 @@ function showTab(tab) {
   <script src="js/cookie-banner.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/hide-header-on-scroll.js" defer></script>
+
+  <script>
+    // JavaScript for å håndtere "hero-card" utvidelse
+    document.getElementById('hero-expand-btn').addEventListener('click', function() {
+      var content = document.getElementById('hero-extra');
+      var icon = document.getElementById('hero-expand-icon');
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+      }
+    });
+  </script>
 </body>
 </html>
