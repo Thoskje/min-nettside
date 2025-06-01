@@ -33,7 +33,7 @@
   <!-- Faner for innhold -->
 <div class="hero-bilde-container">
   <section class="hero">
-    <div class="h1-tabs">
+  <div class="h1-tabs">
       <button class="h1-tab active" data-h1="1">Start chat</button>
       <button class="h1-tab" data-h1="2">Avtal time</button>
       <button class="h1-tab" data-h1="3">kurs</button>
@@ -43,7 +43,7 @@
       <p>
         Få raske, uavhengige råd om bilhold, service og reparasjon – direkte fra erfarne fagfolk.
         <span id="hero-more-icon" style="display:inline-block; cursor:pointer; vertical-align:middle; margin-left:10px; transition:transform 0.2s;">
-          <svg width="28" height="28" viewBox="0 0 28 28" style="display:block;" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <polyline points="7,12 14,19 21,12" stroke="#ff9900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
@@ -53,16 +53,51 @@
         </span>
       </p>
       <div class="hero-knapper">
-        <button class="cta-button chat-btn">Start chat</button>
-        <button class="cta-button avtal-btn">Avtal time</button>
-        <button class="cta-button kurs-btn">Kurs</button>
+        <button class="cta-button chat-btn" id="chat-btn">Start chat</button>
+        <button class="cta-button avtal-btn" id="avtal-btn">Avtal time</button>
+        <button class="cta-button kurs-btn" id="kurs-btn">Kurs</button>
       </div>
     </div>
-    <div class="h1-tab-content" id="
-    <div class="hero-knapper">
-      <button class="cta-button chat-btn">Start chat</button>
-      <button class="cta-button avtal-btn">Avtal time</button>
-      <button class="cta-button kurs-btn">Kurs</button>
+    <div class="h1-tab-content" id="h1-tab-2">
+      <h1>Avtal time</h1>
+      <p>
+        Book en tid med våre bil-eksperter for personlig rådgivning eller videokonsultasjon.
+        <span id="avtal-more-icon" style="display:inline-block; cursor:pointer; vertical-align:middle; margin-left:10px; transition:transform 0.2s;">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="7,12 14,19 21,12" stroke="#ff9900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span id="avtal-more-text" style="display:none;">
+          <br>
+          Du kan velge tidspunkt, få påminnelser og stille spørsmål på forhånd. Vi hjelper deg med alt fra EU-kontroll til feilsøking!
+        </span>
+      </p>
+      <div class="hero-knapper">
+        <button class="cta-button chat-btn" id="chat-btn">Start chat</button>
+        <button class="cta-button avtal-btn" id="avtal-btn">Avtal time</button>
+        <button class="cta-button kurs-btn" id="kurs-btn">Kurs</button>
+      </div>
+    </div>
+
+    <div class="h1-tab-content" id="h1-tab-3">
+      <h1>Kurs</h1>
+      <p>
+        Lær mer om bilhold, vedlikehold og sikkerhet gjennom våre digitale kurs.
+        <span id="kurs-more-icon" style="display:inline-block; cursor:pointer; vertical-align:middle; margin-left:10px; transition:transform 0.2s;">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="7,12 14,19 21,12" stroke="#ff9900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span id="kurs-more-text" style="display:none;">
+          <br>
+          Våre kurs gir deg praktiske tips, forståelse for bilens systemer og gjør deg tryggere som bileier.
+        </span>
+      </p>
+      <div class="hero-knapper">
+        <button class="cta-button chat-btn" id="chat-btn">Start chat</button>
+        <button class="cta-button avtal-btn" id="avtal-btn">Avtal time</button>
+        <button class="cta-button kurs-btn" id="kurs-btn">Kurs</button>
+      </div>
     </div>
   </section>
   <img src="bilder/bilde1.png" alt="Dekorativt bilde" class="bilde-ved-hero">
