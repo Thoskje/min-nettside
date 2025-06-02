@@ -131,20 +131,5 @@
   <script src="js/cookie-banner.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/hide-header-on-scroll.js" defer></script>
-
-  <script>
-    // JavaScript for å håndtere "hero-card" utvidelse
-    document.getElementById('hero-expand-btn').addEventListener('click', function() {
-      var content = document.getElementById('hero-extra');
-      var icon = document.getElementById('hero-expand-icon');
-      if (content.style.display === 'none' || content.style.display === '') {
-        content.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
-      } else {
-        content.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-      }
-    });
-  </script>
 </body>
 </html>
