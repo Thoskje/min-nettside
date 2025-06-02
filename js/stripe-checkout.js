@@ -25,4 +25,10 @@ function startCheckout() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.stripe-btn').forEach(btn => {
+    btn.addEventListener('click', startCheckout);
+  });
+});
+
 window.startCheckout = startCheckout;
