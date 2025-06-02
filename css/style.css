@@ -320,6 +320,7 @@ footer a:hover {
   }
   .nav-links nav {
     gap: 1rem;
+  }
 }
 
 .bilde-under-fane {
@@ -549,6 +550,4 @@ footer a:hover {
 #hero-more-icon svg polyline {
   stroke: #c8c8c8; /* Alltid denne fargen */
 }
-}
-
 
