@@ -6,7 +6,7 @@
 const stripeClient = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0');
 
 function startCheckout() {
-  fetch('http://localhost:4242/api/create-checkout-session', { method: 'POST' })
+  fetch('/api/create-checkout-session', { method: 'POST' })
     .then(res => res.text())
     .then(text => {
       console.log('Rått svar fra backend:', text);
