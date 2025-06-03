@@ -105,5 +105,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  document.querySelectorAll('.h1-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.h1-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      // ...vis riktig tab-innhold...
+    });
+  });
 });
 
