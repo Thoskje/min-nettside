@@ -177,7 +177,7 @@ nav a:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
-.cta-button.active {
+.cta-button.cta-active {
   background: #ff9900 !important;
   color: #fff !important;
 }

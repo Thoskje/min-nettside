@@ -48,8 +48,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Aktiver første tab ved lasting
-  const firstTab = document.querySelector('.h1-tab.active');
-  if (firstTab) firstTab.click();
+  const firstTab = document.querySelector('.h1-tab');
+  const firstTabContent = document.getElementById('h1-tab-1');
+  if (firstTab && firstTabContent) {
+    firstTab.classList.add('active');
+    firstTabContent.classList.add('active');
+    // Marker riktig CTA-knapp i første tab
+    const btn = firstTabContent.querySelector('.chat-btn');
+    if (btn) btn.classList.add('cta-active');
+  }
 
   // CTA-knapp: Kurs
   document.querySelectorAll('.hero-knapper .kurs-btn').forEach(btn => {
@@ -108,9 +115,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('.h1-tab').forEach(tab => {
     tab.addEventListener('click', function() {
+      // Bytt aktiv tab-knapp
       document.querySelectorAll('.h1-tab').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
-      // ...vis riktig tab-innhold...
+
+      // Finn valgt tab-index (1, 2, 3)
+      const tabIndex = this.getAttribute('data-h1');
+      // Bytt aktivt innhold
+      document.querySelectorAll('.h1-tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById('h1-tab-' + tabIndex).classList.add('active');
+
+      // Fjern aktiv-klasse fra alle CTA-knapper
+      document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
+      // Legg til aktiv-klasse på riktig CTA-knapp i valgt tab (kun for farge)
+      const activeTabContent = document.getElementById('h1-tab-' + tabIndex);
+      if (activeTabContent) {
+        if (tabIndex === "1") {
+          activeTabContent.querySelector('.chat-btn').classList.add('cta-active');
+        } else if (tabIndex === "2") {
+          activeTabContent.querySelector('.avtal-btn').classList.add('cta-active');
+        } else if (tabIndex === "3") {
+          activeTabContent.querySelector('.kurs-btn').classList.add('cta-active');
+        }
+      }
     });
   });
 });
