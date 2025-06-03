@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.addEventListener('scroll', function () {
-    console.log("Scroll event fired!");
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     // Vis alltid header hvis du er helt øverst
