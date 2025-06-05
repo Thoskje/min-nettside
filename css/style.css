@@ -549,3 +549,21 @@ footer a:hover {
   stroke: #c8c8c8; /* Alltid denne fargen */
 }
 
+#hero-more-text {
+  font-size: 1.15rem;         /* Endre tall for større/mindre tekst */
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif; /* Endre font hvis ønskelig */
+  color: #0c1a2a;                /* Endre tekstfarge */
+  border-radius: 0.7rem;
+  padding: 1.2rem 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(255,153,0,0.07);
+  line-height: 1.7;
+}
+#hero-more-text ul {
+  margin-left: 1.2rem;
+  padding-left: 1.2rem;
+}
+#hero-more-text li {
+  margin-bottom: 0.9rem;
+}
+
