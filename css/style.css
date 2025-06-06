@@ -399,8 +399,8 @@ footer a:hover {
 /* Legg til i style.css */
 .hero-knapper {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 3.5rem;   /* Øk denne for mer luft sideveis mellom knappene */
+  margin-top: 3.5rem;
 }
 
 #dynamic-h1 {
@@ -412,9 +412,9 @@ footer a:hover {
 
 .h1-tabs {
   display: flex;
-  gap: 1.2rem;
+  gap: 6.2rem;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem; /* Øk denne for mer luft under tabs */
 }
 
 .h1-tab {
