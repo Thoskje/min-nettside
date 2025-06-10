@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "name": "min-nettside",
+  "version": "1.0.0",
+  "description": "Nettside som leverer tjenester med råd og veiledning for Ola og Kari Nordmann",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thoskje/min-nettside.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thoskje/min-nettside/issues"
+  },
+  "homepage": "https://github.com/Thoskje/min-nettside#readme"
+}
