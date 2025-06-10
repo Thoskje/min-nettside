@@ -32,7 +32,18 @@
     </nav>
   </header>
 
-  <!-- Faner for innhold -->
+ 
+   <!-- Legg dette inn i ønsket tab eller seksjon -->
+<div style="margin-bottom:1.5rem;">
+  <label class="skjema-label" for="regnr">Registreringsnummer</label>
+  <div style="display:flex;gap:0.5rem;">
+    <input class="skjema-input" type="text" id="regnr" placeholder="f.eks. AB12345">
+    <button type="button" class="skjema-btn" id="sok-bil">Søk</button>
+  </div>
+  <div id="bilinfo" style="margin:0.5rem 0 0.5rem 0; color:#0c1a2a; font-size:1rem;"></div>
+</div>
+
+ <!-- Faner for innhold -->
 <div class="hero-bilde-container">
   <section class="hero">
   <div class="h1-tabs">
@@ -138,5 +149,6 @@
   <script src="js/cookie-banner.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/hide-header-on-scroll.js" defer></script>
+  <script src="js/biloppslag.js"></script>
 </body>
 </html>

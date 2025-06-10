@@ -1,8 +1,6 @@
 {
-  "dependencies": {
-    "express": "^5.1.0"
-  },
-  "name": "min-nettside",
+  "type": "module",
+  "name": "min-nettside-test",
   "version": "1.0.0",
   "description": "Nettside som leverer tjenester med råd og veiledning for Ola og Kari Nordmann",
   "main": "index.js",
@@ -19,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Thoskje/min-nettside/issues"
   },
-  "homepage": "https://github.com/Thoskje/min-nettside#readme"
+  "homepage": "https://github.com/Thoskje/min-nettside#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

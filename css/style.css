@@ -17,6 +17,9 @@ body {
   flex-direction: column;
   min-height: 100vh;
   font-family: 'Inter', Arial, sans-serif;
+  background: #f6f9fc;
+  margin: 0;
+  padding: 0;
 }
 
 /* Topptekst */
@@ -648,6 +651,97 @@ footer a:hover {
     max-width: 98vw;
     padding: 1.5rem 1rem;
     border-radius: 1rem;
+  }
+}
+
+/* Skjema stiler */
+.skjema-hero {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(31,38,135,0.07);
+  max-width: 420px;
+  margin: 3rem auto 2rem auto;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  text-align: center;
+}
+.skjema-hero h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #0c1a2a;
+  margin-bottom: 0.7rem;
+  letter-spacing: -1px;
+}
+.skjema-hero p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+.skjema-step {
+  display: none;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+.skjema-step.active {
+  display: flex;
+}
+.skjema-label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #0c1a2a;
+}
+.skjema-input, .skjema-select, .skjema-textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  border: 1px solid #e0e7ef;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  background: #f6f9fc;
+  color: #222;
+  box-sizing: border-box;
+}
+.skjema-btn-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+.skjema-btn {
+  background: #ff9900;
+  color: #fff;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.skjema-btn:disabled {
+  background: #ffd580;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.skjema-progress {
+  margin: 1.5rem 0 1rem 0;
+  height: 8px;
+  background: #e0e7ef;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.skjema-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9900 60%, #ffd580 100%);
+  width: 0%;
+  transition: width 0.3s;
+}
+@media (max-width: 600px) {
+  .skjema-hero {
+    margin: 1.2rem 0.2rem;
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
   }
 }
 
