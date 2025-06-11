@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const { regnr } = req.query;
-  const API_KEY = 'Apikey 036d17d4-e6c6-4187-997a-bfe0dbe78830';
+  const API_KEY = process.env.SVV_API_KEY;
   const apiUrl = `https://akfell-datautlevering.atlas.vegvesen.no/enkeltoppslag/kjoretoydata?kjennemerke=${regnr.toUpperCase()}`;
   try {
     const response = await fetch(apiUrl, {
