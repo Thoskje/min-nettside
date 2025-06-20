@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "min-nettside-test",
+  "name": "min-nettside",
   "version": "1.0.0",
   "description": "Nettside som leverer tjenester med råd og veiledning for Ola og Kari Nordmann",
   "main": "index.js",
