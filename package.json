@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Thoskje/min-nettside#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "stripe": "^18.2.1"
   }
 }
