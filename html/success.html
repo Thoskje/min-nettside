@@ -24,5 +24,41 @@
     })();
   </script>
   <!-- End of Tawk.to Script -->
+
+  <script>
+    // Assuming you're using Stripe for payments
+    var stripe = Stripe('your-publishable-key-here');
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function () {
+      // Call your backend to create the Checkout session.
+      fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          success_url: 'https://min-nettside-nine.vercel.app/success.html',
+          cancel_url: 'https://min-nettside-nine.vercel.app/cancel.html',
+          // Add any other parameters your backend needs
+        })
+      })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (sessionId) {
+        return stripe.redirectToCheckout({ sessionId: sessionId });
+      })
+      .then(function (result) {
+        if (result.error) {
+          // Inform the customer that there was an error.
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
