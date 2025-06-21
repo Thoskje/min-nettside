@@ -36,9 +36,17 @@ document.addEventListener('DOMContentLoaded', function () {
           const modell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
           const forstegangsregistrert = bil.forstegangsregistrering?.registrertForstegangNorgeDato || '';
 
+          // Sett brukernavn i Tawk.to-chatten
+          if (window.Tawk_API) {
+            window.Tawk_API.setAttributes({
+              'name': `${merke} ${modell} (${regnr})`
+            }, function(error){});
+          }
+
           bilinfoDiv.innerHTML = `<strong>Bilmerke:</strong> ${merke}<br>
             <strong>Bilmodell:</strong> ${modell}<br>
-            <strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>`;
+            <strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>
+            <strong>Registreringsnummer:</strong> ${regnr}<br>`;
         } else {
           console.warn('Ingen informasjon funnet for dette registreringsnummeret.');
           bilinfoDiv.innerHTML = 'Ingen informasjon funnet for dette registreringsnummeret.';
