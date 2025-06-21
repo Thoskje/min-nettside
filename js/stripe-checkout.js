@@ -7,21 +7,16 @@ const stripeClient = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNT
 
 function startCheckout() {
   fetch('/api/create-checkout-session', { method: 'POST' })
-    .then(res => res.text())
-    .then(text => {
-      console.log('Rått svar fra backend:', text);
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        alert('Feil fra backend: ' + text);
-        return;
-      }
+    .then(res => res.json())
+    .then(data => {
       if (data.id) {
         stripeClient.redirectToCheckout({ sessionId: data.id });
       } else {
         alert('Ingen sessionId fra backend.');
       }
+    })
+    .catch(err => {
+      alert('Feil fra backend: ' + err);
     });
 }
 

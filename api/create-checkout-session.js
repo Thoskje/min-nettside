@@ -22,8 +22,8 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
-      success_url: 'https://min-nettside-qdbhei9ew-thomas-s-projects-fd5b29c6.vercel.app/success',
-      cancel_url: 'https://min-nettside-qdbhei9ew-thomas-s-projects-fd5b29c6.vercel.app/cancel',
+      success_url: 'https://dittdomene.no/success',
+      cancel_url: 'https://dittdomene.no/cancel',
     });
 
     res.status(200).json({ id: session.id });
