@@ -144,3 +144,48 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// 1. Vis biloppslag-widget når CTA trykkes
+document.getElementById('cta-knapp').addEventListener('click', function() {
+  document.getElementById('biloppslag-widget').style.display = 'block';
+  this.style.display = 'none';
+});
+
+// 2. Hent bilinfo når bruker søker
+document.getElementById('sok-bil').addEventListener('click', function() {
+  const regnr = document.getElementById('regnr-input').value;
+  fetch(`/api/bil?regnr=${regnr}`)
+    .then(res => res.json())
+    .then(data => {
+      const merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
+      const modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
+      const arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
+      const drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
+      const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+      const regnrUpper = regnr.toUpperCase();
+
+      // Vis bilinfo
+      document.getElementById('bilinfo').innerHTML = `
+        <strong>Bilmerke:</strong> ${merke}<br>
+        <strong>Bilmodell:</strong> ${modell}<br>
+        <strong>Årsmodell:</strong> ${arsmodell}<br>
+        <strong>Drivstoff:</strong> ${drivstoff}<br>
+        <strong>Motortype:</strong> ${motortype}<br>
+        <strong>Registreringsnummer:</strong> ${regnrUpper}<br>
+      `;
+      // Lagre bilnavn for chat
+      const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
+      localStorage.setItem('bilnavn', bilnavn);
+
+      // Vis godkjenn-knapp
+      document.getElementById('godkjenn-bil').style.display = 'inline-block';
+    });
+});
+
+// 3. Når bruker godkjenner biltype, vis Stripe-knapp
+document.getElementById('godkjenn-bil').addEventListener('click', function() {
+  document.querySelector('.stripe-btn').style.display = 'inline-block';
+  this.style.display = 'none';
+});
+
+// 4. Stripe-knapp og chat-tilgang håndteres som før
+
