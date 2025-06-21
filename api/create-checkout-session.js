@@ -22,8 +22,8 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'payment',
-      success_url: 'https://dittdomene.no/success',
-      cancel_url: 'https://dittdomene.no/cancel',
+      success_url: 'https://dittdomene.no/success.html',
+      cancel_url: 'https://dittdomene.no/cancel.html',
     });
 
     res.status(200).json({ id: session.id });
