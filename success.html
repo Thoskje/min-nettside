@@ -61,5 +61,18 @@
       });
     });
   </script>
+
+  <script>
+    // Hent bilnavn fra localStorage og sett som navn i chatten
+    var bilnavn = localStorage.getItem('bilnavn');
+    var Tawk_API = Tawk_API || {};
+    Tawk_API.onLoad = function(){
+      if(bilnavn) {
+        Tawk_API.setAttributes({ name: bilnavn }, function(error){});
+      }
+      Tawk_API.maximize();
+    };
+  </script>
+  <!-- Tawk.to-scriptet ditt her -->
 </body>
 </html>

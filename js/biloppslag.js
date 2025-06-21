@@ -43,6 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }, function(error){});
           }
 
+          const regnrUpper = regnr.toUpperCase();
+          const bilnavn = `${merke} ${modell} (${regnrUpper})`;
+          localStorage.setItem('bilnavn', bilnavn);
+
           bilinfoDiv.innerHTML = `<strong>Bilmerke:</strong> ${merke}<br>
             <strong>Bilmodell:</strong> ${modell}<br>
             <strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>
