@@ -27,6 +27,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.startCheckout = startCheckout;
-
-success_url: 'https://min-nettside-nine.vercel.app/success.html',
-cancel_url: 'https://min-nettside-nine.vercel.app/cancel.html',
