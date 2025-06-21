@@ -144,15 +144,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// 1. Vis biloppslag-widget når CTA trykkes
+// Vis biloppslag-widget når CTA-knappen trykkes
 document.getElementById('cta-knapp').addEventListener('click', function() {
   document.getElementById('biloppslag-widget').style.display = 'block';
   this.style.display = 'none';
 });
 
-// 2. Hent bilinfo når bruker søker
+// Hent bilinfo når bruker søker
 document.getElementById('sok-bil').addEventListener('click', function() {
-  const regnr = document.getElementById('regnr-input').value;
+  const regnr = document.getElementById('regnr').value;
   fetch(`/api/bil?regnr=${regnr}`)
     .then(res => res.json())
     .then(data => {
@@ -163,7 +163,6 @@ document.getElementById('sok-bil').addEventListener('click', function() {
       const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
       const regnrUpper = regnr.toUpperCase();
 
-      // Vis bilinfo
       document.getElementById('bilinfo').innerHTML = `
         <strong>Bilmerke:</strong> ${merke}<br>
         <strong>Bilmodell:</strong> ${modell}<br>
@@ -172,7 +171,8 @@ document.getElementById('sok-bil').addEventListener('click', function() {
         <strong>Motortype:</strong> ${motortype}<br>
         <strong>Registreringsnummer:</strong> ${regnrUpper}<br>
       `;
-      // Lagre bilnavn for chat
+
+      // Lagre bilnavn for evt. chat
       const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
       localStorage.setItem('bilnavn', bilnavn);
 
