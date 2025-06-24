@@ -173,10 +173,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   // Stripe-flyt: kun fra godkjenn-knapp
-  const stripe = Stripe('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'); // <-- Sett inn din publishable key
+  const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- Sett inn din publishable key
   const elements = stripe.elements();
-  const card = elements.create('card');
-  card.mount('#card-element');
+  const card = elements.create('card', {
+  style: style,
+  hidePostalCode: true
+});
+card.mount('#card-element');
 
   // Vis Stripe-skjema når bruker har godkjent biltype
   const godkjennBtn = document.getElementById('godkjenn-bil');
