@@ -13,7 +13,7 @@ document.querySelectorAll('.accordion-header').forEach(function(header) {
 /* ===========================
    Hero-faner: Bytte av innhold ved klikk
    =========================== */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // Tabs
   const tabButtons = document.querySelectorAll('.h1-tab');
   const tabContents = document.querySelectorAll('.h1-tab-content');
@@ -173,15 +173,56 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Stripe-flyt: kun fra godkjenn-knapp
+  const stripe = Stripe('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'); // <-- Sett inn din publishable key
+  const elements = stripe.elements();
+  const card = elements.create('card');
+  card.mount('#card-element');
+
+  // Vis Stripe-skjema når bruker har godkjent biltype
   const godkjennBtn = document.getElementById('godkjenn-bil');
   if (godkjennBtn) {
     godkjennBtn.addEventListener('click', function() {
       this.style.display = 'none';
-      if (typeof startCheckout === 'function') {
-        startCheckout();
-      } else {
-        const stripeBtn = document.querySelector('.stripe-btn');
-        if (stripeBtn) stripeBtn.click();
+      document.getElementById('payment-form').style.display = 'flex';
+    });
+  }
+
+  // Håndter betaling
+  const paymentForm = document.getElementById('payment-form');
+  if (paymentForm) {
+    paymentForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      document.getElementById('submit-payment').disabled = true;
+      document.getElementById('payment-message').textContent = '';
+
+      // 1. Kall backend for å lage PaymentIntent og få clientSecret
+      let clientSecret;
+      try {
+        const response = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ /* evt. pris, bilinfo, e.l. */ })
+        });
+        const data = await response.json();
+        clientSecret = data.clientSecret;
+      } catch (err) {
+        document.getElementById('payment-message').textContent = 'Kunne ikke starte betaling.';
+        document.getElementById('submit-payment').disabled = false;
+        return;
+      }
+
+      // 2. Bekreft betaling med Stripe Elements
+      const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: card }
+      });
+
+      if (error) {
+        document.getElementById('payment-message').textContent = error.message;
+        document.getElementById('submit-payment').disabled = false;
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        document.getElementById('payment-message').style.color = 'green';
+        document.getElementById('payment-message').textContent = 'Betaling fullført!';
+        // Her kan du åpne chat, redirecte, eller vise success-melding
       }
     });
   }
