@@ -67,16 +67,6 @@
 <button class="cta-button">Avtal time</button>
 <button class="cta-button">Kurs</button>
 
-<!-- Biloppslag-widget (skjult først) -->
-<section id="biloppslag-widget" style="display:none; margin-bottom:2rem;">
-  <label class="skjema-label" for="regnr">Registreringsnummer</label>
-  <div style="display:flex;gap:0.5rem;">
-    <input class="skjema-input" type="text" id="regnr" placeholder="f.eks. AB12345">
-    <button type="button" class="skjema-btn" id="sok-bil">Søk</button>
-  </div>
-  <div id="bilinfo" style="margin:0.5rem 0 0.5rem 0; color:#0c1a2a; font-size:1rem;"></div>
-  <button id="godkjenn-bil" style="display:none; margin-top:1em;">Godkjenn biltype</button>
-</section>
     </div>
     <div class="h1-tab-content" id="h1-tab-2">
       <h1>Avtal time</h1>
@@ -121,6 +111,17 @@
   
   <!-- <img src="bilder/bilde1.png" alt="Dekorativt bilde" class="bilde-ved-hero"> -->
 </div> <!-- hero-bilde-container slutt -->
+
+<!-- Biloppslag-widget her -->
+<section id="biloppslag-widget" style="display:none;">
+  <label class="skjema-label" for="regnr">Registreringsnummer</label>
+  <div style="display:flex;gap:0.5rem;">
+    <input class="skjema-input" type="text" id="regnr" placeholder="f.eks. AB12345">
+    <button type="button" class="skjema-btn" id="sok-bil">Søk</button>
+  </div>
+  <div id="bilinfo" style="margin:0.5rem 0 0.5rem 0; color:#0c1a2a; font-size:1rem;"></div>
+  <button id="godkjenn-bil" style="display:none; margin-top:1em;">Godkjenn biltype</button>
+</section>
 
   <!-- Bunntekst -->
   <footer>
