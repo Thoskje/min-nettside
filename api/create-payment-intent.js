@@ -32,5 +32,8 @@ const style = {
   },
   invalid: { color: "#e5424d", iconColor: "#e5424d" }
 };
-const card = elements.create('card', { style });
+const card = elements.create('card', {
+  style: style,
+  hidePostalCode: true
+});
 card.mount('#card-element');
