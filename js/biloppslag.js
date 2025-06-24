@@ -84,3 +84,16 @@ fetch(`/api/bil?regnr=${regnr}`)
       <strong>Motortype:</strong> ${motortype}<br>
       <strong>Registreringsnummer:</strong> ${regnrUpper}<br>`;
   });
+const regnrInput = document.getElementById('regnr');
+if (!regnrInput) return;
+const regnr = regnrInput.value.trim();
+if (!regnr) return;
+
+fetch(`/api/bil?regnr=${regnr}`)
+  .then(response => response.json())
+  .then(data => {
+    // ...behandle data...
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
