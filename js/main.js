@@ -14,13 +14,15 @@ document.querySelectorAll('.accordion-header').forEach(function(header) {
    Hero-faner: Bytte av innhold ved klikk
    =========================== */
 document.addEventListener('DOMContentLoaded', function() {
-  // H1-tabs (øverst i hero)
+  // Tabs
   const tabButtons = document.querySelectorAll('.h1-tab');
+  const tabContents = document.querySelectorAll('.h1-tab-content');
+
   tabButtons.forEach(function(tabBtn) {
     tabBtn.addEventListener('click', function() {
       // Fjern aktiv-klasse fra alle tabs og innhold
       tabButtons.forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.h1-tab-content').forEach(tab => tab.classList.remove('active'));
+      tabContents.forEach(tab => tab.classList.remove('active'));
 
       // Legg til aktiv-klasse på valgt tab og innhold
       tabBtn.classList.add('active');
@@ -29,31 +31,30 @@ document.addEventListener('DOMContentLoaded', function() {
       if (tabContent) tabContent.classList.add('active');
 
       // Fjern aktiv-klasse fra ALLE CTA-knapper
-      document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
 
       // Legg til aktiv-klasse på riktig CTA-knapp i AKTIV tab
-      let focusBtnId = '';
-      if (tabNum === '1') focusBtnId = 'chat-btn';
-      else if (tabNum === '2') focusBtnId = 'avtal-btn';
-      else if (tabNum === '3') focusBtnId = 'kurs-btn';
-
-      if (focusBtnId && tabContent) {
-        const btn = tabContent.querySelector('#' + focusBtnId);
-        if (btn) {
-          btn.classList.add('active');
-          btn.focus();
+      if (tabContent) {
+        if (tabNum === '1') {
+          const btn = tabContent.querySelector('.chat-btn');
+          if (btn) btn.classList.add('cta-active');
+        } else if (tabNum === '2') {
+          const btn = tabContent.querySelector('.avtal-btn');
+          if (btn) btn.classList.add('cta-active');
+        } else if (tabNum === '3') {
+          const btn = tabContent.querySelector('.kurs-btn');
+          if (btn) btn.classList.add('cta-active');
         }
       }
     });
   });
 
-  // Aktiver første tab ved lasting
-  const firstTab = document.querySelector('.h1-tab');
+  // Aktiver første tab og CTA-knapp ved lasting
+  const firstTab = document.querySelector('.h1-tab[data-h1="1"]');
   const firstTabContent = document.getElementById('h1-tab-1');
   if (firstTab && firstTabContent) {
     firstTab.classList.add('active');
     firstTabContent.classList.add('active');
-    // Marker riktig CTA-knapp i første tab
     const btn = firstTabContent.querySelector('.chat-btn');
     if (btn) btn.classList.add('cta-active');
   }
@@ -62,6 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.hero-knapper .kurs-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       window.location.href = 'html/kurs.html';
+    });
+  });
+
+  // Biloppslag-widget vises når en CTA-knapp trykkes
+  document.querySelectorAll('.cta-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const widget = document.getElementById('biloppslag-widget');
+      if (widget) widget.style.display = 'block';
     });
   });
 
