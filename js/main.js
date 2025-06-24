@@ -49,12 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Aktiver første tab og CTA-knapp ved lasting
+  // Aktiver første tab og CTA-knapp ved lasting (dette må stå ETTER all annen tab-init)
   const firstTab = document.querySelector('.h1-tab[data-h1="1"]');
   const firstTabContent = document.getElementById('h1-tab-1');
   if (firstTab && firstTabContent) {
     firstTab.classList.add('active');
     firstTabContent.classList.add('active');
+    // Fjern aktiv fra alle CTA-knapper først
+    document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
+    // Sett aktiv på chat-knappen
     const btn = firstTabContent.querySelector('.chat-btn');
     if (btn) btn.classList.add('cta-active');
   }
