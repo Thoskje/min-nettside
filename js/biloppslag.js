@@ -62,38 +62,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-fetch(`/api/bil?regnr=${regnr}`)
-  .then(res => res.json())
-  .then(data => {
-    const merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-    const modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-    const regnrUpper = regnr.toUpperCase();
-    const arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-    const drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-    const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+function hentBilinfo() {
+  const regnrInput = document.getElementById('regnr');
+  if (!regnrInput) return;
+  const regnr = regnrInput.value.trim();
+  if (!regnr) return;
 
-    // Lag bilnavn med årsmodell, drivstoff og motortype
-    const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
-    localStorage.setItem('bilnavn', bilnavn);
+  fetch(`/api/bil?regnr=${regnr}`)
+    .then(response => response.json())
+    .then(data => {
+      const merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
+      const modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
+      const regnrUpper = regnr.toUpperCase();
+      const arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
+      const drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
+      const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
 
-    // ...vis bilinfo på siden som før...
-    bilinfoDiv.innerHTML = `<strong>Bilmerke:</strong> ${merke}<br>
-      <strong>Bilmodell:</strong> ${modell}<br>
-      <strong>Årsmodell:</strong> ${arsmodell}<br>
-      <strong>Drivstoff:</strong> ${drivstoff}<br>
-      <strong>Motortype:</strong> ${motortype}<br>
-      <strong>Registreringsnummer:</strong> ${regnrUpper}<br>`;
-  });
-const regnrInput = document.getElementById('regnr');
-if (!regnrInput) return;
-const regnr = regnrInput.value.trim();
-if (!regnr) return;
+      // Lag bilnavn med årsmodell, drivstoff og motortype
+      const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
+      localStorage.setItem('bilnavn', bilnavn);
 
-fetch(`/api/bil?regnr=${regnr}`)
-  .then(response => response.json())
-  .then(data => {
-    // ...behandle data...
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
+      // ...vis bilinfo på siden som før...
+      bilinfoDiv.innerHTML = `<strong>Bilmerke:</strong> ${merke}<br>
+        <strong>Bilmodell:</strong> ${modell}<br>
+        <strong>Årsmodell:</strong> ${arsmodell}<br>
+        <strong>Drivstoff:</strong> ${drivstoff}<br>
+        <strong>Motortype:</strong> ${motortype}<br>
+        <strong>Registreringsnummer:</strong> ${regnrUpper}<br>`;
+    });
+}
