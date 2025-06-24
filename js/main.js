@@ -18,46 +18,40 @@ document.addEventListener('DOMContentLoaded', function() {
   const tabButtons = document.querySelectorAll('.h1-tab');
   const tabContents = document.querySelectorAll('.h1-tab-content');
 
+  function activateTab(tabNum) {
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
+
+    const tabBtn = document.querySelector('.h1-tab[data-h1="' + tabNum + '"]');
+    const tabContent = document.getElementById('h1-tab-' + tabNum);
+    if (tabBtn) tabBtn.classList.add('active');
+    if (tabContent) tabContent.classList.add('active');
+
+    if (tabContent) {
+      if (tabNum === '1') {
+        const btn = tabContent.querySelector('.chat-btn');
+        if (btn) btn.classList.add('cta-active');
+      } else if (tabNum === '2') {
+        const btn = tabContent.querySelector('.avtal-btn');
+        if (btn) btn.classList.add('cta-active');
+      } else if (tabNum === '3') {
+        const btn = tabContent.querySelector('.kurs-btn');
+        if (btn) btn.classList.add('cta-active');
+      }
+    }
+  }
+
+  // Tabs click
   tabButtons.forEach(function(tabBtn) {
     tabBtn.addEventListener('click', function() {
-      // Fjern aktiv-klasse fra alle tabs og innhold
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      tabContents.forEach(tab => tab.classList.remove('active'));
-
-      // Legg til aktiv-klasse på valgt tab og innhold
-      tabBtn.classList.add('active');
       const tabNum = tabBtn.getAttribute('data-h1');
-      const tabContent = document.getElementById('h1-tab-' + tabNum);
-      if (tabContent) tabContent.classList.add('active');
-
-      // Fjern aktiv-klasse fra ALLE CTA-knapper
-      document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
-
-      // Legg til aktiv-klasse på riktig CTA-knapp i AKTIV tab
-      if (tabContent) {
-        if (tabNum === '1') {
-          const btn = tabContent.querySelector('.chat-btn');
-          if (btn) btn.classList.add('cta-active');
-        } else if (tabNum === '2') {
-          const btn = tabContent.querySelector('.avtal-btn');
-          if (btn) btn.classList.add('cta-active');
-        } else if (tabNum === '3') {
-          const btn = tabContent.querySelector('.kurs-btn');
-          if (btn) btn.classList.add('cta-active');
-        }
-      }
+      activateTab(tabNum);
     });
   });
 
   // Aktiver første tab og CTA-knapp ved lasting
-  const firstTab = document.querySelector('.h1-tab[data-h1="1"]');
-  const firstTabContent = document.getElementById('h1-tab-1');
-  if (firstTab && firstTabContent) {
-    firstTab.classList.add('active');
-    firstTabContent.classList.add('active');
-    const btn = firstTabContent.querySelector('.chat-btn');
-    if (btn) btn.classList.add('cta-active');
-  }
+  activateTab('1');
 
   // CTA-knapp: Kurs
   document.querySelectorAll('.hero-knapper .kurs-btn').forEach(btn => {
@@ -66,13 +60,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Biloppslag-widget vises når en CTA-knapp trykkes
+  /* ===========================
+     Biloppslag-widget som overlay/modal
+     =========================== */
+  // Åpne overlay når CTA trykkes
   document.querySelectorAll('.cta-button').forEach(btn => {
     btn.addEventListener('click', function() {
-      const widget = document.getElementById('biloppslag-widget');
-      if (widget) widget.style.display = 'block';
+      const overlay = document.getElementById('biloppslag-overlay');
+      if (overlay) overlay.style.display = 'flex';
     });
   });
+
+  // Lukk overlay
+  const lukkBtn = document.getElementById('lukk-biloppslag');
+  if (lukkBtn) {
+    lukkBtn.addEventListener('click', function() {
+      const overlay = document.getElementById('biloppslag-overlay');
+      if (overlay) overlay.style.display = 'none';
+    });
+  }
 
   // Hero "mer info"-piler
   const heroIcon = document.getElementById('hero-more-icon');
@@ -122,45 +128,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  document.querySelectorAll('.h1-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      // Bytt aktiv tab-knapp
-      document.querySelectorAll('.h1-tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-
-      // Finn valgt tab-index (1, 2, 3)
-      const tabIndex = this.getAttribute('data-h1');
-      // Bytt aktivt innhold
-      document.querySelectorAll('.h1-tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-      document.getElementById('h1-tab-' + tabIndex).classList.add('active');
-
-      // Fjern aktiv-klasse fra alle CTA-knapper
-      document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
-      // Legg til aktiv-klasse på riktig CTA-knapp i valgt tab (kun for farge)
-      const activeTabContent = document.getElementById('h1-tab-' + tabIndex);
-      if (activeTabContent) {
-        if (tabIndex === "1") {
-          activeTabContent.querySelector('.chat-btn').classList.add('cta-active');
-        } else if (tabIndex === "2") {
-          activeTabContent.querySelector('.avtal-btn').classList.add('cta-active');
-        } else if (tabIndex === "3") {
-          activeTabContent.querySelector('.kurs-btn').classList.add('cta-active');
-        }
-      }
-    });
-  });
-
-  // 1. Vis biloppslag-widget når en CTA-knapp trykkes
-  document.querySelectorAll('.cta-button').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const widget = document.getElementById('biloppslag-widget');
-      if (widget) widget.style.display = 'block';
-    });
-  });
-
-  // 2. Hent bilinfo når bruker søker
+  /* ===========================
+     Biloppslag-funksjonalitet
+     =========================== */
   const sokBilBtn = document.getElementById('sok-bil');
   if (sokBilBtn) {
     sokBilBtn.addEventListener('click', function() {
@@ -202,28 +172,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // 3. Når bruker godkjenner biltype, åpne Stripe (stripe-checkout.js må håndtere stripe-flowen)
+  // Stripe-flyt: kun fra godkjenn-knapp
   const godkjennBtn = document.getElementById('godkjenn-bil');
   if (godkjennBtn) {
     godkjennBtn.addEventListener('click', function() {
-      // Skjul godkjenn-knappen hvis ønskelig
       this.style.display = 'none';
-      // Start Stripe-flow (stripe-checkout.js må lytte på .stripe-btn eller startCheckout kan kalles direkte)
       if (typeof startCheckout === 'function') {
         startCheckout();
       } else {
-        // Alternativ: simuler klikk på Stripe-knapp hvis du bruker en skjult knapp
         const stripeBtn = document.querySelector('.stripe-btn');
         if (stripeBtn) stripeBtn.click();
       }
     });
   }
-});
-
-// 3. Når bruker godkjenner biltype, vis Stripe-knapp
-document.getElementById('godkjenn-bil').addEventListener('click', function() {
-  document.querySelector('.stripe-btn').style.display = 'inline-block';
-  this.style.display = 'none';
 });
 
 
