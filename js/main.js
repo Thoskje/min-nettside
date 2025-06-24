@@ -144,10 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Vis biloppslag-widget når CTA-knappen trykkes
-document.getElementById('cta-knapp').addEventListener('click', function() {
-  document.getElementById('biloppslag-widget').style.display = 'block';
-  this.style.display = 'none';
+// 4. Stripe-knapp og chat-tilgang håndteres som før
+document.querySelectorAll('.cta-button').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('biloppslag-widget').style.display = 'block';
+    // Hvis du vil skjule alle CTA-knapper etterpå:
+    // document.querySelectorAll('.cta-button').forEach(b => b.style.display = 'none');
+  });
 });
 
 // Hent bilinfo når bruker søker
@@ -187,5 +190,5 @@ document.getElementById('godkjenn-bil').addEventListener('click', function() {
   this.style.display = 'none';
 });
 
-// 4. Stripe-knapp og chat-tilgang håndteres som før
+
 
