@@ -143,19 +143,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Vis biloppslag-widget når en CTA-knapp trykkes
+  // 1. Vis biloppslag-widget når en CTA-knapp trykkes
   document.querySelectorAll('.cta-button').forEach(btn => {
     btn.addEventListener('click', function() {
       const widget = document.getElementById('biloppslag-widget');
-      if (widget) {
-        widget.style.display = 'block';
-      }
-      // Skjul alle CTA-knapper hvis ønskelig:
-      // document.querySelectorAll('.cta-button').forEach(b => b.style.display = 'none');
+      if (widget) widget.style.display = 'block';
     });
   });
 
-  // Hent bilinfo når bruker søker
+  // 2. Hent bilinfo når bruker søker
   const sokBilBtn = document.getElementById('sok-bil');
   if (sokBilBtn) {
     sokBilBtn.addEventListener('click', function() {
@@ -189,7 +185,28 @@ document.addEventListener('DOMContentLoaded', function() {
           // Lagre bilnavn for evt. chat
           const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
           localStorage.setItem('bilnavn', bilnavn);
+
+          // Vis godkjenn-knapp
+          const godkjennBtn = document.getElementById('godkjenn-bil');
+          if (godkjennBtn) godkjennBtn.style.display = 'inline-block';
         });
+    });
+  }
+
+  // 3. Når bruker godkjenner biltype, åpne Stripe (stripe-checkout.js må håndtere stripe-flowen)
+  const godkjennBtn = document.getElementById('godkjenn-bil');
+  if (godkjennBtn) {
+    godkjennBtn.addEventListener('click', function() {
+      // Skjul godkjenn-knappen hvis ønskelig
+      this.style.display = 'none';
+      // Start Stripe-flow (stripe-checkout.js må lytte på .stripe-btn eller startCheckout kan kalles direkte)
+      if (typeof startCheckout === 'function') {
+        startCheckout();
+      } else {
+        // Alternativ: simuler klikk på Stripe-knapp hvis du bruker en skjult knapp
+        const stripeBtn = document.querySelector('.stripe-btn');
+        if (stripeBtn) stripeBtn.click();
+      }
     });
   }
 });
