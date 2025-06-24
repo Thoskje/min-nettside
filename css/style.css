@@ -818,3 +818,29 @@ footer a:hover {
   box-shadow: 0 1px 4px rgba(12,26,42,0.04);
 }
 
+.biloppslag-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(30,40,60,0.18);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.biloppslag-modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(12,26,42,0.12), 0 1.5px 4px rgba(12,26,42,0.10);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  max-width: 95vw;
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Inter', Arial, sans-serif;
+  position: relative;
+}
+

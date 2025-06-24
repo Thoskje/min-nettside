@@ -126,6 +126,24 @@
     </div>
   </section>
 
+  <!-- Overlay for blur -->
+  <div id="biloppslag-overlay" class="biloppslag-overlay" style="display:none;">
+    <div class="biloppslag-modal">
+      <div class="biloppslag-header">
+        <span class="biloppslag-icon">🚗</span>
+        <span class="biloppslag-title">Biloppslag</span>
+      </div>
+      <label class="skjema-label" for="regnr">Registreringsnummer</label>
+      <div class="biloppslag-inputrow">
+        <input class="skjema-input" type="text" id="regnr" placeholder="f.eks. AB12345">
+        <button type="button" class="skjema-btn" id="sok-bil">Søk</button>
+      </div>
+      <div id="bilinfo" class="biloppslag-bilinfo"></div>
+      <button id="godkjenn-bil" class="skjema-btn biloppslag-godkjenn" style="display:none;">Godkjenn biltype</button>
+      <button id="lukk-biloppslag" class="skjema-btn" style="background:#e0e6ed;color:#0c1a2a;margin-top:1rem;">Lukk</button>
+    </div>
+  </div>
+
   <!-- Bunntekst -->
   <footer>
     <p>&copy; 2025 bilrådet.no.  | <a href="html/personvern.html">Personvern</a> | <a href="html/cookies.html">Cookies</a></p>
