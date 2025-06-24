@@ -142,57 +142,57 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-});
 
-// Vis biloppslag-widget når en cta-button trykkes
-document.querySelectorAll('.cta-button').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const widget = document.getElementById('biloppslag-widget');
-    if (widget) {
-      widget.style.display = 'block';
-    }
-    // Hvis du ønsker å skjule alle CTA-knapper etterpå, fjern kommentaren under:
-    // document.querySelectorAll('.cta-button').forEach(b => b.style.display = 'none');
+  // Vis biloppslag-widget når en CTA-knapp trykkes
+  document.querySelectorAll('.cta-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const widget = document.getElementById('biloppslag-widget');
+      if (widget) {
+        widget.style.display = 'block';
+      }
+      // Skjul alle CTA-knapper hvis ønskelig:
+      // document.querySelectorAll('.cta-button').forEach(b => b.style.display = 'none');
+    });
   });
+
+  // Hent bilinfo når bruker søker
+  const sokBilBtn = document.getElementById('sok-bil');
+  if (sokBilBtn) {
+    sokBilBtn.addEventListener('click', function() {
+      const regnrInput = document.getElementById('regnr');
+      if (!regnrInput) return;
+      const regnr = regnrInput.value.trim();
+      if (!regnr) return;
+
+      fetch(`/api/bil?regnr=${regnr}`)
+        .then(res => res.json())
+        .then(data => {
+          const merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
+          const modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
+          const arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
+          const drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
+          const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+          const regnrUpper = regnr.toUpperCase();
+
+          const bilinfoDiv = document.getElementById('bilinfo');
+          if (bilinfoDiv) {
+            bilinfoDiv.innerHTML = `
+              <strong>Bilmerke:</strong> ${merke}<br>
+              <strong>Bilmodell:</strong> ${modell}<br>
+              <strong>Årsmodell:</strong> ${arsmodell}<br>
+              <strong>Drivstoff:</strong> ${drivstoff}<br>
+              <strong>Motortype:</strong> ${motortype}<br>
+              <strong>Registreringsnummer:</strong> ${regnrUpper}<br>
+            `;
+          }
+
+          // Lagre bilnavn for evt. chat
+          const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
+          localStorage.setItem('bilnavn', bilnavn);
+        });
+    });
+  }
 });
-
-// Hent bilinfo når bruker søker
-const sokBilBtn = document.getElementById('sok-bil');
-if (sokBilBtn) {
-  sokBilBtn.addEventListener('click', function() {
-    const regnrInput = document.getElementById('regnr');
-    if (!regnrInput) return;
-    const regnr = regnrInput.value.trim();
-    if (!regnr) return;
-
-    fetch(`/api/bil?regnr=${regnr}`)
-      .then(res => res.json())
-      .then(data => {
-        const merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-        const modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-        const arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-        const drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-        const motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
-        const regnrUpper = regnr.toUpperCase();
-
-        const bilinfoDiv = document.getElementById('bilinfo');
-        if (bilinfoDiv) {
-          bilinfoDiv.innerHTML = `
-            <strong>Bilmerke:</strong> ${merke}<br>
-            <strong>Bilmodell:</strong> ${modell}<br>
-            <strong>Årsmodell:</strong> ${arsmodell}<br>
-            <strong>Drivstoff:</strong> ${drivstoff}<br>
-            <strong>Motortype:</strong> ${motortype}<br>
-            <strong>Registreringsnummer:</strong> ${regnrUpper}<br>
-          `;
-        }
-
-        // Lagre bilnavn for evt. chat
-        const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnrUpper})`;
-        localStorage.setItem('bilnavn', bilnavn);
-      });
-  });
-}
 
 // 3. Når bruker godkjenner biltype, vis Stripe-knapp
 document.getElementById('godkjenn-bil').addEventListener('click', function() {
