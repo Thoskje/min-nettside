@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tabContents.forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.hero-knapper .cta-button').forEach(btn => btn.classList.remove('cta-active'));
 
-    const tabBtn = document.querySelector('.h1-tab[data-h1="' + tabNum + '"]');
-    const tabContent = document.getElementById('h1-tab-' + tabNum);
+    const tabBtn = document.querySelector(`.h1-tab[data-h1="${tabNum}"]`);
+    const tabContent = document.getElementById(`h1-tab-${tabNum}`);
     if (tabBtn) tabBtn.classList.add('active');
     if (tabContent) tabContent.classList.add('active');
 
