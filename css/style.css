@@ -1,4 +1,4 @@
-/* Generell tilbakestilling av margin og padding */
+/* === Reset og grunnleggende === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,21 +8,19 @@
 html, body {
   height: 100%;
   min-height: 100%;
-  background: #fff; /* eller samme som footer hvis du vil ha mørk bakgrunn */
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background: #f6f9fc;
+  font-family: 'Inter', Arial, sans-serif;
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: 'Inter', Arial, sans-serif;
-  background: #f6f9fc;
   margin: 0;
   padding: 0;
 }
 
-/* Topptekst */
+/* === Header og navigasjon === */
 header {
   background: #0c1a2a;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
@@ -39,14 +37,9 @@ header {
 .logo {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   letter-spacing: 1px;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
 }
 
 nav a {
@@ -63,56 +56,13 @@ nav a:hover {
   color: #fff;
 }
 
-.chat-button {
-  background-color: #535353;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  color:white;
-  padding: 0.9rem 1.7rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  width: 250px;
-}
-
-.chat-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
-  background-color: #ff9900;
-}
-
-/* Faner/navigasjon */
-.nav-links nav {
-  display: flex;
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  background: #ff9900;
-  color: #fff;
-}
-
-/* Heltopp / Hero seksjon */
+/* === Hero og faner === */
 .hero {
-  max-width: 1300px;      /* Øk denne for større bredde */
-  min-width: 400px;      /* Juster etter behov */
+  max-width: 1300px;
+  min-width: 400px;
   width: 100%;
   margin: 0 auto;
-  padding: 5rem 3rem;    /* Øk padding for mer luft */
+  padding: 5rem 3rem;
   border-radius: 2rem;
   box-shadow: 0 8px 32px rgba(31,38,135,0.07);
   background: #fff;
@@ -124,32 +74,25 @@ nav a:hover {
 }
 
 .hero h1 {
-  font-size: 4.5rem;       /* Øk for større overskrift */
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  font-family: 'Segoe UI', Roboto, sans-serif;
   font-size: 2.5rem;
   font-weight: 800;
   color: #0c1a2a;
   margin-bottom: 1.2rem;
   letter-spacing: -1px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
 .hero p {
   font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-  font-size: 1.25rem;  /* Øk for større brødtekst */
+  font-size: 1.25rem;
   color: #222;
   margin-bottom: 1.6rem;
   line-height: 1.7;
-  text-shadow: none; /* Fjern eller juster hvis du ikke ønsker skygge */
 }
 
 .cta-button {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  background: #0c1a2a;      /* blå bakgrunn */
-  color: #fff;          /* lys tekst */
+  background: #0c1a2a;
+  color: #fff;
   font-size: 1rem;
   font-weight: bold;
   padding: 0.9rem 1.7rem;
@@ -157,16 +100,8 @@ nav a:hover {
   border-radius: 2rem;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  box-shadow: none;
   width: 250px;
 }
-
-/* Fjern eller kommenter ut ::before hvis du vil ha flat farge */
-/*
-.cta-button::before {
-  display: none;
-}
-*/
 
 .cta-button:hover {
   background: #ffb84d;
@@ -178,246 +113,12 @@ nav a:hover {
   color: #fff !important;
 }
 
-.cta-button:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Faneinnhold */
-.tab-content {
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 700px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  color: #0c1a2a;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.tab-content::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Accordion kort for hver knapp */
-.accordion-card {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.accordion-header {
-  width: 100%;
-  background: #0c1a2a;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 1.1rem 2rem;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-  transition: background 0.2s;
-}
-
-.accordion-header:hover {
-  background: #14325a;
-}
-
-.accordion-body {
-  display: none;
-  padding: 1.2rem 2rem 2rem 2rem;
-  background: #f7f7f7;
-  color: #0c1a2a;
-  border-top: 1px solid #eee;
-  animation: fadeIn 0.3s;
-}
-
-.accordion-body.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Bunntekst */
-footer {
-  background-color: #0c1a2a;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-  margin-top: auto;
-}
-
-footer a {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-footer a:hover {
-  color: #ffffff;
-}
-
-/* Cookie-banner */
-.cookie-banner {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #0c1a2a;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-  display: none;
-  z-index: 1000;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.cookie-banner button {
-  background-color: #ff9900;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.cookie-banner a {
-  color: #ff9900;
-  text-decoration: underline;
-}
-
-.cookie-options {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* Responsivt */
-@media (max-width: 700px) {
-  .tab-content, .hero {
-    padding: 1rem;
-    max-width: 98vw;
-  }
-  .nav-links nav {
-    gap: 1rem;
-  }
-  .h1-tabs {
-    flex-direction: row;   /* Endret fra column til row */
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-}
-
-.bilde-under-fane {
-  display: block;
-  margin: 2rem auto 0 auto;
-  max-width: 350px;
-  width: 100%;
-  height: auto;
-  opacity: 0.85; /* valgfritt, for litt gjennomsiktighet */
-}
-
-.hero-bilde-container {
-  display: flex;
-  flex-direction: column;   /* Viktig: kolonne, ikke rad */
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  margin-top: 4rem;
-  padding: 3rem 0 2rem 0;
-}
-
-.bilde-ved-hero {
-  flex: 0 0 auto;
-  width: 320px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 1.5rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  object-fit: cover;
-  background: #fff;
-  /* Juster denne verdien til å matche hero sin topp-padding/margin */
-  margin-top: 0;
-  align-self: flex-start;
-  z-index: 1;
-}
-
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2.5rem;
-  justify-content: center;
-  margin: 3rem 0;
-}
-
-.card {
-  background: #fff;
-  border-radius: 1.5rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  padding: 3rem 2.2rem;
-  max-width: 420px;      /* øk fra 340px */
-  min-width: 320px;
-  flex: 1 1 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: transform 0.18s, box-shadow 0.18s;
-}
-
-.card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 8px 32px rgba(31,38,135,0.13);
-}
-
-.card h2 {
-  font-size: 1.5rem;
-  color: #0c1a2a;
-  margin-bottom: 0.7rem;
-}
-
-.card p {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 1.2rem;
-}
-
-.card .cta-button {
-  margin-top: auto;
-}
-
-/* Legg til i style.css */
-.hero-knapper {
-  display: flex;
-  gap: 3.5rem;   /* Øk denne for mer luft sideveis mellom knappene */
-  margin-top: 4.5rem;
-}
-
-#dynamic-h1 {
-  min-width: 350px; /* juster etter behov */
-  display: inline-block;
-  text-align: center;
-  transition: opacity 0.6s;
-}
-
+/* === Hero tabs === */
 .h1-tabs {
   display: flex;
-  gap: 3.0rem;
+  gap: 3rem;
   justify-content: center;
-  margin-bottom: 0.5rem; /* Øk denne for mer luft under tabs */
+  margin-bottom: 0.5rem;
 }
 
 .h1-tab {
@@ -431,14 +132,13 @@ footer a:hover {
   cursor: pointer;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
   box-shadow: 0 2px 8px rgba(31,38,135,0.06);
-  outline: none;
   margin-bottom: -8px;
   position: relative;
   top: 0;
 }
 
 .h1-tab.active {
-  background: #ffffff !important;
+  background: #fff !important;
   color: #ff9900 !important;
   box-shadow: 0 4px 24px rgba(31,38,135,0.08);
   z-index: 2;
@@ -459,361 +159,14 @@ footer a:hover {
   display: block;
 }
 
-.menu-btn {
-  background: none;
-  border: none;
-  font-size: 3rem;
-  color: #ffffff;
-  cursor: pointer;
-  position: absolute;
-  right: 1.5rem;
-  top: -0.3rem;
-  z-index: 1201;
-  display: block; /* Fjern eller overstyr media query midlertidig */
-}
-
-.mobile-nav {
-  display: none;
-  position: fixed;
-  top: 0; right: 0;
-  width: 70vw;
-  max-width: 320px;
-  height: 100vh;
-  background: #fff;
-  box-shadow: -2px 0 16px rgba(0,0,0,0.08);
-  z-index: 1200;
-  padding: 3rem 2rem 2rem 2rem;
-  transition: transform 0.2s;
-  transform: translateX(100%);
-}
-.mobile-nav.open {
-  display: block;
-  transform: translateX(0);
-}
-.mobile-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.mobile-nav li {
-  margin-bottom: 1.5rem;
-}
-.mobile-nav a {
-  color: #0c1a2a;
-  font-size: 1.2rem;
-  text-decoration: none;
-  font-weight: 600;
-}
-@media (max-width: 900px) {
-  .menu-btn { display: block; }
-  .mobile-nav { display: block; }
-  header .logo { position: relative; z-index: 1202; }
-}
-
-.hero-card {
-  background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1.5rem 1.2rem;
-}
-.hero-card-header {
+/* === Hero-knapper === */
+.hero-knapper {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #0c1a2a;
+  gap: 3.5rem;
+  margin-top: 4.5rem;
 }
 
-/* Spesifikke stiler for hero-card innhold */
-.hero-card-content {
-  margin-top: 1rem;
-  color: #0c1a2a;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-
-#hero-more-icon:hover svg polyline {
-  stroke: #ffb84d;
-  filter: drop-shadow(0 2px 4px rgba(255,153,0,0.15));
-}
-#hero-more-icon svg {
-  transition: transform 0.2s;
-
-}
-#hero-more-icon svg polyline {
-  stroke: #c8c8c8; /* Alltid denne fargen */
-}
-
-#hero-more-text {
-  font-size: 1.15rem;         /* Endre tall for større/mindre tekst */
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif; /* Endre font hvis ønskelig */
-  color: #0c1a2a;                /* Endre tekstfarge */
-  border-radius: 0.7rem;
-  padding: 1.2rem 1.5rem;
-  margin-top: 1rem;
-  box-shadow: 0 2px 8px rgba(255,153,0,0.07);
-  line-height: 1.7;
-}
-#hero-more-text ul {
-  margin-left: 0;
-  padding-left: 1.2em;         /* Gir litt luft, men ikke for mye */
-  list-style-position: inside;
-}
-
-#hero-more-text li {
-  margin-bottom: 0.7rem;
-  text-indent: 0;
-  padding-left: 0;
-  /* Ikke bruk negative text-indent eller ekstra padding her */
-}
-
-/* Mobiloptimalisering */
-@media (max-width: 700px) {
-  .hero-bilde-container {
-    flex-direction: ro;
-    align-items: stretch;
-    gap: 1.2rem;
-    margin-top: 1.2rem;
-    padding: 1rem 0 1.5rem 0;
-  }
-
-  .hero {
-    padding: 1.2rem 0.5rem;
-    max-width: 100vw;
-    min-width: 0;
-    border-radius: 1.2rem;
-    box-shadow: 0 2px 8px rgba(31,38,135,0.07);
-  }
-
-  .hero h1 {
-    font-size: 1.7rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero p,
-  #hero-more-text {
-    font-size: 1rem;
-    padding: 1rem 0.5rem;
-  }
-
-  .h1-tabs {
-    flex-direction: row;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .h1-tab {
-    font-size: 1rem;
-    padding: 0.7rem 1.2rem;
-    border-radius: 14px 14px 0 0;
-    margin-bottom: 0;
-  }
-
-  .hero-knapper {
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-top: 1rem;
-  }
-
-  .cta-button {
-    width: 100%;
-    font-size: 1.05rem;
-    padding: 1rem 0;
-    border-radius: 1.5rem;
-  }
-
-  .bilde-ved-hero {
-    width: 100%;
-    max-width: 98vw;
-    margin: 1.2rem 0 0 0;
-    border-radius: 1rem;
-  }
-
-  .tab-content,
-  .h1-tab-content {
-    padding: 1rem 0.5rem;
-    font-size: 1.1rem;
-  }
-
-  .card-list {
-    flex-direction: column;
-    gap: 1.2rem;
-    margin: 1.5rem 0;
-  }
-
-  .card {
-    min-width: 0;
-    max-width: 98vw;
-    padding: 1.5rem 1rem;
-    border-radius: 1rem;
-  }
-}
-
-/* Skjema stiler */
-.skjema-hero {
-  background: #fff;
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 32px rgba(31,38,135,0.07);
-  max-width: 420px;
-  margin: 3rem auto 2rem auto;
-  padding: 2.5rem 1.5rem 2rem 1.5rem;
-  text-align: center;
-}
-.skjema-hero h1 {
-  font-size: 2.1rem;
-  font-weight: 800;
-  color: #0c1a2a;
-  margin-bottom: 0.7rem;
-  letter-spacing: -1px;
-}
-.skjema-hero p {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 1.5rem;
-}
-.skjema-step {
-  display: none;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-bottom: 1.2rem;
-  text-align: left;
-}
-.skjema-step.active {
-  display: flex;
-}
-.skjema-label {
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  color: #0c1a2a;
-}
-.skjema-input, .skjema-select, .skjema-textarea {
-  width: 100%;
-  padding: 0.7rem;
-  border-radius: 0.7rem;
-  border: 1px solid #e0e7ef;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  background: #f6f9fc;
-  color: #222;
-  box-sizing: border-box;
-}
-.skjema-btn-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1.2rem;
-}
-.skjema-btn {
-  background: #ff9900;
-  color: #fff;
-  border: none;
-  border-radius: 1.2rem;
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.18s;
-}
-.skjema-btn:disabled {
-  background: #ffd580;
-  color: #aaa;
-  cursor: not-allowed;
-}
-.skjema-progress {
-  margin: 1.5rem 0 1rem 0;
-  height: 8px;
-  background: #e0e7ef;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-.skjema-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ff9900 60%, #ffd580 100%);
-  width: 0%;
-  transition: width 0.3s;
-}
-@media (max-width: 600px) {
-  .skjema-hero {
-    margin: 1.2rem 0.2rem;
-    padding: 1.2rem 0.5rem;
-    max-width: 98vw;
-  }
-}
-
-/* Moderne app-boks for biloppslag */
-.biloppslag-appbox {
-  max-width: 370px;
-  margin: 2rem auto;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 32px rgba(12,26,42,0.12), 0 1.5px 4px rgba(12,26,42,0.10);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  font-family: 'Inter', Arial, sans-serif;
-}
-
-.biloppslag-header {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #0c1a2a;
-  margin-bottom: 0.5rem;
-}
-
-.biloppslag-inputrow {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.skjema-input {
-  flex: 1;
-  padding: 0.7rem 1rem;
-  border: 1.5px solid #e0e6ed;
-  border-radius: 8px;
-  font-size: 1rem;
-  background: #f8fafc;
-  transition: border 0.2s;
-}
-.skjema-input:focus {
-  border-color: #ff9900;
-  outline: none;
-}
-
-.skjema-btn, .biloppslag-godkjenn {
-  background: #ff9900;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.7rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.skjema-btn:hover, .biloppslag-godkjenn:hover {
-  background: #e07c00;
-}
-
-.biloppslag-bilinfo {
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 1rem;
-  color: #0c1a2a;
-  font-size: 1rem;
-  min-height: 2.5rem;
-  margin-top: 0.5rem;
-  box-shadow: 0 1px 4px rgba(12,26,42,0.04);
-}
-
+/* === Biloppslag-widget/modal === */
 .biloppslag-overlay {
   position: fixed;
   inset: 0;
@@ -840,6 +193,7 @@ footer a:hover {
   position: relative;
 }
 
+/* === Stripe Checkout-modul (overlay/modal) === */
 .checkout-overlay {
   position: fixed;
   inset: 0;
@@ -921,5 +275,82 @@ footer a:hover {
   color: #0c1a2a;
   font-size: 1rem;
   margin-bottom: 1rem;
+}
+
+/* === Footer === */
+footer {
+  background-color: #0c1a2a;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+footer a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+/* === Cookie-banner === */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #0c1a2a;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cookie-banner button {
+  background-color: #ff9900;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cookie-banner a {
+  color: #ff9900;
+  text-decoration: underline;
+}
+
+/* === Responsivt (utdrag, legg til mer etter behov) === */
+@media (max-width: 700px) {
+  .hero, .tab-content {
+    padding: 1rem;
+    max-width: 98vw;
+  }
+  .h1-tabs {
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .hero-knapper {
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+  .cta-button {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem 0;
+    border-radius: 1.5rem;
+  }
+  .checkout-module {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem;
+  }
 }
 

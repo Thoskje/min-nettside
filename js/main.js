@@ -3,7 +3,7 @@ console.log("main.js lastet");
 /* ===========================
    Accordion-funksjonalitet
    =========================== */
-document.querySelectorAll('.accordion-header').forEach(function(header) {
+document.querySelectorAll('.accordion-header').forEach(header => {
   header.addEventListener('click', function() {
     const body = this.nextElementSibling;
     body.classList.toggle('active');
@@ -13,7 +13,7 @@ document.querySelectorAll('.accordion-header').forEach(function(header) {
 /* ===========================
    Hero-faner: Bytte av innhold ved klikk
    =========================== */
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
   // Tabs
   const tabButtons = document.querySelectorAll('.h1-tab');
   const tabContents = document.querySelectorAll('.h1-tab-content');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   // Tabs click
-  tabButtons.forEach(function(tabBtn) {
+  tabButtons.forEach(tabBtn => {
     tabBtn.addEventListener('click', function() {
       const tabNum = tabBtn.getAttribute('data-h1');
       activateTab(tabNum);
@@ -81,33 +81,21 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   // Hero "mer info"-piler
-  const heroIcon = document.getElementById('hero-more-icon');
-  const heroMore = document.getElementById('hero-more-text');
-  if (heroIcon && heroMore) {
-    heroIcon.addEventListener('click', function() {
-      const open = heroMore.style.display === 'inline';
-      heroMore.style.display = open ? 'none' : 'inline';
-      heroIcon.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
-    });
-  }
-  const avtalIcon = document.getElementById('avtal-more-icon');
-  const avtalMore = document.getElementById('avtal-more-text');
-  if (avtalIcon && avtalMore) {
-    avtalIcon.addEventListener('click', function() {
-      const open = avtalMore.style.display === 'inline';
-      avtalMore.style.display = open ? 'none' : 'inline';
-      avtalIcon.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
-    });
-  }
-  const kursIcon = document.getElementById('kurs-more-icon');
-  const kursMore = document.getElementById('kurs-more-text');
-  if (kursIcon && kursMore) {
-    kursIcon.addEventListener('click', function() {
-      const open = kursMore.style.display === 'inline';
-      kursMore.style.display = open ? 'none' : 'inline';
-      kursIcon.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
-    });
-  }
+  [
+    {icon: 'hero-more-icon', text: 'hero-more-text'},
+    {icon: 'avtal-more-icon', text: 'avtal-more-text'},
+    {icon: 'kurs-more-icon', text: 'kurs-more-text'}
+  ].forEach(({icon, text}) => {
+    const iconEl = document.getElementById(icon);
+    const textEl = document.getElementById(text);
+    if (iconEl && textEl) {
+      iconEl.addEventListener('click', function() {
+        const open = textEl.style.display === 'inline';
+        textEl.style.display = open ? 'none' : 'inline';
+        iconEl.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    }
+  });
 
   // Hamburger-meny
   const menuBtn = document.getElementById('menu-btn');
@@ -172,25 +160,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   }
 
-  // Stripe-flyt: kun fra godkjenn-knapp
-  const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- Sett inn din publishable key
-  const elements = stripe.elements();
-  const card = elements.create('card', {
-  style: style,
-  hidePostalCode: true
-});
-card.mount('#card-element');
-
-  // Vis Stripe-skjema når bruker har godkjent biltype
-  const godkjennBtn = document.getElementById('godkjenn-bil');
-  if (godkjennBtn) {
-    godkjennBtn.addEventListener('click', function() {
-      this.style.display = 'none';
-      document.getElementById('payment-form').style.display = 'flex';
-    });
-  }
-
-  // Åpne Stripe-modul når du ønsker (f.eks. på knappetrykk)
+  /* ===========================
+     Stripe Checkout-modul (overlay)
+     =========================== */
+  // Åpne Stripe-modul (overlay) når du ønsker
   document.querySelectorAll('.cta-button').forEach(btn => {
     btn.addEventListener('click', function() {
       const overlay = document.getElementById('checkout-overlay');
@@ -207,9 +180,9 @@ card.mount('#card-element');
     });
   }
 
-  // Stripe Elements setup
-  document.addEventListener('DOMContentLoaded', function() {
-    if (!window.Stripe) return;
+  // Stripe Elements setup (kun én gang)
+  if (window.Stripe) {
+  const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- Sett inn din publishable key
     const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- din publishable key
     const elements = stripe.elements({
       fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
@@ -262,7 +235,7 @@ card.mount('#card-element');
         // Her kan du åpne chat, redirecte, eller vise success-melding
       }
     });
-  });
+  }
 });
 
 

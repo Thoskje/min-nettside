@@ -108,39 +108,7 @@
     </section>
   </div> <!-- hero-bilde-container slutt -->
 
-  <!-- Biloppslag-widget som overlay/modal -->
-  <div id="biloppslag-overlay" class="biloppslag-overlay" style="display:none;">
-    <div class="biloppslag-modal">
-      <div class="biloppslag-header">
-        <span class="biloppslag-title">Finn din bil</span>
-      </div>
-      <label class="skjema-label" for="regnr">Registreringsnummer</label>
-      <div class="biloppslag-inputrow">
-        <input class="skjema-input" type="text" id="regnr" placeholder="f.eks. AB12345">
-        <button type="button" class="skjema-btn" id="sok-bil">Søk</button>
-      </div>
-      <div id="bilinfo" class="biloppslag-bilinfo"></div>
-      <button id="godkjenn-bil" class="skjema-btn biloppslag-godkjenn" style="display:none;">Godkjenn biltype</button>
-      <!-- Stripe Elements betalingsskjema (skjult til bruker har godkjent bil) -->
-      <form id="payment-form" style="display:none; flex-direction:column; gap:1rem;">
-        <label for="card-element" style="font-weight:600;">Betalingskort</label>
-        <div id="card-element" style="padding:8px 0; border-radius:8px; border:1.5px solid #e0e6ed; background:#f8fafc;"></div>
-        <button id="submit-payment" class="skjema-btn" style="margin-top:1rem; background:#635bff;">
-          Betal med Stripe
-        </button>
-        <div id="payment-message" style="color:#e00; margin-top:0.5rem;"></div>
-        <div style="margin-top:1.5rem; text-align:center;">
-          <a href="https://stripe.com" target="_blank" rel="noopener" style="display:inline-block;">
-            <img src="https://stripe.com/img/v3/home/social.png" alt="Powered by Stripe" style="height:28px; opacity:0.8;">
-          </a>
-          <div style="font-size:0.95em; color:#888; margin-top:0.3em;">Sikker betaling levert av Stripe</div>
-        </div>
-      </form>
-      <button id="lukk-biloppslag" class="skjema-btn" style="background:#e0e6ed;color:#0c1a2a;margin-top:1rem;">Lukk</button>
-    </div>
-  </div>
-
-  <!-- Stripe Checkout-modul som overlay/modal -->
+  <!-- Stripe Checkout-modul som overlay/modal (kun denne, ingen dobbel betaling) -->
   <div id="checkout-overlay" class="checkout-overlay" style="display:none;">
     <div class="checkout-module">
       <div class="checkout-tabs">
