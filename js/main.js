@@ -190,21 +190,55 @@ card.mount('#card-element');
     });
   }
 
-  // Håndter betaling
-  const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.addEventListener('submit', async function(e) {
+  // Åpne Stripe-modul når du ønsker (f.eks. på knappetrykk)
+  document.querySelectorAll('.cta-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const overlay = document.getElementById('checkout-overlay');
+      if (overlay) overlay.style.display = 'flex';
+    });
+  });
+
+  // Lukk Stripe-modul
+  const closeBtn = document.getElementById('close-checkout');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      const overlay = document.getElementById('checkout-overlay');
+      if (overlay) overlay.style.display = 'none';
+    });
+  }
+
+  // Stripe Elements setup
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.Stripe) return;
+    const stripe = Stripe('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'); // <-- din publishable key
+    const elements = stripe.elements({
+      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
+    });
+    const style = {
+      base: {
+        color: "#0c1a2a",
+        fontFamily: 'Inter, Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": { color: "#aab7c4" }
+      },
+      invalid: { color: "#e5424d", iconColor: "#e5424d" }
+    };
+    const card = elements.create('card', { style, hidePostalCode: true });
+    card.mount('#card-element');
+
+    // Håndter betaling
+    document.getElementById('payment-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       document.getElementById('submit-payment').disabled = true;
       document.getElementById('payment-message').textContent = '';
 
-      // 1. Kall backend for å lage PaymentIntent og få clientSecret
+      // Hent clientSecret fra backend
       let clientSecret;
       try {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ /* evt. pris, bilinfo, e.l. */ })
+          headers: { 'Content-Type': 'application/json' }
         });
         const data = await response.json();
         clientSecret = data.clientSecret;
@@ -214,7 +248,7 @@ card.mount('#card-element');
         return;
       }
 
-      // 2. Bekreft betaling med Stripe Elements
+      // Bekreft betaling
       const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: card }
       });
@@ -228,7 +262,7 @@ card.mount('#card-element');
         // Her kan du åpne chat, redirecte, eller vise success-melding
       }
     });
-  }
+  });
 });
 
 
