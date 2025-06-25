@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Stripe Elements setup (kun én gang)
   if (window.Stripe) {
-  const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- Sett inn din publishable key
     const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); // <-- din publishable key
     const elements = stripe.elements({
       fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
