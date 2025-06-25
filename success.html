@@ -2,77 +2,136 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <title>Betaling fullført</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betaling fullført - bilrådet.no</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Takk for din betaling!</h1>
-  <p>Du kan nå chatte med en bilmekaniker direkte.</p>
+  <!-- Topptekst / Navigasjon -->
+  <header>
+    <a href="/" class="logo">bilrådet.no</a>
+  </header>
 
-  <!-- Plasser dette der du vil at chatten skal vises -->
-  <div id='tawk_68148681c915a4190c8c02d6' style="width:400px; margin:40px auto;"></div>
+  <main class="success-container">
+    <div id="betalingsbekreftelse">
+      <h1>Takk for din betaling!</h1>
+      <p>Verifiserer betalingsstatus...</p>
+    </div>
+
+    <div id="protected-content">
+      <h1>Takk for din betaling!</h1>
+      <p>Du kan nå chatte med en bilmekaniker direkte.</p>
+      
+      <!-- Ytterligere innhold som kun vises ved bekreftet betaling -->
+      <div class="tips-section">
+        <h2>Mens du venter</h2>
+        <p>Her er noen nyttige tips om bilvedlikehold:</p>
+        <ul>
+          <li>Sjekk motoroljen regelmessig</li>
+          <li>Kontroller dekktrykket månedlig</li>
+          <li>Bytt vindusviskere årlig</li>
+        </ul>
+      </div>
+
+      <!-- Embedded Tawk.to chat -->
+      <div id='tawk_68148681c915a4190c8c02d6' class="chat-container"></div>
+    </div>
+
+    <div id="payment-error" style="display:none">
+      <h1>Betalingsverifisering mislyktes</h1>
+      <p>Vi kunne ikke bekrefte din betaling. Vennligst kontakt kundeservice eller <a href="/">gå tilbake til forsiden</a>.</p>
+    </div>
+  </main>
+
+  <!-- Bunntekst -->
+  <footer>
+    <p>&copy; 2025 bilrådet.no. | <a href="html/personvern.html">Personvern</a> | <a href="html/cookies.html">Cookies</a></p>
+  </footer>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    // Vi definerer bare Tawk_API-variabelen her, men laster ikke scriptet ennå
+    var Tawk_API = Tawk_API || {}; 
+    var Tawk_LoadStart = new Date();
     Tawk_API.embedded = 'tawk_68148681c915a4190c8c02d6';
-    (function(){
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    
+    // Når chatten er lastet
+    Tawk_API.onLoad = function() {
+      // Hent bilnavn fra localStorage 
+      var bilnavn = localStorage.getItem('bilnavn');
+      if (bilnavn) {
+        Tawk_API.setAttributes({ name: bilnavn }, function(error){});
+      }
+      // Maksimer chatten automatisk
+      Tawk_API.maximize();
+    };
+  </script>
+  
+  <!-- Verifiseringsskript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Standardvisning: Skjul alt unntatt verifiseringsmelding
+      document.getElementById('protected-content').style.display = 'none';
+      document.getElementById('payment-error').style.display = 'none';
+      
+      // Verifiser betaling
+      verifyPayment();
+    });
+
+    async function verifyPayment() {
+      try {
+        // Sjekk om vi har en session_id i URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id') || localStorage.getItem('sessionId');
+        
+        if (!sessionId) {
+          // Ingen session ID, men la oss sjekke om vi har en lokal betalingsstatus
+          if (localStorage.getItem('betalingsStatus') === 'betalt') {
+            showChat();
+            return;
+          }
+          
+          // Ingen betaling funnet
+          showError();
+          return;
+        }
+        
+        // Verifiser med API
+        const response = await fetch(`/api/verify-session?session_id=${sessionId}`);
+        const data = await response.json();
+        
+        if (data.paid) {
+          // Betaling bekreftet
+          localStorage.setItem('betalingsStatus', 'betalt');
+          showChat();
+        } else {
+          showError();
+        }
+      } catch (error) {
+        console.error('Feil ved verifisering:', error);
+        showError();
+      }
+    }
+    
+    function showChat() {
+      document.getElementById('betalingsbekreftelse').style.display = 'none';
+      document.getElementById('protected-content').style.display = 'block';
+      
+      // Last inn Tawk.to script
+      const s1 = document.createElement("script");
       s1.async = true;
       s1.src = 'https://embed.tawk.to/68148681c915a4190c8c02d6/1iu9f7du8';
       s1.charset = 'UTF-8';
       s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
+      document.head.appendChild(s1);
+    }
+    
+    function showError() {
+      document.getElementById('betalingsbekreftelse').style.display = 'none';
+      document.getElementById('payment-error').style.display = 'block';
+    }
   </script>
-  <!--End of Tawk.to Script-->
-
-  <script>
-    // Assuming you're using Stripe for payments
-    var stripe = Stripe('your-publishable-key-here');
-    var checkoutButton = document.getElementById('checkout-button');
-
-    checkoutButton.addEventListener('click', function () {
-      // Call your backend to create the Checkout session.
-      fetch('/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          success_url: 'https://min-nettside-nine.vercel.app/success.html',
-          cancel_url: 'https://min-nettside-nine.vercel.app/cancel.html',
-          // Add any other parameters your backend needs
-        })
-      })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (sessionId) {
-        return stripe.redirectToCheckout({ sessionId: sessionId });
-      })
-      .then(function (result) {
-        if (result.error) {
-          // Inform the customer that there was an error.
-          alert(result.error.message);
-        }
-      })
-      .catch(function (error) {
-        console.error('Error:', error);
-      });
-    });
-  </script>
-
-  <script>
-    // Hent bilnavn fra localStorage og sett som navn i chatten
-    var bilnavn = localStorage.getItem('bilnavn');
-    var Tawk_API = Tawk_API || {};
-    Tawk_API.onLoad = function(){
-      if(bilnavn) {
-        Tawk_API.setAttributes({ name: bilnavn }, function(error){});
-      }
-      Tawk_API.maximize();
-    };
-  </script>
-  <!-- Tawk.to-scriptet ditt her -->
 </body>
 </html>
