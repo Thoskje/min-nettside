@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/biloppslag.css">
   <link rel="stylesheet" href="css/stripe.css">
+  <link rel="stylesheet" href="css/bilinfo-display.css">
+  <link rel="stylesheet" href="css/success.css">
   
   <!-- Stripe.js -->
   <script src="https://js.stripe.com/v3/"></script>
@@ -22,33 +24,7 @@
   </header>
 
   <main class="success-container">
-    <!-- Betalingsbekreftelse som modal overlay -->
-    <div id="betalingsbekreftelse-modal" class="modal-overlay">
-      <div class="modal-content payment-confirmation">
-        <div class="modal-header">
-          <div class="success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-          </div>
-          <h2>Betaling bekreftet</h2>
-        </div>
-        <div class="modal-body">
-          <p>Takk for din betaling! Vi er klar til å hjelpe deg med spørsmål om din bil.</p>
-          
-          <!-- Bilinfo oppsummering -->
-          <div class="quick-bilinfo" id="quick-bilinfo">
-            <!-- Enkel bilinfo fylles inn via JavaScript -->
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="continue-to-chat" class="primary-button">Gå til chatten</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ditt opprinnelige innhold (chat og bilinfo) -->
+    <!-- Hovedinnhold (chat og bilinfo) -->
     <div id="main-content" style="display: none;">
       <!-- Bilinfo-visning -->
       <div class="bilinfo-card">
@@ -73,14 +49,7 @@
       <div id='tawk_68148681c915a4190c8c02d6' class="chat-container"></div>
     </div>
 
-    <div id="protected-content" style="display:none">
-      <h1>Velkommen til kosultasjonen</h1>
-      <p>Du kan nå stille spørsmål bilen din og snakke direkte med en bilmekaniker i chaten</p>
-      <div class="chat-box">
-        <!-- Chat vil vises her -->
-      </div>
-    </div>
-
+    <!-- Feilmelding ved mislykket betalingsverifisering -->
     <div id="payment-error" style="display:none">
       <h1>Betalingsverifisering mislyktes</h1>
       <p>Vi kunne ikke bekrefte din betaling. <p>Vennligst kontakt oss på <a href="mailto:kontakt@bilrådet.no">kontakt@bilrådet.no</a></p> eller <a href="/">gå tilbake til forsiden</a>.</p>
@@ -92,573 +61,86 @@
     <p>&copy; 2025 bilrådet.no. | <a href="html/personvern.html">Personvern</a> | <a href="html/cookies.html">Cookies</a></p>
   </footer>
 
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-    // Vi definerer bare Tawk_API-variabelen her, men laster ikke scriptet ennå
-    var Tawk_API = Tawk_API || {}; 
-    var Tawk_LoadStart = new Date();
-    Tawk_API.embedded = 'tawk_68148681c915a4190c8c02d6';
-    
-    // Når chatten er lastet
-    Tawk_API.onLoad = function() {
-      // Hent bilnavn fra localStorage 
-      var bilnavn = localStorage.getItem('bilnavn');
-      if (bilnavn) {
-        Tawk_API.setAttributes({ name: bilnavn }, function(error){});
-      }
-      // Maksimer chatten automatisk
-      Tawk_API.maximize();
-    };
-  </script>
-  
-  <!-- Verifiseringsskript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Standardvisning: Skjul alt unntatt verifiseringsmelding
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('payment-error').style.display = 'none';
-      document.getElementById('betalingsbekreftelse-modal').style.display = 'none';
-      
-      // Last bilinfo
-      displayBilInfo();
-      
-      // Verifiser betaling
-      verifyPayment();
-      
-      // Legg til en event listener for "Gå til chatten"-knappen
-      document.getElementById('continue-to-chat').addEventListener('click', function() {
-        closePaymentConfirmation();
-      });
-    });
-    
-    function displayBilInfo() {
-      const bilinfoElement = document.getElementById('bilinfo-detaljer');
-      
-      // Hent lagret bilinfo fra localStorage med flere mulige nøkkelnavn
-      const keyMappings = {
-        regnr: ['bilRegistreringsnummer', 'regNr', 'regnr', 'bilnummer', 'registreringsnummer'],
-        merke: ['bilMerke', 'merke', 'produsent', 'brand'],
-        modell: ['bilModell', 'modell', 'model'],
-        år: ['bilÅr', 'år', 'year', 'aarsmodell', 'årsmodell'],
-        motor: ['bilMotor', 'motor', 'engine', 'motortype']
-      };
-      
-      // Funksjon for å finne første ikke-tomme verdi fra mulige nøkler
-      function getFirstValue(keys) {
-        for (const key of keys) {
-          const value = localStorage.getItem(key);
-          if (value) return value;
-        }
-        return null;
-      }
-      
-      // Hent verdier med fallback til alternative nøkkelnavn
-      const regnr = getFirstValue(keyMappings.regnr);
-      const bilmerke = getFirstValue(keyMappings.merke);
-      const bilmodell = getFirstValue(keyMappings.modell);
-      const bilaar = getFirstValue(keyMappings.år);
-      const bilmotor = getFirstValue(keyMappings.motor);
-      
-      // Forsøk å hente fra sessionStorage hvis localStorage ikke har verdiene
-      // (noen brukere kan ha blokkert localStorage men tillatt sessionStorage)
-      if (!regnr && !bilmerke) {
-        const sessRegnr = sessionStorage.getItem('bilRegistreringsnummer') || sessionStorage.getItem('regNr');
-        const sessMerke = sessionStorage.getItem('bilMerke') || sessionStorage.getItem('merke');
-        
-        if (sessRegnr || sessMerke) {
-          bilinfoElement.innerHTML = `
-            <div class="bilinfo-grid">
-              <div class="bilinfo-row">
-                <span class="bilinfo-label">Registreringsnummer:</span>
-                <span class="bilinfo-value">${sessRegnr || 'Ikke tilgjengelig'}</span>
-              </div>
-              <div class="bilinfo-row">
-                <span class="bilinfo-label">Merke:</span>
-                <span class="bilinfo-value">${sessMerke || 'Ikke tilgjengelig'}</span>
-              </div>
-            </div>
-          `;
-          return;
-        }
-      }
-      
-      if (regnr || bilmerke) {
-        // Formater og vis bilinformasjonen
-        bilinfoElement.innerHTML = `
-          <div class="bilinfo-grid">
-            <div class="bilinfo-row">
-              <span class="bilinfo-label">Registreringsnummer:</span>
-              <span class="bilinfo-value">${regnr || 'Ikke tilgjengelig'}</span>
-            </div>
-            <div class="bilinfo-row">
-              <span class="bilinfo-label">Merke:</span>
-              <span class="bilinfo-value">${bilmerke || 'Ikke tilgjengelig'}</span>
-            </div>
-            <div class="bilinfo-row">
-              <span class="bilinfo-label">Modell:</span>
-              <span class="bilinfo-value">${bilmodell || 'Ikke tilgjengelig'}</span>
-            </div>
-            <div class="bilinfo-row">
-              <span class="bilinfo-label">Årsmodell:</span>
-              <span class="bilinfo-value">${bilaar || 'Ikke tilgjengelig'}</span>
-            </div>
-            <div class="bilinfo-row">
-              <span class="bilinfo-label">Motor:</span>
-              <span class="bilinfo-value">${bilmotor || 'Ikke tilgjengelig'}</span>
-            </div>
-          </div>
-        `;
-      } else {
-        bilinfoElement.innerHTML = `
-          <p>Ingen bilinformasjon tilgjengelig</p>
-          <p class="small-note">Dette kan skje hvis cookies er blokkert eller du bruker en annen enhet.</p>
-          <button id="manual-bilinfo" class="manual-input-btn">Oppgi bilinformasjon manuelt</button>
-        `;
-        
-        // Legg til lytter for manuell inntasting
-        document.getElementById('manual-bilinfo').addEventListener('click', showManualBilinfoForm);
-      }
-    }
-
-    // Funksjon for å vise skjema for manuell inntasting
-    function showManualBilinfoForm() {
-      const bilinfoElement = document.getElementById('bilinfo-detaljer');
-      
-      bilinfoElement.innerHTML = `
-        <form id="manual-bilinfo-form">
-          <div class="form-group">
-            <label for="man-regnr">Registreringsnummer:</label>
-            <input type="text" id="man-regnr" placeholder="ABC123">
-          </div>
-          <div class="form-group">
-            <label for="man-merke">Bilmerke:</label>
-            <input type="text" id="man-merke" placeholder="f.eks. Volvo">
-          </div>
-          <div class="form-group">
-            <label for="man-modell">Modell:</label>
-            <input type="text" id="man-modell" placeholder="f.eks. V90">
-          </div>
-          <div class="form-group">
-            <label for="man-aar">Årsmodell:</label>
-            <input type="text" id="man-aar" placeholder="f.eks. 2020">
-          </div>
-          <button type="submit" class="save-bilinfo-btn">Lagre</button>
-        </form>
-      `;
-      
-      document.getElementById('manual-bilinfo-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Lagre verdiene i localStorage
-        const regnr = document.getElementById('man-regnr').value;
-        const merke = document.getElementById('man-merke').value;
-        const modell = document.getElementById('man-modell').value;
-        const aar = document.getElementById('man-aar').value;
-        
-        if (regnr) localStorage.setItem('bilRegistreringsnummer', regnr);
-        if (merke) localStorage.setItem('bilMerke', merke);
-        if (modell) localStorage.setItem('bilModell', modell);
-        if (aar) localStorage.setItem('bilÅr', aar);
-        
-        // Oppdater Tawk.to navn hvis tilgjengelig
-        if (Tawk_API && merke && modell) {
-          const bilnavn = `${merke} ${modell}`;
-          localStorage.setItem('bilnavn', bilnavn);
-          Tawk_API.setAttributes({ name: bilnavn }, function(error){});
-        }
-        
-        // Vis bilinformasjonen på nytt
-        displayBilInfo();
-      });
-    }
-    
-    async function verifyPayment() {
-      try {
-        // Sjekk om vi har en session_id i URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get('session_id') || localStorage.getItem('sessionId');
-        
-        if (!sessionId) {
-          // Ingen session ID, men la oss sjekke om vi har en lokal betalingsstatus
-          if (localStorage.getItem('betalingsStatus') === 'betalt') {
-            showChat();
-            return;
-          }
-          
-          // Ingen betaling funnet
-          showError();
-          return;
-        }
-        
-        // Verifiser med API
-        const response = await fetch(`/api/verify-session?session_id=${sessionId}`);
-        const data = await response.json();
-        
-        if (data.paid) {
-          // Betaling bekreftet
-          localStorage.setItem('betalingsStatus', 'betalt');
-          localStorage.setItem('paymentIntentId', data.paymentIntentId || 'unknown');
-          showChat();
-        } else {
-          showError();
-        }
-      } catch (error) {
-        console.error('Feil ved verifisering:', error);
-        showError();
-      }
-    }
-    
-    function showPaymentConfirmation() {
-      const modal = document.getElementById('betalingsbekreftelse-modal');
-      const quickBilinfo = document.getElementById('quick-bilinfo');
-      
-      // Hent enkel bilinfo for å vise i modalen
-      const bilmerke = localStorage.getItem('bilMerke') || ''; 
-      const bilmodell = localStorage.getItem('bilModell') || '';
-      const regnr = localStorage.getItem('bilRegistreringsnummer') || '';
-      
-      // Vis bilinfo i modalen
-      if (bilmerke || regnr) {
-        quickBilinfo.innerHTML = `
-          <p><strong>Din bil:</strong> ${bilmerke} ${bilmodell}</p>
-          ${regnr ? `<p><strong>Registreringsnummer:</strong> ${regnr}</p>` : ''}
-        `;
-      } else {
-        quickBilinfo.innerHTML = `<p>Du kan stille spørsmål om din bil i chatten.</p>`;
-      }
-      
-      // Vis modalen med animasjon
-      modal.style.display = 'flex';
-      setTimeout(() => {
-        modal.classList.add('visible');
-      }, 10);
-      
-      // Last Tawk.to scriptet på forhånd, men ikke vis det ennå
-      preloadTawkScript();
-    }
-
-    function closePaymentConfirmation() {
-      const modal = document.getElementById('betalingsbekreftelse-modal');
-      
-      // Animer ut modalen
-      modal.classList.remove('visible');
-      
-      setTimeout(() => {
-        modal.style.display = 'none';
-        // Vis hovedinnholdet
-        document.getElementById('main-content').style.display = 'block';
-        
-        // Maksimer chatten hvis den er lastet
-        if (Tawk_API && Tawk_API.maximize) {
-          Tawk_API.maximize();
-        }
-      }, 300);
-    }
-
-    function preloadTawkScript() {
-      // Last inn Tawk.to script på forhånd for raskere oppstart når brukeren går til chat
-      const s1 = document.createElement("script");
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/68148681c915a4190c8c02d6/1iu9f7du8';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      document.head.appendChild(s1);
-    }
-
-    // Oppdatert showChat-funksjon for å vise betalingsbekreftelsen først
-    function showChat() {
-      // Vis betalingsbekreftelsesmodalen
-      showPaymentConfirmation();
-    }
-    
-    function showError() {
-      document.getElementById('betalingsbekreftelse').style.display = 'none';
-      document.getElementById('payment-error').style.display = 'block';
-    }
-
-    // Håndter lukking av chat
-    document.addEventListener('click', function(event) {
-      if (event.target.id === 'close-checkout') {
-        // Lukk chatten og fjern Tawk_API
-        if (Tawk_API && Tawk_API.close) {
-          Tawk_API.close();
-        }
-      }
-    });
-    
-    function showAllLocalStorage() {
-      console.log('Alle localStorage-verdier:');
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        console.log(`${key}: ${localStorage.getItem(key)}`);
-      }
-    }
-  </script>
+  <!-- JavaScript dependencies -->
+  <script src="js/bilinfo-display.js"></script>
+  <script src="js/payment-verification.js"></script>
+  <script src="js/payment-confirmation.js"></script>
+  <script src="js/chat-loader.js"></script>
   <script src="js/navigasjon-modal.js"></script>
   
-  <style>
-    .success-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-    
-    .payment-success-banner {
-      background: #ecfdf5;
-      border-left: 4px solid #10b981;
-      padding: 1rem 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 6px;
-    }
-    
-    .payment-success-banner h1 {
-      color: #065f46;
-      margin-bottom: 0.5rem;
-    }
-    
-    .payment-success-banner p {
-      color: #065f46;
-    }
-    
-    .bilinfo-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    
-    .bilinfo-card h2 {
-      margin-bottom: 1rem;
-      color: #0c1a2a;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 0.5rem;
-    }
-    
-    .bilinfo-grid {
-      display: grid;
-      gap: 0.75rem;
-    }
-    
-    .bilinfo-row {
-      display: flex;
-      align-items: center;
-    }
-    
-    .bilinfo-label {
-      font-weight: 600;
-      color: #4b5563;
-      width: 180px;
-    }
-    
-    .bilinfo-value {
-      color: #0c1a2a;
-    }
-    
-    .spinner {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      border: 3px solid rgba(0,0,0,.2);
-      border-radius: 50%;
-      border-top-color: #0c1a2a;
-      animation: spin 1s ease-in-out infinite;
-      margin: 1rem auto;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .tips-section {
-      background: #f8fafc;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    
-    .tips-section h2 {
-      margin-bottom: 1rem;
-    }
-    
-    .tips-section ul {
-      padding-left: 1.5rem;
-    }
-    
-    .tips-section li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .chat-container {
-      height: 600px;
-      margin-top: 2rem;
-    }
-    
-    #payment-error {
-      background: #fee2e2;
-      border-radius: 8px;
-      padding: 2rem;
-      text-align: center;
-    }
-    
-    #payment-error h1 {
-      color: #b91c1c;
-      margin-bottom: 1rem;
-    }
-    
-    .small-note {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-top: 0.5rem;
+  <!-- Main application code -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialiser bilinformasjon
+      const bilinfoDisplay = new BilinfoDisplay('bilinfo-detaljer');
+      bilinfoDisplay.display();
+      
+      // Initialiser betalingsbekreftelse
+      const paymentConfirmation = new PaymentConfirmation();
+      
+      // Initialiser betalingsverifisering
+      const paymentVerifier = new PaymentVerifier()
+        .on('onSuccess', function() {
+          // Vis betalingsbekreftelsen på vellykket betaling
+          paymentConfirmation.show();
+        })
+        .on('onError', function() {
+          // Vis feilmelding hvis betalingen ikke kunne verifiseres
+          document.getElementById('payment-error').style.display = 'block';
+        });
+      
+      // Verifiser betaling
+      paymentVerifier.verify();
+    });
+  </script>
+
+  <!-- Chat Loader - Håndterer innlasting av Tawk.to chat -->
+  <script>
+    /**
+     * Chat Loader - Håndterer innlasting av Tawk.to chat
+     */
+    class ChatLoader {
+      constructor() {
+        // Define Tawk API if it doesn't exist
+        window.Tawk_API = window.Tawk_API || {};
+        window.Tawk_LoadStart = new Date();
+        
+        // Set embedded container ID
+        window.Tawk_API.embedded = 'tawk_68148681c915a4190c8c02d6';
+        
+        // Set onLoad handler
+        window.Tawk_API.onLoad = this._onChatLoaded;
+      }
+      
+      // Load chat script
+      load() {
+        // Check if script is already loaded
+        if (document.querySelector('script[src*="tawk.to"]')) return;
+        
+        // Load Tawk.to script
+        const s1 = document.createElement("script");
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/68148681c915a4190c8c02d6/1iu9f7du8';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        document.head.appendChild(s1);
+      }
+      
+      // Handle chat loaded event
+      _onChatLoaded() {
+        // Get car name from localStorage
+        const bilnavn = localStorage.getItem('bilnavn');
+        if (bilnavn) {
+          window.Tawk_API.setAttributes({ name: bilnavn }, function(error){});
+        }
+        
+        // Maximize chat automatically
+        window.Tawk_API.maximize();
+      }
     }
 
-    .manual-input-btn {
-      background: #0c1a2a;
-      color: #fff;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-
-    .manual-input-btn:hover {
-      background: #1e293b;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: #4b5563;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-    }
-
-    .save-bilinfo-btn {
-      background: #10b981;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .save-bilinfo-btn:hover {
-      background: #059669;
-    }
-
-    /* Modal overlay styling */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .modal-overlay.visible {
-      opacity: 1;
-    }
-
-    .modal-content {
-      background: white;
-      width: 90%;
-      max-width: 500px;
-      border-radius: 12px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      overflow: hidden;
-      transform: scale(0.95);
-      transition: transform 0.3s ease;
-    }
-
-    .modal-overlay.visible .modal-content {
-      transform: scale(1);
-    }
-
-    .modal-header {
-      padding: 24px;
-      text-align: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .success-icon {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-
-    .success-icon svg {
-      color: #10b981;
-    }
-
-    .modal-header h2 {
-      margin: 0;
-      color: #0f172a;
-      font-size: 1.5rem;
-    }
-
-    .modal-body {
-      padding: 24px;
-    }
-
-    .modal-footer {
-      padding: 16px 24px 24px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .primary-button {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .primary-button:hover {
-      background: #2563eb;
-    }
-
-    .quick-bilinfo {
-      margin-top: 16px;
-      padding: 16px;
-      background: #f8fafc;
-      border-radius: 8px;
-      font-size: 0.9rem;
-    }
-
-    .quick-bilinfo p {
-      margin: 4px 0;
-      color: #334155;
-    }
-
-    .quick-bilinfo strong {
-      color: #0f172a;
-    }
-  </style>
+    // Export to global scope
+    window.ChatLoader = ChatLoader;
+  </script>
 </body>
 </html>
