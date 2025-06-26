@@ -20,10 +20,9 @@ export default async function handler(req, res) {
     });
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
-    if (paymentIntent && paymentIntent.status === 'succeeded') {
-  window.location.href = '/success.html';
-}
+    
   } catch (err) {
+    console.error('Payment Intent Error:', err);
     res.status(500).json({ error: err.message });
   }
 }
