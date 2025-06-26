@@ -1,4 +1,20 @@
 /* === Reset og grunnleggende === */
+:root {
+  --primary-color: #ff9900;
+  --secondary-color: #0c1a2a;
+  --bg-color: #f6f9fc;
+  --bg-light: #fff;
+  --text-color: #0c1a2a;
+  --border-color: #e0e6ed;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.03);
+  --shadow-md: 0 8px 32px rgba(31,38,135,0.07);
+  --shadow-lg: 0 6px 32px rgba(12,26,42,0.12), 0 1.5px 4px rgba(12,26,42,0.10);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --font-family: 'Inter', Arial, sans-serif;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,8 +24,8 @@
 html, body {
   height: 100%;
   min-height: 100%;
-  background: #f6f9fc;
-  font-family: 'Inter', Arial, sans-serif;
+  background: var(--bg-color);
+  font-family: var(--font-family);
 }
 
 body {
@@ -22,8 +38,8 @@ body {
 
 /* === Header og navigasjon === */
 header {
-  background: #0c1a2a;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  background: var(--secondary-color);
+  box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -34,6 +50,10 @@ header {
   transition: transform 0.3s;
 }
 
+header.hidden {
+  transform: translateY(-100%);
+}
+
 .logo {
   font-size: 1.2rem;
   font-weight: 700;
@@ -42,31 +62,90 @@ header {
   letter-spacing: 1px;
 }
 
+/* Mobilmeny */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 220px;
+  z-index: 100;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav.open {
+  display: block;
+}
+
+.mobile-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-nav li {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-nav li:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav a {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.mobile-nav a:hover {
+  background: var(--bg-color);
+  color: var(--primary-color);
+}
+
+/* Desktop nav */
 nav a {
-  color: #0c1a2a;
+  color: var(--text-color);
   font-weight: 500;
   text-decoration: none;
   padding: 0.5rem 1.1rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   transition: background 0.2s, color 0.2s;
 }
 
 nav a:hover {
-  background: #ff9900;
+  background: var(--primary-color);
   color: #fff;
 }
 
 /* === Hero og faner === */
+.hero-bilde-container {
+  padding: 2rem 1rem;
+}
+
 .hero {
   max-width: 1300px;
   min-width: 400px;
   width: 100%;
   margin: 0 auto;
   padding: 5rem 3rem;
-  border-radius: 2rem;
-  box-shadow: 0 8px 32px rgba(31,38,135,0.07);
-  background: #fff;
-  color: #0c1a2a;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--bg-light);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,7 +155,7 @@ nav a:hover {
 .hero h1 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #0c1a2a;
+  color: var(--text-color);
   margin-bottom: 1.2rem;
   letter-spacing: -1px;
   font-family: 'Segoe UI', Roboto, sans-serif;
@@ -91,7 +170,7 @@ nav a:hover {
 }
 
 .cta-button {
-  background: #0c1a2a;
+  background: var(--secondary-color);
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
@@ -109,7 +188,7 @@ nav a:hover {
 }
 
 .cta-button.cta-active {
-  background: #ff9900 !important;
+  background: var(--primary-color) !important;
   color: #fff !important;
 }
 
@@ -122,16 +201,16 @@ nav a:hover {
 }
 
 .h1-tab {
-  background: #f6f9fc;
-  color: #0c1a2a;
+  background: var(--bg-color);
+  color: var(--text-color);
   border: none;
-  border-radius: 18px 18px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   padding: 0.8rem 2.2rem;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  box-shadow: 0 2px 8px rgba(31,38,135,0.06);
+  box-shadow: var(--shadow-sm);
   margin-bottom: -8px;
   position: relative;
   top: 0;
@@ -139,10 +218,10 @@ nav a:hover {
 
 .h1-tab.active {
   background: #fff !important;
-  color: #ff9900 !important;
-  box-shadow: 0 4px 24px rgba(31,38,135,0.08);
+  color: var(--primary-color) !important;
+  box-shadow: var(--shadow-sm);
   z-index: 2;
-  border-bottom: 3px solid #ff9900;
+  border-bottom: 3px solid var(--primary-color);
 }
 
 .h1-tab-content {
@@ -150,7 +229,7 @@ nav a:hover {
   text-align: center;
   font-size: 2.5rem;
   font-weight: 800;
-  color: #0c1a2a;
+  color: var(--text-color);
   margin-bottom: 1.2rem;
   letter-spacing: -1px;
 }
@@ -279,7 +358,7 @@ nav a:hover {
 
 /* === Footer === */
 footer {
-  background-color: #0c1a2a;
+  background-color: var(--secondary-color);
   color: white;
   text-align: center;
   padding: 1rem;
@@ -302,7 +381,7 @@ footer a:hover {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #0c1a2a;
+  background-color: var(--secondary-color);
   color: #fff;
   padding: 1rem;
   text-align: center;
@@ -312,45 +391,90 @@ footer a:hover {
 }
 
 .cookie-banner button {
-  background-color: #ff9900;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   margin-left: 1rem;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
 .cookie-banner a {
-  color: #ff9900;
+  color: var(--primary-color);
   text-decoration: underline;
 }
 
+/* === Cookie-innstillinger modal === */
+#cookie-settings-modal {
+  background: var(--secondary-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+#cookie-settings-modal h3 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+#cookie-settings-modal label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#cookie-settings-modal button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#cookie-settings-modal button[type="submit"] {
+  background: var(--primary-color);
+  color: white;
+}
+
 /* === Responsivt (utdrag, legg til mer etter behov) === */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+  
+  header {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 700px) {
   .hero, .tab-content {
     padding: 1rem;
     max-width: 98vw;
+    min-width: unset;
   }
+  
   .h1-tabs {
     flex-direction: row;
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
+  
   .hero-knapper {
     flex-direction: column;
     gap: 0.7rem;
     margin-top: 1rem;
   }
+  
   .cta-button {
     width: 100%;
     font-size: 1.05rem;
     padding: 1rem 0;
     border-radius: 1.5rem;
   }
-  .checkout-module {
-    max-width: 98vw;
-    padding: 1.2rem 0.5rem;
+  
+  .h1-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
