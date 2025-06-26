@@ -132,6 +132,80 @@
       document.getElementById('betalingsbekreftelse').style.display = 'none';
       document.getElementById('payment-error').style.display = 'block';
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sjekk om brukeren har betalt (basert på localStorage)
+      const hasValidPayment = 
+        localStorage.getItem('betalingsStatus') === 'betalt' && 
+        localStorage.getItem('paymentIntentId');
+
+      if (hasValidPayment) {
+        // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
+        window.addEventListener('beforeunload', function(e) {
+          // Standard melding (forskjellig visning avhengig av nettleser)
+          const confirmationMessage = 'Du er i ferd med å forlate chatten. ' + 
+                                   'Hvis du forlater siden vil du miste tilgang til samtalen. ' +
+                                   'Er du sikker på at du vil avslutte?';
+          
+          e.returnValue = confirmationMessage; // Standard for de fleste nettlesere
+          return confirmationMessage; // For eldre nettlesere
+        });
+
+        // 2. Fang opp klikk på logoer og lenker
+        document.addEventListener('click', function(e) {
+          const isLogoOrHomeLink = 
+            e.target.classList.contains('logo') || 
+            (e.target.tagName === 'A' && (e.target.getAttribute('href') === '/' || 
+                                         e.target.getAttribute('href') === 'index.html' || 
+                                         e.target.getAttribute('href') === '#'));
+          
+          // Hvis brukeren klikker på logo eller hjem-lenke
+          if (isLogoOrHomeLink) {
+            e.preventDefault(); // Stopp standard navigering
+            
+            // Vis bekreftelsesdialog
+            showNavigationConfirm(e.target.getAttribute('href') || '/');
+          }
+        });
+
+        // 3. Funksjon for å vise tilpasset bekreftelsesdialog
+        function showNavigationConfirm(targetUrl) {
+          // Opprett overlay-container for dialogen
+          const overlay = document.createElement('div');
+          overlay.className = 'navigation-confirm-overlay';
+          
+          // Lag dialogboks
+          const dialog = document.createElement('div');
+          dialog.className = 'navigation-confirm-dialog';
+          dialog.innerHTML = `
+            <h3>Forlat chatten?</h3>
+            <p>Du er i ferd med å forlate samtalen du har betalt for.</p>
+            <p>Hvis du forlater siden nå, må du betale på nytt for å få tilgang igjen.</p>
+            <div class="navigation-confirm-buttons">
+              <button class="cancel-button">Bli på siden</button>
+              <button class="confirm-button">Forlat likevel</button>
+            </div>
+          `;
+          
+          // Legg dialogboksen til overlay
+          overlay.appendChild(dialog);
+          
+          // Legg overlay til body
+          document.body.appendChild(overlay);
+          
+          // Legg til hendelseshåndterere for knappene
+          dialog.querySelector('.cancel-button').addEventListener('click', function() {
+            document.body.removeChild(overlay);
+          });
+          
+          dialog.querySelector('.confirm-button').addEventListener('click', function() {
+            document.body.removeChild(overlay);
+            // Naviger til målet
+            window.location.href = targetUrl;
+          });
+        }
+      }
+    });
   </script>
 </body>
 </html>
