@@ -43,71 +43,44 @@
     // Håndter betaling
     document.getElementById('payment-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      
-      const submitButton = document.getElementById('submit-payment');
-      const messageElement = document.getElementById('payment-message');
-      
-      submitButton.disabled = true;
-      messageElement.textContent = 'Behandler betaling...';
+      document.getElementById('submit-payment').disabled = true;
+      document.getElementById('payment-message').textContent = '';
       
       // Hent biltype fra localStorage for å sende med til backend
       const biltype = localStorage.getItem('bilnavn') || '';
-      const email = document.getElementById('email')?.value || '';
 
-      // Hent clientSecret fra backend
+      // Hent clientSecret fra backend - uten email
       let clientSecret;
       try {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ biltype, email }) // Send med bilinfo til backend
+          body: JSON.stringify({ biltype }) // Fjernet email
         });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
         const data = await response.json();
         clientSecret = data.clientSecret;
         if (!clientSecret) throw new Error(data.error || 'Ingen clientSecret');
       } catch (err) {
-        console.error('Feil ved opprettelse av Payment Intent:', err);
-        messageElement.textContent = 'Kunne ikke starte betaling. Vennligst prøv igjen.';
-        submitButton.disabled = false;
+        document.getElementById('payment-message').textContent = 'Kunne ikke starte betaling.';
+        document.getElementById('submit-payment').disabled = false;
         return;
       }
 
       // Bekreft betaling
-      try {
-        const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: { card: card }
-        });
+      const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: card }
+      });
 
-        if (error) {
-          // Vis feil fra Stripe (kortavvisning, etc)
-          messageElement.textContent = error.message;
-          submitButton.disabled = false;
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-          // Lagre betalings-ID for verifisering på success.html
-          localStorage.setItem('paymentIntentId', paymentIntent.id);
-          localStorage.setItem('betalingsStatus', 'betalt');
-          
-          // Vis vellykketmelding før redirect
-          messageElement.textContent = 'Betaling vellykket! Omdirigerer...';
-          
-          // Kort forsinkelse for å vise success-melding før redirect
-          setTimeout(() => {
-            window.location.href = '/success.html';
-          }, 1000);
-        } else {
-          // Uventet status
-          messageElement.textContent = 'Betalingen har en uventet status. Vennligst kontakt kundesupport.';
-          submitButton.disabled = false;
-        }
-      } catch (err) {
-        console.error('Feil ved betalingsbekreftelse:', err);
-        messageElement.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen senere.';
-        submitButton.disabled = false;
+      if (error) {
+        document.getElementById('payment-message').textContent = error.message;
+        document.getElementById('submit-payment').disabled = false;
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Lagre betalings-ID for verifisering
+        localStorage.setItem('paymentIntentId', paymentIntent.id);
+        localStorage.setItem('betalingsStatus', 'betalt');
+        
+        // Redirect til chat eller success-side
+        window.location.href = '/success.html';
       }
     });
   }

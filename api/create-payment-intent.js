@@ -6,13 +6,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
   try {
-    const { biltype, email } = req.body || {};
+    const { biltype } = req.body || {};
 
+    // Opprett payment intent uten email
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 14900, // 149 kr i øre
       currency: 'nok',
       description: 'Chat med bilmekaniker',
-      receipt_email: email,
       metadata: {
         produkt: 'Chat med bilmekaniker',
         biltype: biltype || '',
@@ -20,7 +20,6 @@ export default async function handler(req, res) {
     });
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
-    
   } catch (err) {
     console.error('Payment Intent Error:', err);
     res.status(500).json({ error: err.message });
