@@ -264,16 +264,27 @@
     });
     
     // 2. Håndter nettleserens tilbakeknapp med History API
-    // Legg til en dummy-state i historikken, så vi kan fange opp når brukeren klikker tilbake
-    history.pushState({ page: 'chat' }, document.title, window.location.href);
+    // Legg til to dummy-states i historikken for å håndtere første tilbakeknapp
+    const currentUrl = window.location.href;
+    
+    // Første dummy-state - denne vil bli popped ved første tilbakeklikk
+    history.pushState({ page: 'chat-entry' }, document.title, currentUrl);
+    
+    // Andre dummy-state - denne vil vise modalen når den poppes
+    history.pushState({ page: 'chat-active' }, document.title, currentUrl);
+    
+    // Logger for debugging
+    console.log('Navigation protection: Added history states');
     
     // Håndter popstate-hendelser (tilbakeknapp eller frem-knapp i nettleseren)
     window.addEventListener('popstate', function(event) {
+      console.log('Navigation protection: Popstate triggered', event.state);
+      
       // Vis modalen når brukeren klikker tilbake
       showNavigationModal(document.referrer || '/');
       
-      // Legg til en ny state slik at tilbakeknapp fortsetter å fungere
-      history.pushState({ page: 'chat' }, document.title, window.location.href);
+      // Legg til en ny state i historikken for å fange neste tilbakeklikk
+      history.pushState({ page: 'chat-active', timestamp: Date.now() }, document.title, currentUrl);
     });
 
     // 3. Fang opp klikk på logoer og lenker
@@ -289,86 +300,90 @@
                         href === 'index.html' || 
                         href === '#' ||
                         href.startsWith('http');
-          
-          // Hvis brukeren klikker på en navigasjonslenke
-          if (isHomeLink && !clickedLink.classList.contains('no-confirm')) {
-            e.preventDefault(); // Stopp standard navigering
-            showNavigationModal(href);
-          }
-        });
-
-        // Funksjon for å vise app-lignende modal
-        function showNavigationModal(targetUrl) {
-          // Opprett modal container
-          const modalContainer = document.createElement('div');
-          modalContainer.className = 'app-modal-container';
-          
-          // Lag modal dialog
-          const modal = document.createElement('div');
-          modal.className = 'app-modal';
-          modal.innerHTML = `
-            <div class="app-modal-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-            <h2>Avslutt samtalen?</h2>
-            <p>Hvis du forlater denne siden vil du miste tilgang til samtalen</p>
-            <div class="app-modal-buttons">
-              <button class="cancel-btn">Bli i chatten</button>
-              <button class="confirm-btn">Forlat siden</button>
-            </div>
-          `;
-          
-          // Legg til modal i container
-          modalContainer.appendChild(modal);
-          
-          // Legg til container i body
-          document.body.appendChild(modalContainer);
-          
-          // Animer inn
-          setTimeout(() => {
-            modalContainer.classList.add('visible');
-            modal.classList.add('visible');
-          }, 10);
-          
-          // Legg til hendelseshåndterere
-          const cancelButton = modal.querySelector('.cancel-btn');
-          const confirmButton = modal.querySelector('.confirm-btn');
-          
-          // Kanseller navigering
-          cancelButton.addEventListener('click', function() {
-            closeModal();
-          });
-          
-          // Bekreft navigering
-          confirmButton.addEventListener('click', function() {
-            closeModal(true);
-            window.location.href = targetUrl;
-          });
-          
-          // Klikk utenfor for å lukke
-          modalContainer.addEventListener('click', function(e) {
-            if (e.target === modalContainer) {
-              closeModal();
-            }
-          });
-          
-          // Funksjon for å lukke modal med animasjon
-          function closeModal(navigate) {
-            modal.classList.remove('visible');
-            setTimeout(() => {
-              modalContainer.classList.remove('visible');
-              setTimeout(() => {
-                document.body.removeChild(modalContainer);
-              }, 300);
-            }, 100);
-          }
-        }
+      
+      // Hvis brukeren klikker på en navigasjonslenke
+      if (isHomeLink && !clickedLink.classList.contains('no-confirm')) {
+        e.preventDefault(); // Stopp standard navigering
+        showNavigationModal(href);
       }
     });
+
+    // Funksjon for å vise app-lignende modal
+    function showNavigationModal(targetUrl) {
+      console.log('Navigation protection: Showing modal for', targetUrl);
+      
+      // Opprett modal container
+      const modalContainer = document.createElement('div');
+      modalContainer.className = 'app-modal-container';
+      modalContainer.style.zIndex = '2147483647'; // Maksimal z-index
+      
+      // Lag modal dialog
+      const modal = document.createElement('div');
+      modal.className = 'app-modal';
+      modal.style.zIndex = '2147483647'; // Maksimal z-index
+      modal.innerHTML = `
+        <div class="app-modal-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h2>Avslutt samtalen?</h2>
+        <p>Hvis du forlater denne siden vil du miste tilgangen til samtalen du har betalt for.</p>
+        <div class="app-modal-buttons">
+          <button class="cancel-btn">Bli i chatten</button>
+          <button class="confirm-btn">Forlat siden</button>
+        </div>
+      `;
+      
+      // Legg til modal i container
+      modalContainer.appendChild(modal);
+      
+      // Legg til container i body
+      document.body.appendChild(modalContainer);
+      
+      // Animer inn
+      setTimeout(() => {
+        modalContainer.classList.add('visible');
+        modal.classList.add('visible');
+      }, 10);
+      
+      // Legg til hendelseshåndterere
+      const cancelButton = modal.querySelector('.cancel-btn');
+      const confirmButton = modal.querySelector('.confirm-btn');
+      
+      // Kanseller navigering
+      cancelButton.addEventListener('click', function() {
+        closeModal();
+      });
+      
+      // Bekreft navigering
+      confirmButton.addEventListener('click', function() {
+        closeModal(true);
+        window.location.href = targetUrl;
+      });
+      
+      // Klikk utenfor for å lukke
+      modalContainer.addEventListener('click', function(e) {
+        if (e.target === modalContainer) {
+          closeModal();
+        }
+      });
+      
+      // Funksjon for å lukke modal med animasjon
+      function closeModal(navigate) {
+        modal.classList.remove('visible');
+        setTimeout(() => {
+          modalContainer.classList.remove('visible');
+          setTimeout(() => {
+            document.body.removeChild(modalContainer);
+          }, 300);
+        }, 100);
+      }
+    }
+  }
+});
   </script>
 </body>
 </html>
