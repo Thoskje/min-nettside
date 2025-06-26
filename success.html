@@ -22,12 +22,34 @@
   </header>
 
   <main class="success-container">
-    <div id="betalingsbekreftelse">
-      <div class="payment-success-banner">
-        <h1>Betaling bekreftet</h1>
-        <p>Takk for din betaling! Vi er klar til å hjelpe deg</p>
+    <!-- Betalingsbekreftelse som modal overlay -->
+    <div id="betalingsbekreftelse-modal" class="modal-overlay">
+      <div class="modal-content payment-confirmation">
+        <div class="modal-header">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h2>Betaling bekreftet</h2>
+        </div>
+        <div class="modal-body">
+          <p>Takk for din betaling! Vi er klar til å hjelpe deg med spørsmål om din bil.</p>
+          
+          <!-- Bilinfo oppsummering -->
+          <div class="quick-bilinfo" id="quick-bilinfo">
+            <!-- Enkel bilinfo fylles inn via JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="continue-to-chat" class="primary-button">Gå til chatten</button>
+        </div>
       </div>
+    </div>
 
+    <!-- Ditt opprinnelige innhold (chat og bilinfo) -->
+    <div id="main-content" style="display: none;">
       <!-- Bilinfo-visning -->
       <div class="bilinfo-card">
         <h2>Din bil</h2>
@@ -93,8 +115,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Standardvisning: Skjul alt unntatt verifiseringsmelding
-      document.getElementById('protected-content').style.display = 'none';
+      document.getElementById('main-content').style.display = 'none';
       document.getElementById('payment-error').style.display = 'none';
+      document.getElementById('betalingsbekreftelse-modal').style.display = 'none';
       
       // Last bilinfo
       displayBilInfo();
@@ -102,8 +125,10 @@
       // Verifiser betaling
       verifyPayment();
       
-      // Vis alle localStorage verdier for debugging
-      showAllLocalStorage();
+      // Legg til en event listener for "Gå til chatten"-knappen
+      document.getElementById('continue-to-chat').addEventListener('click', function() {
+        closePaymentConfirmation();
+      });
     });
     
     function displayBilInfo() {
@@ -283,17 +308,67 @@
       }
     }
     
-    function showChat() {
-      // Vis betalingsbekreftelsen og chatten
-      document.getElementById('betalingsbekreftelse').style.display = 'block';
+    function showPaymentConfirmation() {
+      const modal = document.getElementById('betalingsbekreftelse-modal');
+      const quickBilinfo = document.getElementById('quick-bilinfo');
       
-      // Last inn Tawk.to script
+      // Hent enkel bilinfo for å vise i modalen
+      const bilmerke = localStorage.getItem('bilMerke') || ''; 
+      const bilmodell = localStorage.getItem('bilModell') || '';
+      const regnr = localStorage.getItem('bilRegistreringsnummer') || '';
+      
+      // Vis bilinfo i modalen
+      if (bilmerke || regnr) {
+        quickBilinfo.innerHTML = `
+          <p><strong>Din bil:</strong> ${bilmerke} ${bilmodell}</p>
+          ${regnr ? `<p><strong>Registreringsnummer:</strong> ${regnr}</p>` : ''}
+        `;
+      } else {
+        quickBilinfo.innerHTML = `<p>Du kan stille spørsmål om din bil i chatten.</p>`;
+      }
+      
+      // Vis modalen med animasjon
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.classList.add('visible');
+      }, 10);
+      
+      // Last Tawk.to scriptet på forhånd, men ikke vis det ennå
+      preloadTawkScript();
+    }
+
+    function closePaymentConfirmation() {
+      const modal = document.getElementById('betalingsbekreftelse-modal');
+      
+      // Animer ut modalen
+      modal.classList.remove('visible');
+      
+      setTimeout(() => {
+        modal.style.display = 'none';
+        // Vis hovedinnholdet
+        document.getElementById('main-content').style.display = 'block';
+        
+        // Maksimer chatten hvis den er lastet
+        if (Tawk_API && Tawk_API.maximize) {
+          Tawk_API.maximize();
+        }
+      }, 300);
+    }
+
+    function preloadTawkScript() {
+      // Last inn Tawk.to script på forhånd for raskere oppstart når brukeren går til chat
       const s1 = document.createElement("script");
       s1.async = true;
       s1.src = 'https://embed.tawk.to/68148681c915a4190c8c02d6/1iu9f7du8';
       s1.charset = 'UTF-8';
       s1.setAttribute('crossorigin', '*');
       document.head.appendChild(s1);
+    }
+
+    // Oppdatert showChat-funksjon for å vise betalingsbekreftelsen først
+    function showChat() {
+      // Vis betalingsbekreftelsesmodalen
+      showPaymentConfirmation();
     }
     
     function showError() {
@@ -482,6 +557,107 @@
 
     .save-bilinfo-btn:hover {
       background: #059669;
+    }
+
+    /* Modal overlay styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.visible {
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.visible .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 24px;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .success-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .success-icon svg {
+      color: #10b981;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #0f172a;
+      font-size: 1.5rem;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .primary-button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .primary-button:hover {
+      background: #2563eb;
+    }
+
+    .quick-bilinfo {
+      margin-top: 16px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .quick-bilinfo p {
+      margin: 4px 0;
+      color: #334155;
+    }
+
+    .quick-bilinfo strong {
+      color: #0f172a;
     }
   </style>
 </body>
