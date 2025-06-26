@@ -101,29 +101,73 @@
       
       // Verifiser betaling
       verifyPayment();
+      
+      // Vis alle localStorage verdier for debugging
+      showAllLocalStorage();
     });
     
     function displayBilInfo() {
       const bilinfoElement = document.getElementById('bilinfo-detaljer');
       
-      // Hent lagret bilinfo fra localStorage
-      const regnr = localStorage.getItem('bilRegistreringsnummer');
-      const bilmerke = localStorage.getItem('bilMerke');
-      const bilmodell = localStorage.getItem('bilModell');
-      const bilaar = localStorage.getItem('bilÅr');
-      const bilmotor = localStorage.getItem('bilMotor');
+      // Hent lagret bilinfo fra localStorage med flere mulige nøkkelnavn
+      const keyMappings = {
+        regnr: ['bilRegistreringsnummer', 'regNr', 'regnr', 'bilnummer', 'registreringsnummer'],
+        merke: ['bilMerke', 'merke', 'produsent', 'brand'],
+        modell: ['bilModell', 'modell', 'model'],
+        år: ['bilÅr', 'år', 'year', 'aarsmodell', 'årsmodell'],
+        motor: ['bilMotor', 'motor', 'engine', 'motortype']
+      };
       
-      if (regnr && bilmerke) {
+      // Funksjon for å finne første ikke-tomme verdi fra mulige nøkler
+      function getFirstValue(keys) {
+        for (const key of keys) {
+          const value = localStorage.getItem(key);
+          if (value) return value;
+        }
+        return null;
+      }
+      
+      // Hent verdier med fallback til alternative nøkkelnavn
+      const regnr = getFirstValue(keyMappings.regnr);
+      const bilmerke = getFirstValue(keyMappings.merke);
+      const bilmodell = getFirstValue(keyMappings.modell);
+      const bilaar = getFirstValue(keyMappings.år);
+      const bilmotor = getFirstValue(keyMappings.motor);
+      
+      // Forsøk å hente fra sessionStorage hvis localStorage ikke har verdiene
+      // (noen brukere kan ha blokkert localStorage men tillatt sessionStorage)
+      if (!regnr && !bilmerke) {
+        const sessRegnr = sessionStorage.getItem('bilRegistreringsnummer') || sessionStorage.getItem('regNr');
+        const sessMerke = sessionStorage.getItem('bilMerke') || sessionStorage.getItem('merke');
+        
+        if (sessRegnr || sessMerke) {
+          bilinfoElement.innerHTML = `
+            <div class="bilinfo-grid">
+              <div class="bilinfo-row">
+                <span class="bilinfo-label">Registreringsnummer:</span>
+                <span class="bilinfo-value">${sessRegnr || 'Ikke tilgjengelig'}</span>
+              </div>
+              <div class="bilinfo-row">
+                <span class="bilinfo-label">Merke:</span>
+                <span class="bilinfo-value">${sessMerke || 'Ikke tilgjengelig'}</span>
+              </div>
+            </div>
+          `;
+          return;
+        }
+      }
+      
+      if (regnr || bilmerke) {
         // Formater og vis bilinformasjonen
         bilinfoElement.innerHTML = `
           <div class="bilinfo-grid">
             <div class="bilinfo-row">
               <span class="bilinfo-label">Registreringsnummer:</span>
-              <span class="bilinfo-value">${regnr}</span>
+              <span class="bilinfo-value">${regnr || 'Ikke tilgjengelig'}</span>
             </div>
             <div class="bilinfo-row">
               <span class="bilinfo-label">Merke:</span>
-              <span class="bilinfo-value">${bilmerke}</span>
+              <span class="bilinfo-value">${bilmerke || 'Ikke tilgjengelig'}</span>
             </div>
             <div class="bilinfo-row">
               <span class="bilinfo-label">Modell:</span>
@@ -140,10 +184,69 @@
           </div>
         `;
       } else {
-        bilinfoElement.innerHTML = '<p>Ingen bilinformasjon tilgjengelig</p>';
+        bilinfoElement.innerHTML = `
+          <p>Ingen bilinformasjon tilgjengelig</p>
+          <p class="small-note">Dette kan skje hvis cookies er blokkert eller du bruker en annen enhet.</p>
+          <button id="manual-bilinfo" class="manual-input-btn">Oppgi bilinformasjon manuelt</button>
+        `;
+        
+        // Legg til lytter for manuell inntasting
+        document.getElementById('manual-bilinfo').addEventListener('click', showManualBilinfoForm);
       }
     }
 
+    // Funksjon for å vise skjema for manuell inntasting
+    function showManualBilinfoForm() {
+      const bilinfoElement = document.getElementById('bilinfo-detaljer');
+      
+      bilinfoElement.innerHTML = `
+        <form id="manual-bilinfo-form">
+          <div class="form-group">
+            <label for="man-regnr">Registreringsnummer:</label>
+            <input type="text" id="man-regnr" placeholder="ABC123">
+          </div>
+          <div class="form-group">
+            <label for="man-merke">Bilmerke:</label>
+            <input type="text" id="man-merke" placeholder="f.eks. Volvo">
+          </div>
+          <div class="form-group">
+            <label for="man-modell">Modell:</label>
+            <input type="text" id="man-modell" placeholder="f.eks. V90">
+          </div>
+          <div class="form-group">
+            <label for="man-aar">Årsmodell:</label>
+            <input type="text" id="man-aar" placeholder="f.eks. 2020">
+          </div>
+          <button type="submit" class="save-bilinfo-btn">Lagre</button>
+        </form>
+      `;
+      
+      document.getElementById('manual-bilinfo-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Lagre verdiene i localStorage
+        const regnr = document.getElementById('man-regnr').value;
+        const merke = document.getElementById('man-merke').value;
+        const modell = document.getElementById('man-modell').value;
+        const aar = document.getElementById('man-aar').value;
+        
+        if (regnr) localStorage.setItem('bilRegistreringsnummer', regnr);
+        if (merke) localStorage.setItem('bilMerke', merke);
+        if (modell) localStorage.setItem('bilModell', modell);
+        if (aar) localStorage.setItem('bilÅr', aar);
+        
+        // Oppdater Tawk.to navn hvis tilgjengelig
+        if (Tawk_API && merke && modell) {
+          const bilnavn = `${merke} ${modell}`;
+          localStorage.setItem('bilnavn', bilnavn);
+          Tawk_API.setAttributes({ name: bilnavn }, function(error){});
+        }
+        
+        // Vis bilinformasjonen på nytt
+        displayBilInfo();
+      });
+    }
+    
     async function verifyPayment() {
       try {
         // Sjekk om vi har en session_id i URL
@@ -207,6 +310,14 @@
         }
       }
     });
+    
+    function showAllLocalStorage() {
+      console.log('Alle localStorage-verdier:');
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        console.log(`${key}: ${localStorage.getItem(key)}`);
+      }
+    }
   </script>
   <script src="js/navigasjon-modal.js"></script>
   
@@ -318,6 +429,59 @@
     #payment-error h1 {
       color: #b91c1c;
       margin-bottom: 1rem;
+    }
+    
+    .small-note {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.5rem;
+    }
+
+    .manual-input-btn {
+      background: #0c1a2a;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    .manual-input-btn:hover {
+      background: #1e293b;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    .save-bilinfo-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .save-bilinfo-btn:hover {
+      background: #059669;
     }
   </style>
 </body>

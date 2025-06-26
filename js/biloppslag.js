@@ -83,7 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
           // Lag bilnavn med årsmodell, drivstoff og motortype
           const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnr})`;
           localStorage.setItem('bilnavn', bilnavn);
-
+          localStorage.setItem('bilRegistreringsnummer', regnr);
+          localStorage.setItem('bilMerke', merke);
+          localStorage.setItem('bilModell', modell);
+          localStorage.setItem('bilÅr', arsmodell);
+          localStorage.setItem('bilMotor', `${drivstoff} ${motortype}`.trim());
+          
           // Sett brukernavn i Tawk.to-chatten
           if (window.Tawk_API) {
             window.Tawk_API.setAttributes({
