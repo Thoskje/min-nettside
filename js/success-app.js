@@ -43,36 +43,18 @@ class PaymentVerifier {
         return;
       }
       
-      // Konfigurasjon basert på miljø
-      const CONFIG = {
-        development: {
-          apiBaseUrl: 'http://localhost:3000/api',
-        },
-        test: {
-          apiBaseUrl: 'https://test-api.bilrådet.no/api',
-        },
-        production: {
-          apiBaseUrl: '/api',
-        }
-      };
-      
-      // Bestem miljø (kan settes via build process eller automatisk)
-      const ENV = window.location.hostname === 'localhost' ? 'development' : 
-                 window.location.hostname === 'test.bilrådet.no' ? 'test' : 'production';
-      
-      // Bruk konfigurasjonsverdien
-      const apiBaseUrl = CONFIG[ENV].apiBaseUrl;
-      
-      // Verifiser med API
-      const response = await fetch(`${apiBaseUrl}/verify-session?session_id=${sessionId}`);
+      // Verifiser med API - nå med forbedret respons-format
+      const response = await fetch(`/api/verify-session?session_id=${sessionId}`);
       const data = await response.json();
       
-      if (data.paid) {
+      if (data.success && data.paid) {
         // Betaling bekreftet
         localStorage.setItem('betalingsStatus', 'betalt');
         localStorage.setItem('paymentIntentId', data.paymentIntentId || 'unknown');
+        localStorage.setItem('customerId', data.customerId || 'unknown');
         if (this.events.onSuccess) this.events.onSuccess();
       } else {
+        console.error('Betalingsverifisering feilet:', data.message || 'Ukjent feil');
         if (this.events.onError) this.events.onError();
       }
     } catch (error) {
@@ -245,6 +227,7 @@ class SuccessApp {
   constructor() {
     // DOM-elementer
     this.errorElement = document.getElementById('payment-error');
+    this.errorMessageElement = document.getElementById('error-message'); // Legg til dette i HTML
     this.mainContentElement = document.getElementById('main-content');
     
     // Initialiser moduler
@@ -282,12 +265,25 @@ class SuccessApp {
     });
     
     // Håndter feil ved betalingsverifisering
-    this.paymentVerifier.on('onError', () => {
+    this.paymentVerifier.on('onError', (errorMessage) => {
       console.error('Betaling kunne ikke verifiseres');
       
       // Skjul hovedinnhold og vis feilmelding
       this.mainContentElement.style.display = 'none';
       this.errorElement.style.display = 'block';
+      
+      // Vis spesifikk feilmelding hvis tilgjengelig
+      if (this.errorMessageElement && errorMessage) {
+        this.errorMessageElement.textContent = errorMessage;
+      }
+      
+      // Spor feilen for analyse
+      if (window.gtag) {
+        window.gtag('event', 'payment_verification_error', {
+          'event_category': 'payment',
+          'event_label': errorMessage || 'Ukjent feil'
+        });
+      }
     });
   }
 }
