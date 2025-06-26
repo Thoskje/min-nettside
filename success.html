@@ -1,128 +1,19 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-   <!-- meta-tagger og ressurser -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/biloppslag.css">
-  <link rel="stylesheet" href="css/stripe.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>bilrådet.no</title>
+  <title>bilrådet.no - Betaling bekreftet</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
   
-  <!-- stripe.js -->
+  <!-- CSS filer -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/biloppslag.css">
+  <link rel="stylesheet" href="css/stripe.css">
+  
+  <!-- Stripe.js -->
   <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-   
-  <style>
-    /* App-lignende modal */
-    .app-modal-container {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.65);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2147483647 !important; /* Maksimal mulig z-index */
-      transition: background-color 0.3s ease;
-      backdrop-filter: blur(5px);
-    }
-
-    .app-modal {
-      background: #ffffff;
-      width: 90%;
-      max-width: 380px;
-      border-radius: 16px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      padding: 28px;
-      transform: scale(1); /* Start synlig */
-      opacity: 1; /* Start synlig */
-      text-align: center;
-      position: relative;
-      z-index: 2147483647 !important; /* Samme høye z-index */
-    }
-
-    .app-modal-icon {
-      margin-bottom: 16px;
-      color: #3b82f6;
-      display: flex;
-      justify-content: center;
-    }
-
-    .app-modal h2 {
-      color: #1e293b;
-      font-size: 1.5rem;
-      margin-bottom: 16px;
-      font-weight: 600;
-      line-height: 1.2;
-    }
-
-    .app-modal p {
-      color: #64748b;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    .app-modal-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .app-modal-buttons button {
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .app-modal-buttons .cancel-btn {
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-
-    .app-modal-buttons .cancel-btn:hover {
-      background: #e2e8f0;
-    }
-
-    .app-modal-buttons .confirm-btn {
-      background: #ef4444;
-      color: white;
-    }
-
-    .app-modal-buttons .confirm-btn:hover {
-      background: #dc2626;
-    }
-
-    /* Mobil-stil */
-    @media (min-width: 640px) {
-      .app-modal-buttons {
-        flex-direction: row;
-      }
-      
-      .app-modal-buttons button {
-        flex: 1;
-      }
-    }
-
-    /* Animasjoner */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes scaleIn {
-      from { transform: scale(0.95); }
-      to { transform: scale(1); }
-    }
-  </style>
 </head>
 <body>
   <!-- Topptekst / Navigasjon -->
@@ -132,13 +23,18 @@
 
   <main class="success-container">
     <div id="betalingsbekreftelse">
-      <h1>Takk for din betaling!</h1>
-      <p>Verifiserer betalingsstatus...</p>
-    </div>
+      <div class="payment-success-banner">
+        <h1>Betaling bekreftet</h1>
+        <p>Takk for din betaling! Vår ekspert står klar til å hjelpe deg med spørsmål om din bil.</p>
+      </div>
 
-    <div id="protected-content">
-      <h1>Takk for din betaling!</h1>
-      <p>Du kan nå chatte med en bilmekaniker direkte.</p>
+      <!-- Bilinfo-visning -->
+      <div class="bilinfo-card">
+        <h2>Din bil</h2>
+        <div id="bilinfo-detaljer">
+          <div class="spinner">Laster bilinfo...</div>
+        </div>
+      </div>
       
       <!-- Ytterligere innhold som kun vises ved bekreftet betaling -->
       <div class="tips-section">
@@ -153,6 +49,14 @@
 
       <!-- Embedded Tawk.to chat -->
       <div id='tawk_68148681c915a4190c8c02d6' class="chat-container"></div>
+    </div>
+
+    <div id="protected-content" style="display:none">
+      <h1>Velkommen til chat med vår ekspert</h1>
+      <p>Du kan nå stille spørsmål om din bil.</p>
+      <div class="chat-box">
+        <!-- Chat vil vises her -->
+      </div>
     </div>
 
     <div id="payment-error" style="display:none">
@@ -192,9 +96,53 @@
       document.getElementById('protected-content').style.display = 'none';
       document.getElementById('payment-error').style.display = 'none';
       
+      // Last bilinfo
+      displayBilInfo();
+      
       // Verifiser betaling
       verifyPayment();
     });
+    
+    function displayBilInfo() {
+      const bilinfoElement = document.getElementById('bilinfo-detaljer');
+      
+      // Hent lagret bilinfo fra localStorage
+      const regnr = localStorage.getItem('bilRegistreringsnummer');
+      const bilmerke = localStorage.getItem('bilMerke');
+      const bilmodell = localStorage.getItem('bilModell');
+      const bilaar = localStorage.getItem('bilÅr');
+      const bilmotor = localStorage.getItem('bilMotor');
+      
+      if (regnr && bilmerke) {
+        // Formater og vis bilinformasjonen
+        bilinfoElement.innerHTML = `
+          <div class="bilinfo-grid">
+            <div class="bilinfo-row">
+              <span class="bilinfo-label">Registreringsnummer:</span>
+              <span class="bilinfo-value">${regnr}</span>
+            </div>
+            <div class="bilinfo-row">
+              <span class="bilinfo-label">Merke:</span>
+              <span class="bilinfo-value">${bilmerke}</span>
+            </div>
+            <div class="bilinfo-row">
+              <span class="bilinfo-label">Modell:</span>
+              <span class="bilinfo-value">${bilmodell || 'Ikke tilgjengelig'}</span>
+            </div>
+            <div class="bilinfo-row">
+              <span class="bilinfo-label">Årsmodell:</span>
+              <span class="bilinfo-value">${bilaar || 'Ikke tilgjengelig'}</span>
+            </div>
+            <div class="bilinfo-row">
+              <span class="bilinfo-label">Motor:</span>
+              <span class="bilinfo-value">${bilmotor || 'Ikke tilgjengelig'}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        bilinfoElement.innerHTML = '<p>Ingen bilinformasjon tilgjengelig</p>';
+      }
+    }
 
     async function verifyPayment() {
       try {
@@ -221,6 +169,7 @@
         if (data.paid) {
           // Betaling bekreftet
           localStorage.setItem('betalingsStatus', 'betalt');
+          localStorage.setItem('paymentIntentId', data.paymentIntentId || 'unknown');
           showChat();
         } else {
           showError();
@@ -232,8 +181,8 @@
     }
     
     function showChat() {
-      document.getElementById('betalingsbekreftelse').style.display = 'none';
-      document.getElementById('protected-content').style.display = 'block';
+      // Vis betalingsbekreftelsen og chatten
+      document.getElementById('betalingsbekreftelse').style.display = 'block';
       
       // Last inn Tawk.to script
       const s1 = document.createElement("script");
@@ -249,189 +198,127 @@
       document.getElementById('payment-error').style.display = 'block';
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // Sjekk om brukeren har betalt (basert på localStorage)
-      const hasValidPayment = 
-        localStorage.getItem('betalingsStatus') === 'betalt' && 
-        localStorage.getItem('paymentIntentId');
-
-  if (hasValidPayment) {
-    // Variabler for historikkhåndtering
-    const currentUrl = window.location.href;
-    let historyInitialized = false;
-    
-    // Initialiser historikktilstandene umiddelbart
-    initHistory();
-    
-    // Funksjon for å sette opp historikktilstander
-    function initHistory() {
-      if (historyInitialized) return;
-      
-      // Første dummy-state - denne vil bli popped ved første tilbakeklikk
-      history.pushState({ page: 'chat-entry', id: 1 }, document.title, currentUrl);
-      console.log('Navigation protection: Added first history state');
-      
-      // Legg til neste state etter en kort forsinkelse
-      // Dette hjelper noen nettlesere med å registrere tilstandene separat
-      setTimeout(() => {
-        // Andre dummy-state - denne vil vise modalen når den poppes
-        history.pushState({ page: 'chat-active', id: 2 }, document.title, currentUrl);
-        console.log('Navigation protection: Added second history state');
-        historyInitialized = true;
-      }, 100);
-    }
-
-    // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
-    window.addEventListener('beforeunload', function(e) {
-      const confirmationMessage = 'Du er i ferd med å forlate chatten.';
-      e.returnValue = confirmationMessage;
-      return confirmationMessage;
-    });
-    
-    // 2. Håndter nettleserens tilbakeknapp med History API
-    window.addEventListener('popstate', function(event) {
-      console.log('Navigation protection: Popstate triggered', event.state);
-      
-      // Vis modalen når brukeren klikker tilbake
-      showNavigationModal(document.referrer || '/');
-      
-      // Viktig: Legg til ny state umiddelbart
-      history.pushState({ page: 'chat-active', id: Math.random() }, document.title, currentUrl);
-      console.log('Navigation protection: Added replacement history state');
-    });
-
-    // 3. Fang opp klikk på logoer og lenker
-    document.addEventListener('click', function(e) {
-      // Finn nærmeste a-tag hvis brukeren klikket på et underelement
-      const clickedLink = e.target.closest('a');
-      
-      if (!clickedLink) return;
-      
-      // Sjekk om lenken går til hjemmesiden eller utenfor nåværende side
-      const href = clickedLink.getAttribute('href') || '';
-      const isHomeLink = href === '/' || 
-                        href === 'index.html' || 
-                        href === '#' ||
-                        href.startsWith('http');
-      
-      // Hvis brukeren klikker på en navigasjonslenke
-      if (isHomeLink && !clickedLink.classList.contains('no-confirm')) {
-        e.preventDefault(); // Stopp standard navigering
-        showNavigationModal(href);
-      }
-    });
-
-    // Funksjon for å vise app-lignende modal
-    function showNavigationModal(targetUrl) {
-      console.log('Navigation protection: Showing modal for', targetUrl);
-      
-      // Oprydding: Fjern eksisterende modaler (i tilfelle en henger igjen)
-      const existingModal = document.querySelector('.app-modal-container');
-      if (existingModal) {
-        document.body.removeChild(existingModal);
-      }
-      
-      // Opprett modal container
-      const modalContainer = document.createElement('div');
-      modalContainer.className = 'app-modal-container';
-      modalContainer.style.zIndex = '2147483647'; // Maksimal z-index
-      
-      // Lag modal dialog
-      const modal = document.createElement('div');
-      modal.className = 'app-modal';
-      modal.style.zIndex = '2147483647'; // Maksimal z-index
-      modal.innerHTML = `
-        <div class="app-modal-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-        </div>
-        <h2>Avslutt samtalen?</h2>
-        <p>Hvis du forlater denne siden vil du miste tilgangen til samtalen du har betalt for.</p>
-        <div class="app-modal-buttons">
-          <button class="cancel-btn">Bli i chatten</button>
-          <button class="confirm-btn">Forlat siden</button>
-        </div>
-      `;
-      
-      // Legg til modal i container
-      modalContainer.appendChild(modal);
-      
-      // Legg til container i body
-      document.body.appendChild(modalContainer);
-      
-      // Vis modal umiddelbart (ingen forsinkelse)
-      requestAnimationFrame(() => {
-        modalContainer.classList.add('visible');
-        modal.classList.add('visible');
-      });
-      
-      // Legg til hendelseshåndterere
-      const cancelButton = modal.querySelector('.cancel-btn');
-      const confirmButton = modal.querySelector('.confirm-btn');
-      
-      // Kanseller navigering
-      cancelButton.addEventListener('click', function() {
-        closeModal();
-      });
-      
-      // Bekreft navigering
-      confirmButton.addEventListener('click', function() {
-        closeModal(true);
-        window.location.href = targetUrl;
-      });
-      
-      // Klikk utenfor for å lukke
-      modalContainer.addEventListener('click', function(e) {
-        if (e.target === modalContainer) {
-          closeModal();
+    // Håndter lukking av chat
+    document.addEventListener('click', function(event) {
+      if (event.target.id === 'close-checkout') {
+        // Lukk chatten og fjern Tawk_API
+        if (Tawk_API && Tawk_API.close) {
+          Tawk_API.close();
         }
-      });
-      
-      // Funksjon for å lukke modal med animasjon
-      function closeModal(navigate) {
-        modal.classList.remove('visible');
-        setTimeout(() => {
-          modalContainer.classList.remove('visible');
-          setTimeout(() => {
-            if (document.body.contains(modalContainer)) {
-              document.body.removeChild(modalContainer);
-            }
-          }, 300);
-        }, 100);
-      }
-    }
-    
-    // Reinitaliser historikktilstandene ved interaksjon for å sikre konstant beskyttelse
-    document.addEventListener('click', function() {
-      if (!historyInitialized) {
-        initHistory();
       }
     });
-    
-    // Sjekk om nettleseren støtter History API korrekt
-    if (window.navigator.userAgent.indexOf('MSIE ') > -1 || 
-        window.navigator.userAgent.indexOf('Trident/') > -1) {
-      console.log('IE detected, using fallback history protection');
-      
-      // IE fallback - sjekk regelmessig om brukeren forsøker å gå tilbake
-      setInterval(function() {
-        if (document.visibilityState === 'hidden') {
-          // Brukeren kan ha forsøkt å navigere bort
-          document.addEventListener('visibilitychange', function onVisibilityChange() {
-            if (document.visibilityState === 'visible') {
-              showNavigationModal('/');
-              document.removeEventListener('visibilitychange', onVisibilityChange);
-            }
-          });
-        }
-      }, 500);
-    }
-  }
-});
   </script>
   <script src="js/navigasjon-modal.js"></script>
+  
+  <style>
+    .success-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    
+    .payment-success-banner {
+      background: #ecfdf5;
+      border-left: 4px solid #10b981;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 6px;
+    }
+    
+    .payment-success-banner h1 {
+      color: #065f46;
+      margin-bottom: 0.5rem;
+    }
+    
+    .payment-success-banner p {
+      color: #065f46;
+    }
+    
+    .bilinfo-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .bilinfo-card h2 {
+      margin-bottom: 1rem;
+      color: #0c1a2a;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+    
+    .bilinfo-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+    
+    .bilinfo-row {
+      display: flex;
+      align-items: center;
+    }
+    
+    .bilinfo-label {
+      font-weight: 600;
+      color: #4b5563;
+      width: 180px;
+    }
+    
+    .bilinfo-value {
+      color: #0c1a2a;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(0,0,0,.2);
+      border-radius: 50%;
+      border-top-color: #0c1a2a;
+      animation: spin 1s ease-in-out infinite;
+      margin: 1rem auto;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .tips-section {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .tips-section h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .tips-section ul {
+      padding-left: 1.5rem;
+    }
+    
+    .tips-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .chat-container {
+      height: 600px;
+      margin-top: 2rem;
+    }
+    
+    #payment-error {
+      background: #fee2e2;
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    #payment-error h1 {
+      color: #b91c1c;
+      margin-bottom: 1rem;
+    }
+  </style>
 </body>
 </html>
