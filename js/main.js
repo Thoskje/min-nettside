@@ -125,3 +125,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!menuBtn) console.error('Hamburger-meny: #menu-btn element ikke funnet');
     if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
+  });
