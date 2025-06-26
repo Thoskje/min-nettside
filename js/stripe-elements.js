@@ -29,12 +29,26 @@
     
     const card = elements.create('card', { style, hidePostalCode: true });
     card.mount('#card-element');
+    
+    // Vis feil ved kortvalidering
+    card.on('change', function(event) {
+      const messageElement = document.getElementById('payment-message');
+      if (event.error) {
+        messageElement.textContent = event.error.message;
+      } else {
+        messageElement.textContent = '';
+      }
+    });
 
     // Håndter betaling
     document.getElementById('payment-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      document.getElementById('submit-payment').disabled = true;
-      document.getElementById('payment-message').textContent = '';
+      
+      const submitButton = document.getElementById('submit-payment');
+      const messageElement = document.getElementById('payment-message');
+      
+      submitButton.disabled = true;
+      messageElement.textContent = 'Behandler betaling...';
       
       // Hent biltype fra localStorage for å sende med til backend
       const biltype = localStorage.getItem('bilnavn') || '';
@@ -48,26 +62,52 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ biltype, email }) // Send med bilinfo til backend
         });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
         const data = await response.json();
         clientSecret = data.clientSecret;
         if (!clientSecret) throw new Error(data.error || 'Ingen clientSecret');
       } catch (err) {
-        document.getElementById('payment-message').textContent = 'Kunne ikke starte betaling.';
-        document.getElementById('submit-payment').disabled = false;
+        console.error('Feil ved opprettelse av Payment Intent:', err);
+        messageElement.textContent = 'Kunne ikke starte betaling. Vennligst prøv igjen.';
+        submitButton.disabled = false;
         return;
       }
 
       // Bekreft betaling
-      const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: card }
-      });
+      try {
+        const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: { card: card }
+        });
 
-      if (error) {
-        document.getElementById('payment-message').textContent = error.message;
-        document.getElementById('submit-payment').disabled = false;
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Redirect til chat eller success-side
-        window.location.href = '/success.html';
+        if (error) {
+          // Vis feil fra Stripe (kortavvisning, etc)
+          messageElement.textContent = error.message;
+          submitButton.disabled = false;
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+          // Lagre betalings-ID for verifisering på success.html
+          localStorage.setItem('paymentIntentId', paymentIntent.id);
+          localStorage.setItem('betalingsStatus', 'betalt');
+          
+          // Vis vellykketmelding før redirect
+          messageElement.textContent = 'Betaling vellykket! Omdirigerer...';
+          
+          // Kort forsinkelse for å vise success-melding før redirect
+          setTimeout(() => {
+            window.location.href = '/success.html';
+          }, 1000);
+        } else {
+          // Uventet status
+          messageElement.textContent = 'Betalingen har en uventet status. Vennligst kontakt kundesupport.';
+          submitButton.disabled = false;
+        }
+      } catch (err) {
+        console.error('Feil ved betalingsbekreftelse:', err);
+        messageElement.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen senere.';
+        submitButton.disabled = false;
       }
     });
   }
