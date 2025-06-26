@@ -21,17 +21,12 @@
     .app-modal-container {
       position: fixed;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.65);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2000000 !important; /* Ekstrem høy z-index for å overstyre Tawk.to */
+      z-index: 2147483647 !important; /* Maksimal mulig z-index */
       transition: background-color 0.3s ease;
-      backdrop-filter: blur(0px);
-    }
-
-    .app-modal-container.visible {
-      background-color: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(5px);
     }
 
@@ -42,17 +37,11 @@
       border-radius: 16px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       padding: 28px;
-      transform: scale(0.95);
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform: scale(1); /* Start synlig */
+      opacity: 1; /* Start synlig */
       text-align: center;
-      position: relative; /* Legg til position relative */
-      z-index: 2000001 !important; /* Enda høyere z-index enn container */
-    }
-
-    .app-modal.visible {
-      transform: scale(1);
-      opacity: 1;
+      position: relative;
+      z-index: 2147483647 !important; /* Samme høye z-index */
     }
 
     .app-modal-icon {
