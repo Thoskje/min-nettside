@@ -142,67 +142,101 @@
       if (hasValidPayment) {
         // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
         window.addEventListener('beforeunload', function(e) {
-          // Standard melding (forskjellig visning avhengig av nettleser)
-          const confirmationMessage = 'Du er i ferd med å forlate chatten. ' + 
-                                   'Hvis du forlater siden vil du miste tilgang til samtalen. ' +
-                                   'Er du sikker på at du vil avslutte?';
-          
-          e.returnValue = confirmationMessage; // Standard for de fleste nettlesere
-          return confirmationMessage; // For eldre nettlesere
+          const confirmationMessage = 'Du er i ferd med å forlate chatten.';
+          e.returnValue = confirmationMessage;
+          return confirmationMessage;
         });
 
         // 2. Fang opp klikk på logoer og lenker
         document.addEventListener('click', function(e) {
-          const isLogoOrHomeLink = 
-            e.target.classList.contains('logo') || 
-            (e.target.tagName === 'A' && (e.target.getAttribute('href') === '/' || 
-                                         e.target.getAttribute('href') === 'index.html' || 
-                                         e.target.getAttribute('href') === '#'));
+          // Finn nærmeste a-tag hvis brukeren klikket på et underelement
+          const clickedLink = e.target.closest('a');
           
-          // Hvis brukeren klikker på logo eller hjem-lenke
-          if (isLogoOrHomeLink) {
+          if (!clickedLink) return;
+          
+          // Sjekk om lenken går til hjemmesiden eller utenfor nåværende side
+          const href = clickedLink.getAttribute('href') || '';
+          const isHomeLink = href === '/' || 
+                            href === 'index.html' || 
+                            href === '#' ||
+                            href.startsWith('http');
+          
+          // Hvis brukeren klikker på en navigasjonslenke
+          if (isHomeLink && !clickedLink.classList.contains('no-confirm')) {
             e.preventDefault(); // Stopp standard navigering
-            
-            // Vis bekreftelsesdialog
-            showNavigationConfirm(e.target.getAttribute('href') || '/');
+            showNavigationModal(href);
           }
         });
 
-        // 3. Funksjon for å vise tilpasset bekreftelsesdialog
-        function showNavigationConfirm(targetUrl) {
-          // Opprett overlay-container for dialogen
-          const overlay = document.createElement('div');
-          overlay.className = 'navigation-confirm-overlay';
+        // Funksjon for å vise app-lignende modal
+        function showNavigationModal(targetUrl) {
+          // Opprett modal container
+          const modalContainer = document.createElement('div');
+          modalContainer.className = 'app-modal-container';
           
-          // Lag dialogboks
-          const dialog = document.createElement('div');
-          dialog.className = 'navigation-confirm-dialog';
-          dialog.innerHTML = `
-            <h3>Forlat chatten?</h3>
-            <p>Du er i ferd med å forlate samtalen du har betalt for.</p>
-            <p>Hvis du forlater siden nå, må du betale på nytt for å få tilgang igjen.</p>
-            <div class="navigation-confirm-buttons">
-              <button class="cancel-button">Bli på siden</button>
-              <button class="confirm-button">Forlat likevel</button>
+          // Lag modal dialog
+          const modal = document.createElement('div');
+          modal.className = 'app-modal';
+          modal.innerHTML = `
+            <div class="app-modal-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <h2>Avslutt samtalen?</h2>
+            <p>Hvis du forlater denne siden vil du miste tilgangen til samtalen du har betalt for.</p>
+            <div class="app-modal-buttons">
+              <button class="cancel-btn">Bli i chatten</button>
+              <button class="confirm-btn">Forlat siden</button>
             </div>
           `;
           
-          // Legg dialogboksen til overlay
-          overlay.appendChild(dialog);
+          // Legg til modal i container
+          modalContainer.appendChild(modal);
           
-          // Legg overlay til body
-          document.body.appendChild(overlay);
+          // Legg til container i body
+          document.body.appendChild(modalContainer);
           
-          // Legg til hendelseshåndterere for knappene
-          dialog.querySelector('.cancel-button').addEventListener('click', function() {
-            document.body.removeChild(overlay);
+          // Animer inn
+          setTimeout(() => {
+            modalContainer.classList.add('visible');
+            modal.classList.add('visible');
+          }, 10);
+          
+          // Legg til hendelseshåndterere
+          const cancelButton = modal.querySelector('.cancel-btn');
+          const confirmButton = modal.querySelector('.confirm-btn');
+          
+          // Kanseller navigering
+          cancelButton.addEventListener('click', function() {
+            closeModal();
           });
           
-          dialog.querySelector('.confirm-button').addEventListener('click', function() {
-            document.body.removeChild(overlay);
-            // Naviger til målet
+          // Bekreft navigering
+          confirmButton.addEventListener('click', function() {
+            closeModal(true);
             window.location.href = targetUrl;
           });
+          
+          // Klikk utenfor for å lukke
+          modalContainer.addEventListener('click', function(e) {
+            if (e.target === modalContainer) {
+              closeModal();
+            }
+          });
+          
+          // Funksjon for å lukke modal med animasjon
+          function closeModal(navigate) {
+            modal.classList.remove('visible');
+            setTimeout(() => {
+              modalContainer.classList.remove('visible');
+              setTimeout(() => {
+                document.body.removeChild(modalContainer);
+              }, 300);
+            }, 100);
+          }
         }
       }
     });
