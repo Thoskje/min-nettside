@@ -256,6 +256,31 @@
         localStorage.getItem('paymentIntentId');
 
   if (hasValidPayment) {
+    // Variabler for historikkhåndtering
+    const currentUrl = window.location.href;
+    let historyInitialized = false;
+    
+    // Initialiser historikktilstandene umiddelbart
+    initHistory();
+    
+    // Funksjon for å sette opp historikktilstander
+    function initHistory() {
+      if (historyInitialized) return;
+      
+      // Første dummy-state - denne vil bli popped ved første tilbakeklikk
+      history.pushState({ page: 'chat-entry', id: 1 }, document.title, currentUrl);
+      console.log('Navigation protection: Added first history state');
+      
+      // Legg til neste state etter en kort forsinkelse
+      // Dette hjelper noen nettlesere med å registrere tilstandene separat
+      setTimeout(() => {
+        // Andre dummy-state - denne vil vise modalen når den poppes
+        history.pushState({ page: 'chat-active', id: 2 }, document.title, currentUrl);
+        console.log('Navigation protection: Added second history state');
+        historyInitialized = true;
+      }, 100);
+    }
+
     // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
     window.addEventListener('beforeunload', function(e) {
       const confirmationMessage = 'Du er i ferd med å forlate chatten.';
@@ -264,27 +289,15 @@
     });
     
     // 2. Håndter nettleserens tilbakeknapp med History API
-    // Legg til to dummy-states i historikken for å håndtere første tilbakeknapp
-    const currentUrl = window.location.href;
-    
-    // Første dummy-state - denne vil bli popped ved første tilbakeklikk
-    history.pushState({ page: 'chat-entry' }, document.title, currentUrl);
-    
-    // Andre dummy-state - denne vil vise modalen når den poppes
-    history.pushState({ page: 'chat-active' }, document.title, currentUrl);
-    
-    // Logger for debugging
-    console.log('Navigation protection: Added history states');
-    
-    // Håndter popstate-hendelser (tilbakeknapp eller frem-knapp i nettleseren)
     window.addEventListener('popstate', function(event) {
       console.log('Navigation protection: Popstate triggered', event.state);
       
       // Vis modalen når brukeren klikker tilbake
       showNavigationModal(document.referrer || '/');
       
-      // Legg til en ny state i historikken for å fange neste tilbakeklikk
-      history.pushState({ page: 'chat-active', timestamp: Date.now() }, document.title, currentUrl);
+      // Viktig: Legg til ny state umiddelbart
+      history.pushState({ page: 'chat-active', id: Math.random() }, document.title, currentUrl);
+      console.log('Navigation protection: Added replacement history state');
     });
 
     // 3. Fang opp klikk på logoer og lenker
@@ -311,6 +324,12 @@
     // Funksjon for å vise app-lignende modal
     function showNavigationModal(targetUrl) {
       console.log('Navigation protection: Showing modal for', targetUrl);
+      
+      // Oprydding: Fjern eksisterende modaler (i tilfelle en henger igjen)
+      const existingModal = document.querySelector('.app-modal-container');
+      if (existingModal) {
+        document.body.removeChild(existingModal);
+      }
       
       // Opprett modal container
       const modalContainer = document.createElement('div');
@@ -343,11 +362,11 @@
       // Legg til container i body
       document.body.appendChild(modalContainer);
       
-      // Animer inn
-      setTimeout(() => {
+      // Vis modal umiddelbart (ingen forsinkelse)
+      requestAnimationFrame(() => {
         modalContainer.classList.add('visible');
         modal.classList.add('visible');
-      }, 10);
+      });
       
       // Legg til hendelseshåndterere
       const cancelButton = modal.querySelector('.cancel-btn');
@@ -377,10 +396,38 @@
         setTimeout(() => {
           modalContainer.classList.remove('visible');
           setTimeout(() => {
-            document.body.removeChild(modalContainer);
+            if (document.body.contains(modalContainer)) {
+              document.body.removeChild(modalContainer);
+            }
           }, 300);
         }, 100);
       }
+    }
+    
+    // Reinitaliser historikktilstandene ved interaksjon for å sikre konstant beskyttelse
+    document.addEventListener('click', function() {
+      if (!historyInitialized) {
+        initHistory();
+      }
+    });
+    
+    // Sjekk om nettleseren støtter History API korrekt
+    if (window.navigator.userAgent.indexOf('MSIE ') > -1 || 
+        window.navigator.userAgent.indexOf('Trident/') > -1) {
+      console.log('IE detected, using fallback history protection');
+      
+      // IE fallback - sjekk regelmessig om brukeren forsøker å gå tilbake
+      setInterval(function() {
+        if (document.visibilityState === 'hidden') {
+          // Brukeren kan ha forsøkt å navigere bort
+          document.addEventListener('visibilitychange', function onVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+              showNavigationModal('/');
+              document.removeEventListener('visibilitychange', onVisibilityChange);
+            }
+          });
+        }
+      }, 500);
     }
   }
 });
