@@ -25,7 +25,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      z-index: 2000000 !important; /* Ekstrem høy z-index for å overstyre Tawk.to */
       transition: background-color 0.3s ease;
       backdrop-filter: blur(0px);
     }
@@ -46,6 +46,8 @@
       opacity: 0;
       transition: transform 0.3s ease, opacity 0.3s ease;
       text-align: center;
+      position: relative; /* Legg til position relative */
+      z-index: 2000001 !important; /* Enda høyere z-index enn container */
     }
 
     .app-modal.visible {
