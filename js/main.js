@@ -84,21 +84,44 @@ document.addEventListener('DOMContentLoaded', function() {
      =========================== */
   const menuBtn = document.getElementById('menu-btn');
   const mobileNav = document.getElementById('mobile-nav');
+  
   if (menuBtn && mobileNav) {
-    menuBtn.addEventListener('click', function() {
-      mobileNav.classList.toggle('open');
+    // Lag en variabel for å holde styr på om menyen er åpen
+    let menuOpen = false;
+    
+    // Toggle menyen ved klikk på hamburger-ikonet
+    menuBtn.addEventListener('click', function(e) {
+      // Hindre at klikket fortsetter til document
+      e.stopPropagation();
+      
+      // Toggle meny og oppdater status
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      
+      // Logg for debugging
+      console.log('Hamburger-meny: ' + (menuOpen ? 'åpnet' : 'lukket'));
     });
-    // Lukk meny ved klikk på lenke
+    
+    // Lukk menyen ved klikk på lenke
     mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileNav.classList.remove('open'));
-    });
-    // Lukk meny ved klikk utenfor
-    document.addEventListener('click', function(e) {
-      if (!mobileNav.contains(e.target) && e.target !== menuBtn) {
+      link.addEventListener('click', () => {
+        menuOpen = false;
         mobileNav.classList.remove('open');
+        console.log('Hamburger-meny: lukket via lenke-klikk');
+      });
+    });
+    
+    // Lukk menyen ved klikk utenfor
+    document.addEventListener('click', function(e) {
+      // Sjekk at menyen er åpen, at klikket ikke er på menyen eller på menyknappen
+      if (menuOpen && !mobileNav.contains(e.target) && e.target !== menuBtn) {
+        menuOpen = false;
+        mobileNav.classList.remove('open');
+        console.log('Hamburger-meny: lukket via klikk utenfor');
       }
     });
+  } else {
+    // Logg feil hvis elementer mangler
+    if (!menuBtn) console.error('Hamburger-meny: #menu-btn element ikke funnet');
+    if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
-  
-});
-
