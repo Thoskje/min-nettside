@@ -1,12 +1,137 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
+   <!-- meta-tagger og ressurser -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/biloppslag.css">
+  <link rel="stylesheet" href="css/stripe.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Betaling fullført - bilrådet.no</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>bilrådet.no</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
+  
+  <!-- stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+   
+  <style>
+    /* App-lignende modal */
+    .app-modal-container {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: background-color 0.3s ease;
+      backdrop-filter: blur(0px);
+    }
+
+    .app-modal-container.visible {
+      background-color: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+    }
+
+    .app-modal {
+      background: #ffffff;
+      width: 90%;
+      max-width: 380px;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      padding: 28px;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      text-align: center;
+    }
+
+    .app-modal.visible {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .app-modal-icon {
+      margin-bottom: 16px;
+      color: #3b82f6;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-modal h2 {
+      color: #1e293b;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .app-modal p {
+      color: #64748b;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .app-modal-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .app-modal-buttons button {
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .app-modal-buttons .cancel-btn {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .app-modal-buttons .cancel-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .app-modal-buttons .confirm-btn {
+      background: #ef4444;
+      color: white;
+    }
+
+    .app-modal-buttons .confirm-btn:hover {
+      background: #dc2626;
+    }
+
+    /* Mobil-stil */
+    @media (min-width: 640px) {
+      .app-modal-buttons {
+        flex-direction: row;
+      }
+      
+      .app-modal-buttons button {
+        flex: 1;
+      }
+    }
+
+    /* Animasjoner */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.95); }
+      to { transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
   <!-- Topptekst / Navigasjon -->
