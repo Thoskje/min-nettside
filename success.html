@@ -255,27 +255,40 @@
         localStorage.getItem('betalingsStatus') === 'betalt' && 
         localStorage.getItem('paymentIntentId');
 
-      if (hasValidPayment) {
-        // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
-        window.addEventListener('beforeunload', function(e) {
-          const confirmationMessage = 'Du er i ferd med å forlate chatten.';
-          e.returnValue = confirmationMessage;
-          return confirmationMessage;
-        });
+  if (hasValidPayment) {
+    // 1. Advarsel ved forsøk på å forlate siden/lukke fanen
+    window.addEventListener('beforeunload', function(e) {
+      const confirmationMessage = 'Du er i ferd med å forlate chatten.';
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+    });
+    
+    // 2. Håndter nettleserens tilbakeknapp med History API
+    // Legg til en dummy-state i historikken, så vi kan fange opp når brukeren klikker tilbake
+    history.pushState({ page: 'chat' }, document.title, window.location.href);
+    
+    // Håndter popstate-hendelser (tilbakeknapp eller frem-knapp i nettleseren)
+    window.addEventListener('popstate', function(event) {
+      // Vis modalen når brukeren klikker tilbake
+      showNavigationModal(document.referrer || '/');
+      
+      // Legg til en ny state slik at tilbakeknapp fortsetter å fungere
+      history.pushState({ page: 'chat' }, document.title, window.location.href);
+    });
 
-        // 2. Fang opp klikk på logoer og lenker
-        document.addEventListener('click', function(e) {
-          // Finn nærmeste a-tag hvis brukeren klikket på et underelement
-          const clickedLink = e.target.closest('a');
-          
-          if (!clickedLink) return;
-          
-          // Sjekk om lenken går til hjemmesiden eller utenfor nåværende side
-          const href = clickedLink.getAttribute('href') || '';
-          const isHomeLink = href === '/' || 
-                            href === 'index.html' || 
-                            href === '#' ||
-                            href.startsWith('http');
+    // 3. Fang opp klikk på logoer og lenker
+    document.addEventListener('click', function(e) {
+      // Finn nærmeste a-tag hvis brukeren klikket på et underelement
+      const clickedLink = e.target.closest('a');
+      
+      if (!clickedLink) return;
+      
+      // Sjekk om lenken går til hjemmesiden eller utenfor nåværende side
+      const href = clickedLink.getAttribute('href') || '';
+      const isHomeLink = href === '/' || 
+                        href === 'index.html' || 
+                        href === '#' ||
+                        href.startsWith('http');
           
           // Hvis brukeren klikker på en navigasjonslenke
           if (isHomeLink && !clickedLink.classList.contains('no-confirm')) {
