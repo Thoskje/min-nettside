@@ -162,14 +162,5 @@ class BilinfoDisplay {
   }
 }
 
-// Eksporter til globalt scope
+// Eksporter kun BilinfoDisplay til globalt scope
 window.BilinfoDisplay = BilinfoDisplay;
-
-// Automatisk initialiser hvis det finnes et bilinfo-detaljer element
-document.addEventListener('DOMContentLoaded', function() {
-  const bilinfoDetaljer = document.getElementById('bilinfo-detaljer');
-  if (bilinfoDetaljer) {
-    const display = new BilinfoDisplay('bilinfo-detaljer');
-    display.display();
-  }
-});
