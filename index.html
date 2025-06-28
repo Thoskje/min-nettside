@@ -120,25 +120,6 @@
   <div id="biloppslag-overlay" class="biloppslag-overlay" style="display:none;">
   </div>
     <div class="biloppslag-modal">
-      <!-- Fremdriftsindikator -->
-  <div class="progress-stepper">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-    <div class="progress-steps">
-      <div class="step step-1 active">
-        <div class="step-circle">1</div>
-        <div class="step-label">Finn din bil</div>
-      </div>
-      <div class="step step-2">
-        <div class="step-circle">2</div>
-        <div class="step-label">Legg inn betaling</div>
-      </div>
-      <div class="step step-3">
-        <div class="step-circle">3</div>
-        <div class="step-label">Start konsultasjon</div>
-      </div>
-    </div>
     <h2>Skriv inn registreringsnummer</h2>
     <input type="text" id="regnr" placeholder="F.eks. AB12345">
     <button id="sok-bil">Søk</button>
@@ -148,6 +129,58 @@
   </div>
 </div>
 
+  <!-- Stripe Checkout-modul som overlay/modal -->
+  <div id="checkout-overlay" class="checkout-overlay" style="display:none;">
+    <div class="checkout-module">
+      <div class="checkout-tabs">
+        <button class="checkout-tab active">Betal nå</button>
+        <button class="checkout-tab" disabled>Etter levering</button>
+      </div>
+      <div class="checkout-options">
+        <div class="option selected">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Vipps-logo.png" alt="Vipps" class="option-icon" />
+          <div>
+            <strong>Vipps</strong>
+           </div>
+        
+        </div>
+        <div class="option">
+          <img src="https://stripe.com/img/v3/apple-pay/apple-pay.svg" alt="Apple Pay" class="option-icon" />
+          <div>
+            <strong>Apple Pay</strong>
+          </div>
+        </div>
+        <div class="option card-option active">
+          <img src="https://stripe.com/img/v3/home/social.png" alt="Kort" class="option-icon" />
+          <div>
+            <strong>Kort</strong>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-summary">
+        <strong>Du betaler for:</strong>
+        <ul>
+          <li>Chat med bilmekaniker – 149 kr</li>
+        </ul>
+      </div>
+      <!-- Stripe Elements betalingsskjema -->
+      <form id="payment-form" style="flex-direction:column; gap:1rem;">
+        <label for="card-element" style="font-weight:600;">Betalingskort</label>
+        <div id="card-element" style="padding:8px 0; border-radius:8px; border:1.5px solid #e0e6ed; background:#f8fafc;"></div>
+        <button id="submit-payment" class="skjema-btn" style="margin-top:1rem; background:#635bff;">
+          Betal med Stripe
+        </button>
+        <div id="payment-message" style="color:#e00; margin-top:0.5rem;"></div>
+        <div style="margin-top:1.5rem; text-align:center;">
+          <a href="https://stripe.com" target="_blank" rel="noopener" style="display:inline-block;">
+            <img src="https://stripe.com/img/v3/home/social.png" alt="Powered by Stripe" style="height:28px; opacity:0.8;">
+          </a>
+          <div style="font-size:0.95em; color:#888; margin-top:0.3em;">Sikker betaling levert av Stripe</div>
+        </div>
+      </form>
+      <button id="close-checkout" class="skjema-btn" style="background:#e0e6ed;color:#0c1a2a;margin-top:1rem;">Lukk</button>
+    </div>
+  </div>
 
   <!-- Bunntekst -->
   <footer>
