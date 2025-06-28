@@ -10,77 +10,153 @@
     });
   }
 
-  // Stripe Elements setup
-  if (window.Stripe) {
-    const stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0'); 
-    const elements = stripe.elements({
-      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
-    });
-    const style = {
-      base: {
-        color: "#0c1a2a",
-        fontFamily: 'Inter, Arial, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": { color: "#aab7c4" }
-      },
-      invalid: { color: "#e5424d", iconColor: "#e5424d" }
+  document.addEventListener('DOMContentLoaded', function() {
+    // Stripe integrasjon
+    let stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Erstatt med din faktiske Stripe-nøkkel
+    let elements;
+    let card;
+    let stripeElementsInitialized = false;
+    
+    // Eksporter til window for tilgang fra andre scripts
+    window.stripeElements = {
+      initialize: initializeStripe,
+      stripe: stripe,
+      initialized: () => stripeElementsInitialized
     };
     
-    const card = elements.create('card', { style, hidePostalCode: true });
-    card.mount('#card-element');
-    
-    // Vis feil ved kortvalidering
-    card.on('change', function(event) {
-      const messageElement = document.getElementById('payment-message');
-      if (event.error) {
-        messageElement.textContent = event.error.message;
-      } else {
-        messageElement.textContent = '';
-      }
-    });
-
-    // Håndter betaling
-    document.getElementById('payment-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      document.getElementById('submit-payment').disabled = true;
-      document.getElementById('payment-message').textContent = '';
+    function initializeStripe() {
+      if (stripeElementsInitialized) return;
       
-      // Hent biltype fra localStorage for å sende med til backend
-      const biltype = localStorage.getItem('bilnavn') || '';
-
-      // Hent clientSecret fra backend - uten email
-      let clientSecret;
-      try {
-        const response = await fetch('/api/create-payment-intent', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ biltype }) // Fjernet email
-        });
-        const data = await response.json();
-        clientSecret = data.clientSecret;
-        if (!clientSecret) throw new Error(data.error || 'Ingen clientSecret');
-      } catch (err) {
-        document.getElementById('payment-message').textContent = 'Kunne ikke starte betaling.';
-        document.getElementById('submit-payment').disabled = false;
-        return;
-      }
-
-      // Bekreft betaling
-      const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: card }
+      const cardElement = document.getElementById('card-element');
+      if (!cardElement) return;
+      
+      // Opprett Stripe Elements
+      elements = stripe.elements();
+      
+      // Tilpass utseendet til card elementet
+      const style = {
+        base: {
+          color: '#0c1a2a',
+          fontFamily: '"Inter", sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#64748b'
+          }
+        },
+        invalid: {
+          color: '#ef4444',
+          iconColor: '#ef4444'
+        }
+      };
+      
+      // Opprett card elementet
+      card = elements.create('card', { style });
+      
+      // Legg til card elementet i DOM
+      card.mount('#card-element');
+      
+      // Håndter validerings-feil
+      card.on('change', function(event) {
+        const displayError = document.getElementById('card-errors');
+        if (displayError) {
+          if (event.error) {
+            displayError.textContent = event.error.message;
+          } else {
+            displayError.textContent = '';
+          }
+        }
       });
-
-      if (error) {
-        document.getElementById('payment-message').textContent = error.message;
-        document.getElementById('submit-payment').disabled = false;
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Lagre betalings-ID for verifisering
-        localStorage.setItem('paymentIntentId', paymentIntent.id);
-        localStorage.setItem('betalingsStatus', 'betalt');
+      
+      stripeElementsInitialized = true;
+    }
+    
+    // Sjekk om betalingsform eksisterer på siden
+    const paymentForm = document.getElementById('payment-form');
+    if (paymentForm) {
+      paymentForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
         
-        // Redirect til chat eller success-side
-        window.location.href = '/success.html';
-      }
-    });
-  }
+        const submitBtn = document.getElementById('submit-payment');
+        if (!submitBtn) return;
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Behandler...';
+        
+        try {
+          const bilMerke = localStorage.getItem('bilMerke') || '';
+          const bilModell = localStorage.getItem('bilModell') || '';
+          const regnr = localStorage.getItem('bilRegistreringsnummer') || '';
+          
+          // Opprett Payment Intent på serveren
+          const response = await fetch('/api/create-payment-intent', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount: 149, // 149 kr
+              currency: 'nok',
+              metadata: {
+                bilinfo: `${bilMerke} ${bilModell}`,
+                regnr: regnr
+              }
+            }),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Kunne ikke opprette betalingsforespørsel');
+          }
+          
+          const paymentData = await response.json();
+          
+          // Bekreft kortet
+          const result = await stripe.confirmCardPayment(paymentData.clientSecret, {
+            payment_method: {
+              card: card,
+              billing_details: {
+                name: 'Kunde' // Ideelt sett burde dette fylles ut av brukeren
+              }
+            }
+          });
+          
+          if (result.error) {
+            // Vis feil til brukeren
+            const errorElement = document.getElementById('card-errors');
+            if (errorElement) {
+              errorElement.textContent = result.error.message;
+            }
+            
+            // Gjenopprett knappen
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Betal 149 kr';
+          } else {
+            if (result.paymentIntent.status === 'succeeded') {
+              // Betalingen er vellykket
+              localStorage.setItem('betalingsStatus', 'betalt');
+              localStorage.setItem('paymentIntentId', result.paymentIntent.id);
+              localStorage.setItem('sessionId', paymentData.id);
+              
+              // Gå til suksess-steget
+              if (window.bilOppslagStepper) {
+                window.bilOppslagStepper.goToStep(3);
+              } else {
+                // Redirect til bekreftelsessiden hvis vi ikke er i biloppslag-widget
+                window.location.href = "/html/bekreftelse.html";
+              }
+            }
+          }
+        } catch (err) {
+          console.error('Feil ved betaling:', err);
+          const errorElement = document.getElementById('card-errors');
+          if (errorElement) {
+            errorElement.textContent = 'Det oppstod en teknisk feil. Vennligst prøv igjen.';
+          }
+          
+          // Gjenopprett knappen
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Betal 149 kr';
+        }
+      });
+    }
+  });
