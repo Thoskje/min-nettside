@@ -135,3 +135,74 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+/**
+ * Håndterer progresjonsvisning gjennom de forskjellige stegene
+ */
+class ProgressStepper {
+  constructor() {
+    this.currentStep = 1;
+    this.progressFill = document.getElementById('progress-fill');
+    this.steps = document.querySelectorAll('.step');
+    
+    // Initialiser første steg
+    this.updateProgressBar();
+  }
+  
+  /**
+   * Går til et spesifikt steg
+   * @param {number} stepNumber - Stegnummer (1-3)
+   */
+  goToStep(stepNumber) {
+    if (stepNumber < 1 || stepNumber > 3) return;
+    
+    // Marker tidligere steg som fullført
+    for (let i = 1; i < stepNumber; i++) {
+      document.querySelector(`.step-${i}`).classList.add('completed');
+      document.querySelector(`.step-${i}`).classList.remove('active');
+    }
+    
+    // Marker nåværende steg som aktivt
+    for (let i = stepNumber; i <= 3; i++) {
+      document.querySelector(`.step-${i}`).classList.remove('completed');
+      document.querySelector(`.step-${i}`).classList.remove('active');
+    }
+    document.querySelector(`.step-${stepNumber}`).classList.add('active');
+    
+    this.currentStep = stepNumber;
+    this.updateProgressBar();
+  }
+  
+  /**
+   * Går til neste steg
+   */
+  nextStep() {
+    if (this.currentStep < 3) {
+      this.goToStep(this.currentStep + 1);
+    }
+  }
+  
+  /**
+   * Går til forrige steg
+   */
+  prevStep() {
+    if (this.currentStep > 1) {
+      this.goToStep(this.currentStep - 1);
+    }
+  }
+  
+  /**
+   * Oppdaterer progresjonslinjen basert på nåværende steg
+   */
+  updateProgressBar() {
+    // Beregn prosent av fremdrift (0%, 50%, 100%)
+    const percent = ((this.currentStep - 1) / 2) * 100;
+    this.progressFill.style.width = `${percent}%`;
+  }
+}
+
+// Initialiser progressStepper når siden er lastet
+document.addEventListener('DOMContentLoaded', () => {
+  // Globalt tilgjengelig for å kunne brukes av andre deler av applikasjonen
+  window.progressStepper = new ProgressStepper();
+});

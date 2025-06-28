@@ -144,3 +144,107 @@
     padding: 0.7rem 1rem;
   }
 }
+
+/* === Progresjonslinje styling === */
+.progress-stepper {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.progress-bar {
+  background: #edf2f7;
+  height: 4px;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+
+.progress-fill {
+  background: #3b82f6;
+  height: 100%;
+  border-radius: 4px;
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 33.333%;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #edf2f7;
+  border: 2px solid #cbd5e0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-top: -40px;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  text-align: center;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+/* Aktiv steg styling */
+.step.active .step-circle {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.step.active .step-label {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* Fullført steg styling */
+.step.completed .step-circle {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.step.completed .step-circle::after {
+  content: "✓";
+  font-size: 1rem;
+}
+
+.step.completed .step-label {
+  color: #10b981;
+}
+
+/* Responsiv styling */
+@media (max-width: 640px) {
+  .step-label {
+    font-size: 0.75rem;
+  }
+  
+  .step-circle {
+    width: 26px;
+    height: 26px;
+    margin-top: -36px;
+  }
+}
