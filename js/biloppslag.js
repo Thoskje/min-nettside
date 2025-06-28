@@ -1,254 +1,281 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Elementer
+  // DOM-elementer
+  const bilOppslagOverlay = document.getElementById('biloppslag-overlay');
+  const lukkeKnapp = document.getElementById('lukk-biloppslag');
   const regnrInput = document.getElementById('regnr');
-  const sokBilBtn = document.getElementById('sok-bil');
-  const bilinfoDiv = document.getElementById('bilinfo');
-  const godkjennBtn = document.getElementById('godkjenn-bil');
-  const lukkBtn = document.getElementById('lukk-biloppslag');
-
-  // Åpne biloppslag når CTA trykkes
-  document.querySelectorAll('.cta-button').forEach(btn => {
-    if (btn && !btn.classList.contains('kurs-btn')) { // Ikke åpne overlay for kurs-knappen
-      btn.addEventListener('click', function() {
-        const overlay = document.getElementById('biloppslag-overlay');
-        if (overlay) overlay.style.display = 'flex';
-      });
-    }
-  });
-
-  // Lukk biloppslag-overlay
-  if (lukkBtn) {
-    lukkBtn.addEventListener('click', function() {
-      const overlay = document.getElementById('biloppslag-overlay');
-      if (overlay) overlay.style.display = 'none';
-    });
-  }
-
-  // Søk etter bil
-  if (sokBilBtn && regnrInput && bilinfoDiv) {
-    sokBilBtn.addEventListener('click', async () => {
-      const regnr = regnrInput.value.trim().toUpperCase();
-      console.log('Søker etter regnr:', regnr);
+  const sokBilKnapp = document.getElementById('sok-bil');
+  const bilinfoElement = document.getElementById('bilinfo');
+  const godkjennBilKnapp = document.getElementById('godkjenn-bil');
+  
+  // Steg-elementer
+  const bilOppslagStep = document.getElementById('biloppslag-step');
+  const paymentStep = document.getElementById('payment-step');
+  const successStep = document.getElementById('success-step');
+  const backToBilOppslagBtn = document.getElementById('back-to-biloppslag');
+  const startConsultationBtn = document.getElementById('start-consultation');
+  
+  // Progresjonsklasse
+  class BilOppslagStepper {
+    constructor() {
+      this.currentStep = 1;
+      this.progressFill = document.getElementById('progress-fill');
       
-      if (!regnr) {
-        alert('Vennligst skriv inn et registreringsnummer.');
-        return;
+      // Initialiser første steg
+      this.updateProgressBar();
+    }
+    
+    goToStep(stepNumber) {
+      if (stepNumber < 1 || stepNumber > 3) return;
+      
+      // Marker tidligere steg som fullført
+      for (let i = 1; i < stepNumber; i++) {
+        document.querySelector(`.step-${i}`).classList.add('completed');
+        document.querySelector(`.step-${i}`).classList.remove('active');
       }
       
-      bilinfoDiv.textContent = 'Laster...';
-      
-      try {
-        const url = `/api/bil?regnr=${regnr}`;
-        console.log('Henter fra API:', url);
-        const res = await fetch(url);
-        
-        if (!res.ok) {
-          console.error('Nettverksresponsen var ikke ok', res.status, res.statusText);
-          throw new Error('Nettverksresponsen var ikke ok');
-        }
-        
-        const data = await res.json();
-        console.log('Data fra proxy:', data);
-
-        // Sjekk begge mulige feltnavn
-        const bilListe = data.kjoretoydataListe || data.kjoretoydata;
-        let merke = '';
-        let modell = '';
-        let arsmodell = '';
-        let drivstoff = '';
-        let motortype = '';
-        let forstegangsregistrert = '';
-
-        if (bilListe && bilListe.length > 0) {
-          const bil = bilListe[0];
-          console.log('Første bil-objekt:', bil);
-
-          // Hent ut feltene fra objektet
-          merke = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-          modell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-          arsmodell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-          drivstoff = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-          motortype = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
-          forstegangsregistrert = bil.forstegangsregistrering?.registrertForstegangNorgeDato || '';
-        } else {
-          // Sjekk alternativ struktur
-          merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-          modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-          arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-          drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-          motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
-        }
-
-        if (merke || modell) {
-          // Lag bilnavn med årsmodell, drivstoff og motortype
-          const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnr})`;
-          localStorage.setItem('bilnavn', bilnavn);
-          localStorage.setItem('bilRegistreringsnummer', regnr);
-          localStorage.setItem('bilMerke', merke);
-          localStorage.setItem('bilModell', modell);
-          localStorage.setItem('bilÅr', arsmodell);
-          localStorage.setItem('bilMotor', `${drivstoff} ${motortype}`.trim());
-          
-          // Sett brukernavn i Tawk.to-chatten
-          if (window.Tawk_API) {
-            window.Tawk_API.setAttributes({
-              'name': `${merke} ${modell} (${regnr})`
-            }, function(error){});
-          }
-
-          // Vis bilinformasjon
-          bilinfoDiv.innerHTML = `
-            <strong>Bilmerke:</strong> ${merke}<br>
-            <strong>Bilmodell:</strong> ${modell}<br>
-            <strong>Årsmodell:</strong> ${arsmodell}<br>
-            <strong>Drivstoff:</strong> ${drivstoff}<br>
-            <strong>Motortype:</strong> ${motortype}<br>
-            ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
-            <strong>Registreringsnummer:</strong> ${regnr}<br>
-          `;
-
-          // Vis godkjenn-knapp
-          if (godkjennBtn) godkjennBtn.style.display = 'inline-block';
-        } else {
-          console.warn('Ingen informasjon funnet for dette registreringsnummeret.');
-          bilinfoDiv.innerHTML = 'Ingen informasjon funnet for dette registreringsnummeret.';
-          if (godkjennBtn) godkjennBtn.style.display = 'none';
-        }
-      } catch (e) {
-        console.error('Det oppsto en feil:', e);
-        bilinfoDiv.innerHTML = 'Det oppsto en feil under henting av bilinformasjon. Vennligst prøv igjen senere.';
-        if (godkjennBtn) godkjennBtn.style.display = 'none';
+      // Marker nåværende steg som aktivt
+      for (let i = stepNumber; i <= 3; i++) {
+        document.querySelector(`.step-${i}`).classList.remove('completed');
+        document.querySelector(`.step-${i}`).classList.remove('active');
       }
-    });
-  }
-
-  // Når bruker trykker "Godkjenn" i biloppslag-widget
-  if (godkjennBtn) {
-    godkjennBtn.addEventListener('click', function() {
-      // Lukk biloppslag-overlay
-      const overlay = document.getElementById('biloppslag-overlay');
-      if (overlay) overlay.style.display = 'none';
+      document.querySelector(`.step-${stepNumber}`).classList.add('active');
       
-      // Åpne Stripe Elements-overlay
-      const checkoutOverlay = document.getElementById('checkout-overlay');
-      if (checkoutOverlay) checkoutOverlay.style.display = 'flex';
-    });
-  }
-});
-
-/**
- * Håndterer progresjonsvisning gjennom de forskjellige stegene i biloppslag-prosessen
- */
-class BilOppslagStepper {
-  constructor() {
-    this.currentStep = 1;
-    this.progressFill = document.getElementById('progress-fill');
-    this.steps = document.querySelectorAll('.biloppslag-modal .step');
-    
-    // Initialiser første steg
-    this.updateProgressBar();
-  }
-  
-  /**
-   * Går til et spesifikt steg
-   * @param {number} stepNumber - Stegnummer (1-3)
-   */
-  goToStep(stepNumber) {
-    if (stepNumber < 1 || stepNumber > 3) return;
-    
-    // Marker tidligere steg som fullført
-    for (let i = 1; i < stepNumber; i++) {
-      document.querySelector(`.biloppslag-modal .step-${i}`).classList.add('completed');
-      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('active');
+      this.currentStep = stepNumber;
+      this.updateProgressBar();
+      
+      // Vis riktig innholdspanel
+      this.showStepContent(stepNumber);
     }
     
-    // Marker nåværende steg som aktivt
-    for (let i = stepNumber; i <= 3; i++) {
-      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('completed');
-      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('active');
+    updateProgressBar() {
+      const percent = ((this.currentStep - 1) / 2) * 100;
+      this.progressFill.style.width = `${percent}%`;
     }
-    document.querySelector(`.biloppslag-modal .step-${stepNumber}`).classList.add('active');
     
-    this.currentStep = stepNumber;
-    this.updateProgressBar();
-  }
-  
-  /**
-   * Går til neste steg
-   */
-  nextStep() {
-    if (this.currentStep < 3) {
-      this.goToStep(this.currentStep + 1);
+    showStepContent(step) {
+      // Skjul alle steg
+      bilOppslagStep.style.display = 'none';
+      paymentStep.style.display = 'none';
+      successStep.style.display = 'none';
+      
+      // Vis aktuelt steg
+      switch(step) {
+        case 1:
+          bilOppslagStep.style.display = 'block';
+          break;
+        case 2:
+          paymentStep.style.display = 'block';
+          // Smooth scroll til toppen av betalingssteget
+          setTimeout(() => {
+            paymentStep.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+          break;
+        case 3:
+          successStep.style.display = 'block';
+          break;
+      }
     }
   }
   
-  /**
-   * Går til forrige steg
-   */
-  prevStep() {
-    if (this.currentStep > 1) {
-      this.goToStep(this.currentStep - 1);
-    }
-  }
-  
-  /**
-   * Oppdaterer progresjonslinjen basert på nåværende steg
-   */
-  updateProgressBar() {
-    // Beregn prosent av fremdrift (0%, 50%, 100%)
-    const percent = ((this.currentStep - 1) / 2) * 100;
-    this.progressFill.style.width = `${percent}%`;
-  }
-}
-
-// Eksisterende kode og hendelseshåndterere
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialiser stepper ved oppstart
+  // Initialiser stepper
   const stepper = new BilOppslagStepper();
   
-  // Legg til globalt for enkel tilgang fra andre funksjoner
-  window.bilOppslagStepper = stepper;
-  
-  // Eksempel på å knytte stepper til eksisterende funksjoner:
-  
-  // 1. Når bilsøket er gjennomført og vi viser bilinformasjon
-  document.getElementById('sok-bil').addEventListener('click', function() {
-    // Når bilen er funnet og bilinfo vises:
-    document.getElementById('bilinfo').innerHTML = "Din bil er funnet!"; // Dette er bare for demo
-    document.getElementById('godkjenn-bil').style.display = 'block';
-    
-    // Progresjonsoppdatering - fremdeles i steg 1, men fremhevet
-  });
-  
-  // 2. Når brukeren godkjenner bilen og går til betaling
-  document.getElementById('godkjenn-bil').addEventListener('click', function() {
-    // Gå videre til steg 2 (betaling)
-    stepper.nextStep();
-    
-    // Vis betalingsoverlay
-    document.getElementById('checkout-overlay').style.display = 'flex';
-    document.getElementById('biloppslag-overlay').style.display = 'none';
-  });
-  
-  // 3. Når betalingen er fullført
-  document.getElementById('submit-payment').addEventListener('click', function(e) {
-    // Dette er bare for demo - normalt håndteres dette etter Stripe-callback
+  // Åpne modal når chat-knappen klikkes
+  document.querySelector('.chat-btn').addEventListener('click', function(e) {
     e.preventDefault();
-    
-    // Simuler betaling fullført
-    setTimeout(() => {
-      stepper.nextStep(); // Gå til steg 3
-      document.getElementById('checkout-overlay').style.display = 'none';
-      
-      // Her kan du f.eks. starte chat eller vise suksessmelding
-      alert('Betaling godkjent! Du kan nå starte konsultasjonen.');
-    }, 1500);
+    bilOppslagOverlay.style.display = 'flex';
+    stepper.goToStep(1); // Start på steg 1
   });
   
-  // Håndtere tilbake-navigasjon
-  document.getElementById('close-checkout').addEventListener('click', function() {
-    document.getElementById('checkout-overlay').style.display = 'none';
-    document.getElementById('biloppslag-overlay').style.display = 'flex';
-    stepper.prevStep(); // Gå tilbake til steg 1
+  // Lukk modal når lukkeknappen klikkes
+  lukkeKnapp.addEventListener('click', function() {
+    bilOppslagOverlay.style.display = 'none';
+  });
+  
+  // Biloppslag-funksjonalitet
+  sokBilKnapp.addEventListener('click', function() {
+    const regnr = regnrInput.value.trim();
+    
+    if (!regnr) {
+      bilinfoElement.innerHTML = "<p class='error'>Vennligst skriv inn registreringsnummer</p>";
+      return;
+    }
+    
+    // Vis laster-animasjon
+    bilinfoElement.innerHTML = "<div class='spinner'></div>";
+    
+    // Simuler API-kall (erstatt med faktisk API-kall)
+    setTimeout(() => {
+      const bilData = {
+        regnr: regnr.toUpperCase(),
+        merke: 'Volvo',
+        modell: 'V90',
+        årsmodell: '2019',
+        motor: '2.0 D4'
+      };
+      
+      // Lagre bildata i localStorage for senere bruk
+      localStorage.setItem('bilRegistreringsnummer', bilData.regnr);
+      localStorage.setItem('bilMerke', bilData.merke);
+      localStorage.setItem('bilModell', bilData.modell);
+      localStorage.setItem('bilÅr', bilData.årsmodell);
+      localStorage.setItem('bilMotor', bilData.motor);
+      
+      // Vis bilinfo
+      bilinfoElement.innerHTML = `
+        <div class="bilinfo-resultat">
+          <h3>${bilData.merke} ${bilData.modell}</h3>
+          <div class="bilinfo-detaljer">
+            <p><strong>Registreringsnummer:</strong> ${bilData.regnr}</p>
+            <p><strong>Årsmodell:</strong> ${bilData.årsmodell}</p>
+            <p><strong>Motor:</strong> ${bilData.motor}</p>
+          </div>
+        </div>
+      `;
+      
+      // Vis godkjenn-knappen
+      godkjennBilKnapp.style.display = 'block';
+      
+    }, 1000);
+  });
+  
+  // Når brukeren godkjenner bilen
+  godkjennBilKnapp.addEventListener('click', function() {
+    stepper.goToStep(2); // Gå til betalingssteget
+  });
+  
+  // Tilbake til biloppslag
+  backToBilOppslagBtn.addEventListener('click', function() {
+    stepper.goToStep(1);
+  });
+  
+  // Stripe integrasjon
+  let stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Erstatt med din faktiske Stripe-nøkkel
+  let elements;
+  let card;
+  
+  const initializeStripe = () => {
+    // Opprett Stripe Elements
+    elements = stripe.elements();
+    
+    // Tilpass utseendet til card elementet
+    const style = {
+      base: {
+        color: '#0c1a2a',
+        fontFamily: '"Inter", sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#64748b'
+        }
+      },
+      invalid: {
+        color: '#ef4444',
+        iconColor: '#ef4444'
+      }
+    };
+    
+    // Opprett card elementet
+    card = elements.create('card', { style });
+    
+    // Legg til card elementet i DOM
+    card.mount('#card-element');
+    
+    // Håndter validerings-feil
+    card.on('change', function(event) {
+      const displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+  };
+  
+  // Initialiser Stripe når brukeren går til betalingssteget
+  godkjennBilKnapp.addEventListener('click', function() {
+    if (!elements) {
+      initializeStripe();
+    }
+  });
+  
+  // Håndter betalingsinnsending
+  const paymentForm = document.getElementById('payment-form');
+  
+  paymentForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const submitBtn = document.getElementById('submit-payment');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Behandler...';
+    
+    try {
+      // Opprett Payment Intent på serveren (simulert her)
+      const clientSecret = await simulateCreatePaymentIntent();
+      
+      // Bekreft kortet
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: 'Kunde Navn' // Ideelt sett burde dette fylles ut av brukeren
+          }
+        }
+      });
+      
+      if (result.error) {
+        // Vis feil til brukeren
+        const errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+        
+        // Gjenopprett knappen
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Betal 149 kr';
+      } else {
+        if (result.paymentIntent.status === 'succeeded') {
+          // Betalingen er vellykket
+          localStorage.setItem('betalingsStatus', 'betalt');
+          localStorage.setItem('paymentIntentId', result.paymentIntent.id);
+          
+          // Gå til suksess-steget
+          stepper.goToStep(3);
+        }
+      }
+    } catch (err) {
+      console.error('Feil ved betaling:', err);
+      const errorElement = document.getElementById('card-errors');
+      errorElement.textContent = 'Det oppstod en teknisk feil. Vennligst prøv igjen.';
+      
+      // Gjenopprett knappen
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Betal 149 kr';
+    }
+  });
+  
+  // Simulert funksjon for å opprette Payment Intent (erstatt med faktisk API-kall)
+  async function simulateCreatePaymentIntent() {
+    return new Promise((resolve) => {
+      // Dette ville vanligvis være et API-kall til din server
+      setTimeout(() => {
+        // Dette er et eksempel-clientSecret. I virkeligheten ville dette komme fra serveren din.
+        resolve('pi_1234567890_secret_1234567890');
+      }, 700);
+    });
+  }
+  
+  // Håndtere start av konsultasjon
+  startConsultationBtn.addEventListener('click', function() {
+    // Her kan du legge inn koden for å starte chatten/konsultasjonen
+    bilOppslagOverlay.style.display = 'none';
+    alert('Konsultasjonen starter nå!');
+    // For eksempel åpne chat-widgeten:
+    // window.FrontChat('show');
+  });
+  
+  // Hvis brukeren klikker utenfor modalen, lukk den
+  bilOppslagOverlay.addEventListener('click', function(e) {
+    if (e.target === bilOppslagOverlay) {
+      bilOppslagOverlay.style.display = 'none';
+    }
   });
 });

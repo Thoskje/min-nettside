@@ -11,18 +11,19 @@
 }
 
 .biloppslag-modal {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 32px rgba(12,26,42,0.12), 0 1.5px 4px rgba(12,26,42,0.10);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
-  min-width: 320px;
-  max-width: 95vw;
-  width: 370px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   font-family: 'Inter', Arial, sans-serif;
-  position: relative;
 }
 
 .biloppslag-modal h2 {
@@ -130,18 +131,7 @@
 /* Responsivt */
 @media (max-width: 480px) {
   .biloppslag-modal {
-    width: 95%;
-    min-width: unset;
-    padding: 1.5rem 1rem;
-  }
-  
-  .biloppslag-modal h2 {
-    font-size: 1.2rem;
-  }
-  
-  .biloppslag-modal input,
-  .biloppslag-modal button {
-    padding: 0.7rem 1rem;
+    padding: 1rem;
   }
 }
 
@@ -352,5 +342,184 @@
     height: 24px;
     margin-top: -36px;
     font-size: 0.8rem;
+  }
+}
+
+/* Biloppslag modal justeringer for å inkludere betaling */
+.biloppslag-modal {
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Steg-styling */
+.biloppslag-step, .payment-step, .success-step {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Button styling */
+.biloppslag-btn {
+  background: #ff9900;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.biloppslag-btn:hover {
+  background: #e68a00;
+}
+
+.biloppslag-btn.secondary {
+  background: #e0e6ed;
+  color: #0c1a2a;
+}
+
+.biloppslag-btn.secondary:hover {
+  background: #d0d6dd;
+}
+
+/* Payment step styling */
+.payment-step {
+  margin-top: 1rem;
+}
+
+.checkout-summary {
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.checkout-product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+.product-details h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+}
+
+.product-details p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.product-price {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.payment-options {
+  display: flex;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payment-option.selected {
+  border-color: #3b82f6;
+  background-color: #f0f7ff;
+}
+
+.payment-option img {
+  height: 24px;
+  margin-right: 0.75rem;
+}
+
+/* Stripe Elements styling */
+#card-element {
+  padding: 1rem;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  margin-bottom: 1rem;
+}
+
+.card-errors {
+  color: #ef4444;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  min-height: 1.5em;
+}
+
+.payment-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.secure-payment-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* Success step styling */
+.success-step {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.success-icon {
+  margin: 1rem auto 2rem;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .payment-actions {
+    flex-direction: column;
+  }
+  
+  .payment-actions button {
+    width: 100%;
+  }
+  
+  .biloppslag-modal {
+    padding: 1rem;
   }
 }
