@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Håndterer progresjonsvisning gjennom de forskjellige stegene
+ * Håndterer progresjonsvisning gjennom de forskjellige stegene i biloppslag-prosessen
  */
-class ProgressStepper {
+class BilOppslagStepper {
   constructor() {
     this.currentStep = 1;
     this.progressFill = document.getElementById('progress-fill');
-    this.steps = document.querySelectorAll('.step');
+    this.steps = document.querySelectorAll('.biloppslag-modal .step');
     
     // Initialiser første steg
     this.updateProgressBar();
@@ -158,16 +158,16 @@ class ProgressStepper {
     
     // Marker tidligere steg som fullført
     for (let i = 1; i < stepNumber; i++) {
-      document.querySelector(`.step-${i}`).classList.add('completed');
-      document.querySelector(`.step-${i}`).classList.remove('active');
+      document.querySelector(`.biloppslag-modal .step-${i}`).classList.add('completed');
+      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('active');
     }
     
     // Marker nåværende steg som aktivt
     for (let i = stepNumber; i <= 3; i++) {
-      document.querySelector(`.step-${i}`).classList.remove('completed');
-      document.querySelector(`.step-${i}`).classList.remove('active');
+      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('completed');
+      document.querySelector(`.biloppslag-modal .step-${i}`).classList.remove('active');
     }
-    document.querySelector(`.step-${stepNumber}`).classList.add('active');
+    document.querySelector(`.biloppslag-modal .step-${stepNumber}`).classList.add('active');
     
     this.currentStep = stepNumber;
     this.updateProgressBar();
@@ -201,8 +201,54 @@ class ProgressStepper {
   }
 }
 
-// Initialiser progressStepper når siden er lastet
-document.addEventListener('DOMContentLoaded', () => {
-  // Globalt tilgjengelig for å kunne brukes av andre deler av applikasjonen
-  window.progressStepper = new ProgressStepper();
+// Eksisterende kode og hendelseshåndterere
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialiser stepper ved oppstart
+  const stepper = new BilOppslagStepper();
+  
+  // Legg til globalt for enkel tilgang fra andre funksjoner
+  window.bilOppslagStepper = stepper;
+  
+  // Eksempel på å knytte stepper til eksisterende funksjoner:
+  
+  // 1. Når bilsøket er gjennomført og vi viser bilinformasjon
+  document.getElementById('sok-bil').addEventListener('click', function() {
+    // Når bilen er funnet og bilinfo vises:
+    document.getElementById('bilinfo').innerHTML = "Din bil er funnet!"; // Dette er bare for demo
+    document.getElementById('godkjenn-bil').style.display = 'block';
+    
+    // Progresjonsoppdatering - fremdeles i steg 1, men fremhevet
+  });
+  
+  // 2. Når brukeren godkjenner bilen og går til betaling
+  document.getElementById('godkjenn-bil').addEventListener('click', function() {
+    // Gå videre til steg 2 (betaling)
+    stepper.nextStep();
+    
+    // Vis betalingsoverlay
+    document.getElementById('checkout-overlay').style.display = 'flex';
+    document.getElementById('biloppslag-overlay').style.display = 'none';
+  });
+  
+  // 3. Når betalingen er fullført
+  document.getElementById('submit-payment').addEventListener('click', function(e) {
+    // Dette er bare for demo - normalt håndteres dette etter Stripe-callback
+    e.preventDefault();
+    
+    // Simuler betaling fullført
+    setTimeout(() => {
+      stepper.nextStep(); // Gå til steg 3
+      document.getElementById('checkout-overlay').style.display = 'none';
+      
+      // Her kan du f.eks. starte chat eller vise suksessmelding
+      alert('Betaling godkjent! Du kan nå starte konsultasjonen.');
+    }, 1500);
+  });
+  
+  // Håndtere tilbake-navigasjon
+  document.getElementById('close-checkout').addEventListener('click', function() {
+    document.getElementById('checkout-overlay').style.display = 'none';
+    document.getElementById('biloppslag-overlay').style.display = 'flex';
+    stepper.prevStep(); // Gå tilbake til steg 1
+  });
 });

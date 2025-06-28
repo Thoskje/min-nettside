@@ -248,3 +248,109 @@
     margin-top: -36px;
   }
 }
+
+/* Progresjonslinje styling tilpasset biloppslag modal */
+.biloppslag-modal .progress-stepper {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.biloppslag-modal .progress-bar {
+  background: #edf2f7;
+  height: 4px;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+
+.biloppslag-modal .progress-fill {
+  background: #3b82f6;
+  height: 100%;
+  border-radius: 4px;
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.biloppslag-modal .progress-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.biloppslag-modal .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 33.333%;
+}
+
+.biloppslag-modal .step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #edf2f7;
+  border: 2px solid #cbd5e0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-top: -38px;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.biloppslag-modal .step-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  text-align: center;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+/* Aktiv steg styling */
+.biloppslag-modal .step.active .step-circle {
+  background: #ff9900; /* Bruker den oransje fargen som passer med din eksisterende design */
+  border-color: #ff9900;
+  color: white;
+}
+
+.biloppslag-modal .step.active .step-label {
+  color: #0c1a2a; /* Mørkere farge for aktiv tekst */
+  font-weight: 600;
+}
+
+/* Fullført steg styling */
+.biloppslag-modal .step.completed .step-circle {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.biloppslag-modal .step.completed .step-circle::after {
+  content: "✓";
+  font-size: 1rem;
+}
+
+.biloppslag-modal .step.completed .step-label {
+  color: #10b981;
+}
+
+/* Responsiv styling for mindre skjermer */
+@media (max-width: 480px) {
+  .biloppslag-modal .step-label {
+    font-size: 0.7rem;
+  }
+  
+  .biloppslag-modal .step-circle {
+    width: 24px;
+    height: 24px;
+    margin-top: -36px;
+    font-size: 0.8rem;
+  }
+}
