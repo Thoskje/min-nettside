@@ -118,91 +118,35 @@
   <!-- biloppslag widget-overlay--> 
    
   <div id="biloppslag-overlay" class="biloppslag-overlay" style="display:none;">
-    <div class="biloppslag-modal">
-      <!-- Progresjonslinjen -->
-      <div class="progress-stepper">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <div class="progress-steps">
-          <div class="step step-1 active">
-            <div class="step-circle">1</div>
-            <div class="step-label">Finn din bil</div>
-          </div>
-          <div class="step step-2">
-            <div class="step-circle">2</div>
-            <div class="step-label">Legg inn betaling</div>
-          </div>
-          <div class="step step-3">
-            <div class="step-circle">3</div>
-            <div class="step-label">Start konsultasjon</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Steg 1: Biloppslag -->
-      <div id="biloppslag-step" class="biloppslag-step">
-        <h2>Skriv inn registreringsnummer</h2>
-        <input type="text" id="regnr" placeholder="F.eks. AB12345">
-        <button id="sok-bil" class="biloppslag-btn">Søk</button>
-        <div id="bilinfo"></div>
-        <button id="godkjenn-bil" class="biloppslag-btn next-step" style="display:none;">Videre til betaling</button>
-      </div>
-      
-      <!-- Steg 2: Stripe betaling -->
-      <div id="payment-step" class="payment-step" style="display:none;">
-        <h2>Betal for konsultasjon</h2>
-        
-        <div class="checkout-summary">
-          <div class="checkout-product">
-            <div class="product-details">
-              <h3>Chat med bilmekaniker</h3>
-              <p>Få råd og veiledning spesifikt for din bil</p>
-            </div>
-            <div class="product-price">149 kr</div>
-          </div>
-        </div>
-        
-        <div class="payment-options">
-          <div class="payment-option selected">
-            <img src="https://stripe.com/img/v3/home/social.png" alt="Kort" class="option-icon">
-            <span>Betalingskort</span>
-          </div>
-        </div>
-        
-        <!-- Stripe Elements betalingsskjema -->
-        <form id="payment-form" class="payment-form">
-          <div id="card-element"></div>
-          <div id="card-errors" class="card-errors" role="alert"></div>
-          
-          <div class="payment-actions">
-            <button type="button" id="back-to-biloppslag" class="biloppslag-btn secondary">Tilbake</button>
-            <button id="submit-payment" class="biloppslag-btn primary">Betal 149 kr</button>
-          </div>
-        </form>
-        
-        <div class="secure-payment-info">
-          <img src="https://stripe.com/img/v3/home/social.png" alt="Powered by Stripe" height="20">
-          <span>Sikker betaling via Stripe</span>
-        </div>
-      </div>
-      
-      <!-- Steg 3: Success -->
-      <div id="success-step" class="success-step" style="display:none;">
-        <div class="success-icon">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10" stroke="#10B981" stroke-width="2"/>
-            <path d="M8 12L11 15L16 9" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>Betalingen er gjennomført!</h2>
-        <p>Din konsultasjon er klar til å starte</p>
-        <button id="start-consultation" class="biloppslag-btn primary">Start konsultasjon</button>
-      </div>
-      
-      <button id="lukk-biloppslag" class="close-button">×</button>
-    </div>
   </div>
+    <div class="biloppslag-modal">
+      <!-- Fremdriftsindikator -->
+  <div class="progress-stepper">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-steps">
+      <div class="step step-1 active">
+        <div class="step-circle">1</div>
+        <div class="step-label">Finn din bil</div>
+      </div>
+      <div class="step step-2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Legg inn betaling</div>
+      </div>
+      <div class="step step-3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Start konsultasjon</div>
+      </div>
+    </div>
+    <h2>Skriv inn registreringsnummer</h2>
+    <input type="text" id="regnr" placeholder="F.eks. AB12345">
+    <button id="sok-bil">Søk</button>
+    <div id="bilinfo"></div>
+    <button id="godkjenn-bil" style="display:none;">Godkjenn</button>
+    <button id="lukk-biloppslag">Lukk</button>
+  </div>
+</div>
 
 
   <!-- Bunntekst -->
