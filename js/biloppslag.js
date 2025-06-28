@@ -109,30 +109,46 @@ document.addEventListener('DOMContentLoaded', function() {
       // Vis laster-animasjon
       bilinfoElement.innerHTML = "<div class='spinner'></div>";
       
+      console.log(`Sending request for registration: ${regnr}`);
+      
       // Faktisk API-kall til vår egen endpoint
-      fetch(`/api/bil?regnr=${regnr}`)
-        .then(response => response.json())
+      fetch(`/api/bil?regnr=${encodeURIComponent(regnr)}`)
+        .then(response => {
+          console.log(`Response status: ${response.status}`);
+          return response.json();
+        })
         .then(data => {
+          console.log('Received data from API:', data);
+          
           if (data.error) {
+            console.error('Error from API:', data.error);
             bilinfoElement.innerHTML = `<p class='error'>${data.error}</p>`;
             return;
           }
           
           // Lagre bildata i localStorage for senere bruk
-          localStorage.setItem('bilRegistreringsnummer', data.regnr);
-          localStorage.setItem('bilMerke', data.merke);
-          localStorage.setItem('bilModell', data.modell);
-          localStorage.setItem('bilÅr', data.årsmodell);
-          localStorage.setItem('bilMotor', data.motor);
+          localStorage.setItem('bilRegistreringsnummer', data.regnr || regnr);
+          localStorage.setItem('bilMerke', data.merke || 'Ukjent');
+          localStorage.setItem('bilModell', data.modell || 'Ukjent');
+          localStorage.setItem('bilÅr', data.årsmodell || 'Ukjent');
+          localStorage.setItem('bilMotor', data.motor || 'Ukjent');
+          
+          console.log('Saved to localStorage:', {
+            regnr: data.regnr || regnr,
+            merke: data.merke || 'Ukjent',
+            modell: data.modell || 'Ukjent',
+            år: data.årsmodell || 'Ukjent',
+            motor: data.motor || 'Ukjent'
+          });
           
           // Vis bilinfo
           bilinfoElement.innerHTML = `
             <div class="bilinfo-resultat">
-              <h3>${data.merke} ${data.modell}</h3>
+              <h3>${data.merke || 'Ukjent'} ${data.modell || 'Ukjent'}</h3>
               <div class="bilinfo-detaljer">
-                <p><strong>Registreringsnummer:</strong> ${data.regnr}</p>
-                <p><strong>Årsmodell:</strong> ${data.årsmodell}</p>
-                <p><strong>Motor:</strong> ${data.motor}</p>
+                <p><strong>Registreringsnummer:</strong> ${data.regnr || regnr}</p>
+                <p><strong>Årsmodell:</strong> ${data.årsmodell || 'Ukjent'}</p>
+                <p><strong>Motor:</strong> ${data.motor || 'Ukjent'}</p>
               </div>
             </div>
           `;
@@ -141,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
           godkjennBilKnapp.style.display = 'block';
         })
         .catch(error => {
-          console.error('Feil ved biloppslag:', error);
-          bilinfoElement.innerHTML = "<p class='error'>Kunne ikke hente bilinformasjon. Vennligst prøv igjen.</p>";
+          console.error('Error with biloppslag request:', error);
+          bilinfoElement.innerHTML = `<p class='error'>Kunne ikke hente bilinformasjon: ${error.message}</p>`;
         });
     });
   }
