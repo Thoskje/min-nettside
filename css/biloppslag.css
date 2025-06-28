@@ -155,7 +155,7 @@
   background: #edf2f7;
   height: 4px;
   border-radius: 4px;
-  position: relative;
+  position: flex;
   margin-bottom: 1.5rem;
   z-index: 1;
 }
