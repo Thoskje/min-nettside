@@ -141,16 +141,16 @@
 }
 
 .primary-btn {
-  background: #0c1a2a;
+  background: #5147d5;
   color: white;
 }
 
 .primary-btn:hover {
-  background: #0c1a2a;
+  background:#6156fc;
 }
 
 .success-btn {
-  background:#5147d5;
+  background: #d0d6dd;
   color: white;
 }
 
