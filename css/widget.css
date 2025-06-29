@@ -242,7 +242,34 @@
   animation: widget-spin 1s linear infinite;
 }
 
-/* ---- Payment styling ---- */
+/* ---- Stripe Payment styling ---- */
+
+/* Stripe logo styling */
+.stripe-branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  padding: 12px 0;
+  color: #8898aa;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stripe-logo {
+  height: 18px;
+  width: auto;
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+/* Alternativ: Tekst-basert logo */
+.stripe-text-logo {
+  font-weight: 600;
+  color: #635bff;
+  margin-left: 4px;
+}
+
 .payment-summary {
   background: #f8fafc;
   border-radius: 8px;
