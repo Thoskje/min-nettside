@@ -150,12 +150,12 @@
 }
 
 .success-btn {
-  background: #0c1a2a;
+  background: #ff9900;
   color: white;
 }
 
 .success-btn:hover {
-  background: #0c1a2a;;
+  background: #e68a00;
 }
 
 .secondary-btn {
