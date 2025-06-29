@@ -242,33 +242,7 @@
   animation: widget-spin 1s linear infinite;
 }
 
-/* ---- Stripe Payment styling ---- */
-
-/* Stripe logo styling */
-.stripe-branding {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
-  padding: 12px 0;
-  color: #8898aa;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.stripe-logo {
-  height: 18px;
-  width: auto;
-  margin-left: 6px;
-  opacity: 0.8;
-}
-
-/* Alternativ: Tekst-basert logo */
-.stripe-text-logo {
-  font-weight: 600;
-  color: #635bff;
-  margin-left: 4px;
-}
+/* ---- Stripe elements---- */
 
 .payment-summary {
   background: #f8fafc;
@@ -302,44 +276,6 @@
   font-size: 0.9rem;
   min-height: 1.2em;
   margin-top: 0.3rem;
-}
-
-/* ---- Success styling ---- */
-.success-content {
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.success-icon {
-  width: 70px;
-  height: 70px;
-  background: #0c1a2a;
-  border-radius: 50%;
-  color: white;
-  font-size: 2.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-}
-
-.success-content p {
-  color: #64748b;
-  margin-bottom: 1.5rem;
-}
-
-#widget-start-chat {
-  max-width: 200px;
-  margin: 0 auto;
-}
-.success-btn {
-   background:#e0e6ed;
-  color: #0c1a2a;
-}
-
-.success-btn:hover {
-  background: #0c1a2a;
-  color: white;
 }
 
 /* ---- Error styling ---- */
