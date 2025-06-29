@@ -18,8 +18,8 @@
   width: 95%;
   max-width: 450px;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.04);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(12,26,42,0.12), 0 1.5px 4px rgba(12,26,42,0.10);
   padding: 2rem 1.5rem 1.5rem;
   font-family: 'Inter', Arial, sans-serif;
   position: relative;
@@ -71,13 +71,12 @@
 }
 
 .step.active .step-number {
-  background: var(--primary);
-  box-shadow: 0 0 0 4px rgba(255, 153, 0, 0.15);
+  background: #ff9900;
   color: white;
 }
 
 .step.completed .step-number {
-  background: var(--primary); /* Bruk samme farge for fullførte steg */
+  background: #0c1a2a;
   color: white;
 }
 
@@ -114,17 +113,16 @@
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 8px;
-  border: 1.5px solid var(--gray);
+  border: 1.5px solid #e0e6ed;
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s;
   margin-bottom: 1rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .widget-modal input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.15);
+  border-color: #ff9900;
+  box-shadow: 0 0 0 2px rgba(255,153,0,0.2);
 }
 
 /* Buttons */
@@ -142,14 +140,22 @@
   transform: translateY(1px);
 }
 
-.primary-btn, .success-btn {
-  background: var(--primary);
+.primary-btn {
+  background: #0c1a2a;
   color: white;
-  font-weight: 600;
 }
 
-.primary-btn:hover, .success-btn:hover {
-  background: var(--primary-hover);
+.primary-btn:hover {
+  background:#102236;
+}
+
+.success-btn {
+  background:#0c1a2a;
+  color: white;
+}
+
+.success-btn:hover {
+  background: #102236;
 }
 
 .secondary-btn {
@@ -162,7 +168,7 @@
 }
 
 .payment-btn {
-  background: #635bff; /* Beholde denne spesifikt for betaling */
+  background: #635bff;
   color: white;
 }
 
@@ -203,9 +209,8 @@
 /* ---- Bilinfo styling ---- */
 #widget-bilinfo {
   padding: 1rem;
-  border: 1px solid var(--gray);
+  background: #f8fafc;
   border-radius: 8px;
-  background: var(--gray-light);
   font-size: 0.9rem;
   line-height: 1.5;
   max-height: 200px;
@@ -346,14 +351,4 @@
   .step-label {
     font-size: 0.75rem;
   }
-}
-
-/* Primærfarge: bruker #ff9900 (oransje) som hovedfarge */
-:root {
-  --primary: #ff9900;
-  --primary-hover: #e68a00;
-  --dark: #0c1a2a;
-  --gray-light: #f8fafc;
-  --gray: #e0e6ed;
-  --gray-dark: #64748b;
 }
