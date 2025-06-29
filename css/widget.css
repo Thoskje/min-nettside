@@ -141,12 +141,12 @@
 }
 
 .primary-btn {
-  background: #5147d5;
+  background: #0c1a2a;
   color: white;
 }
 
 .primary-btn:hover {
-  background:#6156fc;
+  background:#102236;
 }
 
 .success-btn {
@@ -165,6 +165,15 @@
 
 .secondary-btn:hover {
   background: #d0d6dd;
+}
+
+.payment-btn {
+  background: #635bff;
+  color: white;
+}
+
+.payment-btn:hover {
+  background: #5147d5;
 }
 
 .button-row {
