@@ -244,13 +244,14 @@
 
 /* ---- Stripe Payment styling ---- */
 
-/* Stripe logo styling */
+/* Stripe branding øverst */
 .stripe-branding {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
-  padding: 12px 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e6ebf1;
   color: #8898aa;
   font-size: 13px;
   font-weight: 500;
