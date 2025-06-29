@@ -158,8 +158,8 @@ class PaymentConfirmation {
     
     setTimeout(() => {
       modal.style.display = 'none';
-      // Vis hovedinnholdet
-      document.getElementById(this.mainContentId).style.display = 'block';
+      // Vis hovedinnholdet som flex istedenfor block
+      document.getElementById(this.mainContentId).style.display = 'flex';
       
       // Maksimer chatten hvis den er lastet
       if (window.Tawk_API && window.Tawk_API.maximize) {
