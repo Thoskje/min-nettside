@@ -141,21 +141,21 @@
 }
 
 .primary-btn {
-  background: #ff9900;
+  background: #0c1a2a;
   color: white;
 }
 
 .primary-btn:hover {
-  background: #e68a00;
+  background: #0c1a2a;
 }
 
 .success-btn {
-  background: #e68a00;
+  background:#0c1a2a;
   color: white;
 }
 
 .success-btn:hover {
-  background:  #ff9900;
+  background: #0c1a2a;
 }
 
 .secondary-btn {
