@@ -47,7 +47,7 @@
 }
 
 .success-icon svg {
-  color: #10b981;
+  color:  #ff9900;
 }
 
 .modal-header h2 {
@@ -67,7 +67,7 @@
 }
 
 .primary-button {
-  background: #3b82f6;
+  background: #0c1a2a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -79,7 +79,7 @@
 }
 
 .primary-button:hover {
-  background: #2563eb;
+  background: #0e1e30;
 }
 
 .quick-bilinfo {
