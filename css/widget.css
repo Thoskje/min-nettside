@@ -140,21 +140,21 @@
   transform: translateY(1px);
 }
 
-.primary-btn {
+.søk-btn {
   background: #0c1a2a;
   color: white;
 }
 
-.primary-btn:hover {
+.søk-btn:hover {
   background:#102236;
 }
 
-.success-btn {
+.godkjenn-btn {
   background:#e0e6ed;
   color: #0c1a2a;
 }
 
-.success-btn:hover {
+.godkjenn-btn:hover {
   background: #0c1a2a;
   color: white;
 }
@@ -331,6 +331,15 @@
 #widget-start-chat {
   max-width: 200px;
   margin: 0 auto;
+}
+.success-btn {
+   background:#e0e6ed;
+  color: #0c1a2a;
+}
+
+.success-btn:hover {
+  background: #0c1a2a;
+  color: white;
 }
 
 /* ---- Error styling ---- */
