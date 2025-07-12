@@ -43,27 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
         fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
       });
       
-      const style = {
-        base: {
-          color: "#0c1a2a",
-          fontFamily: 'Inter, Arial, sans-serif',
-          fontSmoothing: "antialiased",
-          fontSize: "16px",
-          "::placeholder": { color: "#aab7c4" }
-        },
-        invalid: { color: "#e5424d", iconColor: "#e5424d" }
-      };
+      // Sjekk Apple Pay tilgjengelighet
+      checkApplePayAvailability();
       
-      card = elements.create('card', { style, hidePostalCode: true });
-      card.mount('#widget-card-element');
+      // Initialiser kort-element (kun for kortbetaling)
+      initCardElement();
       
-      card.on('change', function(event) {
-        if (event.error) {
-          paymentError.textContent = event.error.message;
-        } else {
-          paymentError.textContent = '';
-        }
-      });
+      // Sett opp betalingsmetode-handlers
+      setupPaymentMethodHandlers();
       
       stripeInitialized = true;
       console.log('Stripe initialized');
@@ -71,6 +58,63 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Error initializing Stripe:', error);
       paymentError.textContent = 'Kunne ikke laste betalingsløsning';
     }
+  }
+  
+  // Sjekk Apple Pay
+  function checkApplePayAvailability() {
+    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+      document.getElementById('apple-pay-container').style.display = 'block';
+      
+      document.getElementById('apple-pay-button').addEventListener('click', handleApplePayment);
+    }
+  }
+  
+  // Initialiser kort-element
+  function initCardElement() {
+    const style = {
+      base: {
+        color: "#0c1a2a",
+        fontFamily: 'Inter, Arial, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": { color: "#aab7c4" }
+      },
+      invalid: { color: "#e5424d", iconColor: "#e5424d" }
+    };
+    
+    card = elements.create('card', { style, hidePostalCode: true });
+    card.mount('#widget-card-element');
+    
+    card.on('change', function(event) {
+      if (event.error) {
+        paymentError.textContent = event.error.message;
+      } else {
+        paymentError.textContent = '';
+      }
+    });
+  }
+  
+  // Betalingsmetode-handlers
+  function setupPaymentMethodHandlers() {
+    const paymentRadios = document.querySelectorAll('input[name="payment-type"]');
+    
+    paymentRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        // Fjern active class fra alle
+        document.querySelectorAll('.payment-method').forEach(method => {
+          method.classList.remove('active');
+        });
+        
+        // Legg til active class på valgt
+        this.closest('.payment-method').classList.add('active');
+      });
+    });
+  }
+  
+  // Apple Pay håndtering
+  async function handleApplePayment() {
+    console.log('Apple Pay clicked - implementer Apple Pay-logikk her');
+    // Implementer Apple Pay med Stripe
   }
   
   // ============= Widget-navigering =============
@@ -293,43 +337,59 @@ document.addEventListener('DOMContentLoaded', function() {
     paymentForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      if (betalBtn) betalBtn.disabled = true;
-      paymentError.textContent = '';
+      const selectedMethod = document.querySelector('input[name="payment-type"]:checked');
       
-      const biltype = localStorage.getItem('bilnavn') || '';
-      
-      try {
-        const response = await fetch('/api/create-payment-intent', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ biltype })
-        });
-        
-        const data = await response.json();
-        
-        if (!data.clientSecret) {
-          throw new Error(data.error || 'Ingen betalingsnøkkel mottatt');
-        }
-        
-        const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
-          payment_method: { card: card }
-        });
-        
-        if (error) {
-          paymentError.textContent = error.message || 'Betalingen ble ikke godkjent';
-          betalBtn.disabled = false;
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-          localStorage.setItem('paymentIntentId', paymentIntent.id);
-          localStorage.setItem('betalingsStatus', 'betalt');
-          
-          widget.goToStep(3);
-        }
-      } catch (error) {
-        console.error('Payment error:', error);
-        paymentError.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen.';
-        betalBtn.disabled = false;
+      if (selectedMethod.value === 'vipps') {
+        handleVippsPayment();
+      } else {
+        handleCardPayment();
       }
     });
+  }
+  
+  async function handleCardPayment() {
+    const betalBtn = document.getElementById('widget-betal');
+    betalBtn.disabled = true;
+    paymentError.textContent = '';
+    
+    const biltype = localStorage.getItem('bilnavn') || '';
+    
+    try {
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ biltype })
+      });
+      
+      const data = await response.json();
+      
+      if (!data.clientSecret) {
+        throw new Error(data.error || 'Ingen betalingsnøkkel mottatt');
+      }
+      
+      const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: { card: card }
+      });
+      
+      if (error) {
+        paymentError.textContent = error.message || 'Betalingen ble ikke godkjent';
+        betalBtn.disabled = false;
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        localStorage.setItem('paymentIntentId', paymentIntent.id);
+        localStorage.setItem('betalingsStatus', 'betalt');
+        
+        widget.goToStep(3);
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      paymentError.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen.';
+      betalBtn.disabled = false;
+    }
+  }
+  
+  async function handleVippsPayment() {
+    alert('Vipps-betaling er ikke implementert ennå');
+    // Her kan du implementere Vipps via annen leverandør
   }
   
   // ============= CHAT =============
