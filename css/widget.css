@@ -154,13 +154,14 @@
   color: white;
 }
 
+/* FIX: Korriger payment button */
 .payment-btn {
   background: #635bff;
   color: white;
   flex: 2;
 }
 
-.payment-btn:hover:not(:disabled) {
+.payment-btn:hover:not(:disabled) {  /* <-- FIKSET: Lagt til :hover:not(:disabled) */
   background: #5147d5;
 }
 
@@ -172,6 +173,29 @@
 
 .secondary-btn:hover:not(:disabled) {
   background: #d0d6dd;
+}
+
+/* FIX: Legg til primary-btn klasse som brukes i HTML */
+.primary-btn {
+  background: #635bff;
+  color: white;
+  flex: 2;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: #5147d5;
+}
+
+/* FIX: Success button styling */
+.success-btn {
+  background: #e0e6ed;
+  color: #0c1a2a;
+  width: 100%;
+}
+
+.success-btn:hover:not(:disabled) {
+  background: #0c1a2a;
+  color: white;
 }
 
 .button-row {
