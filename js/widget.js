@@ -87,14 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
         layout: {
           type: 'tabs'
         },
-        paymentMethodOrder: ['card'],
-        fields: {
-          billingDetails: {
-            address: {
-              country: 'never' // Skjul land-felt
-            }
-          }
-        }
+        paymentMethodOrder: ['card']
+        // Ingen fields config - la Stripe håndtere det automatisk
       });
       
       paymentElement.mount('#widget-payment-element');
@@ -349,12 +343,15 @@ document.addEventListener('DOMContentLoaded', function() {
           throw submitError;
         }
         
-        // 2. Opprett Payment Method (nå fungerer det med manual mode)
+        // 2. Opprett Payment Method MED land (siden vi skjulte feltet)
         const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
           elements,
           params: {
             billing_details: {
-              name: 'Test Bruker'
+              name: 'Test Bruker',
+              address: {
+                country: 'NO' // VIKTIG: Oppgi Norge siden vi skjulte feltet
+              }
             }
           }
         });
@@ -365,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log('Payment Method created successfully:', paymentMethod);
         
-        // 3. For testing: Simuler vellykket betaling
+        // 3. Simuler vellykket betaling
         localStorage.setItem('betalingsStatus', 'betalt');
         localStorage.setItem('paymentMethodId', paymentMethod.id);
         
@@ -378,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function() {
       } catch (error) {
         console.error('Payment error:', error);
         
-        // Vis spesifikk feilmelding
         if (error.type === 'card_error') {
           paymentError.textContent = error.message;
         } else if (error.type === 'validation_error') {
@@ -387,7 +383,6 @@ document.addEventListener('DOMContentLoaded', function() {
           paymentError.textContent = 'Det oppsto en feil. Prøv igjen.';
         }
         
-        // Reaktiver knapp
         betalBtn.disabled = false;
         betalBtn.textContent = 'Betal 249 kr';
       }
