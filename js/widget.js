@@ -87,7 +87,14 @@ document.addEventListener('DOMContentLoaded', function() {
         layout: {
           type: 'tabs'
         },
-        paymentMethodOrder: ['card'] // Kun kort
+        paymentMethodOrder: ['card'],
+        fields: {
+          billingDetails: {
+            address: {
+              country: 'never' // Skjul land-felt
+            }
+          }
+        }
       });
       
       paymentElement.mount('#widget-payment-element');
