@@ -207,8 +207,13 @@ document.addEventListener('DOMContentLoaded', function() {
           // Enkel visning
           bilinfoDiv.innerHTML = `
             <div class="bil-info">
-              <strong>${merke} ${modell} ${arsmodell}</strong><br>
-              <span>Reg.nr: ${regnr}</span>
+              <strong>Bilmerke:</strong> ${merke}<br>
+              <strong>Bilmodell:</strong> ${modell}<br>
+                ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
+              <strong>Årsmodell:</strong> ${arsmodell}<br>
+              <strong>Drivstoff:</strong> ${drivstoff}<br>
+              <strong>Motortype:</strong> ${motortype}<br>
+
             </div>
           `;
           
