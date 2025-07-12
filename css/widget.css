@@ -270,9 +270,9 @@
 /* Stripe Branding */
 .stripe-branding {
   text-align: center;
-  padding: 0.75rem 0 0.5rem 0;
-  margin: 0.5rem 0 1rem 0;
-  border-top: 1px solid #e0e6ed;
+  padding: 12px 0 8px 0;
+  margin: 8px 0 16px 0;
+  border-top: 1px solid #f0f0f0;
 }
 
 .stripe-branding a {
@@ -280,8 +280,9 @@
   align-items: center;
   gap: 4px;
   text-decoration: none;
-  color: #64748b;
-  font-size: 0.75rem;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
   transition: opacity 0.2s ease;
 }
 
@@ -290,8 +291,15 @@
 }
 
 .stripe-branding img {
-  height: 14px;
+  height: 16px;
   width: auto;
+  max-width: 50px; /* Begrens bredde */
+}
+
+/* Fallback styling for tekst */
+.stripe-branding strong {
+  color: #6772E5;
+  font-weight: 600;
 }
 
 /* Payment Error */
