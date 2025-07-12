@@ -40,12 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0');
       
-      // VIKTIG: Legg til paymentMethodCreation: 'manual'
+      // RIKTIG: appearance i elements(), ikke i payment element
       elements = stripe.elements({
         mode: 'payment',
         amount: 24900,
         currency: 'nok',
-        paymentMethodCreation: 'manual', // Dette var det som manglet!
+        paymentMethodCreation: 'manual',
+        // APPEARANCE HER, ikke i payment element
         appearance: {
           theme: 'stripe',
           variables: {
@@ -82,44 +83,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // Opprett Payment Element (kun kort for å unngå problemer)
+      // Payment Element UTEN appearance (den arver fra elements)
       paymentElement = elements.create('payment', {
         layout: {
           type: 'tabs'
         },
         paymentMethodOrder: ['card'],
-        // IKKE skjul Stripe branding
-        appearance: {
-          theme: 'stripe',
-          variables: {
-            colorPrimary: '#635BFF',
-            colorBackground: '#ffffff',
-            colorText: '#1a1a1a',
-            colorDanger: '#e74c3c',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontSizeBase: '16px',
-            borderRadius: '8px',
-            spacingUnit: '4px'
-          },
-          rules: {
-            '.Tab': {
-              border: '1px solid #e0e0e0',
-              padding: '16px 20px',
-              backgroundColor: '#ffffff'
-            },
-            '.Tab--selected': {
-              backgroundColor: '#f8f9ff',
-              borderColor: '#635BFF'
-            },
-            '.Input': {
-              border: '1px solid #d0d0d0',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              fontSize: '16px'
-            },
-            '.Input:focus': {
-              borderColor: '#635BFF',
-              boxShadow: '0 0 0 3px rgba(99, 91, 255, 0.1)'
+        fields: {
+          billingDetails: {
+            address: {
+              country: 'auto'
+            }
+          }
+        },
+        defaultValues: {
+          billingDetails: {
+            address: {
+              country: 'NO'
             }
           }
         }
@@ -127,7 +107,25 @@ document.addEventListener('DOMContentLoaded', function() {
       
       paymentElement.mount('#widget-payment-element');
       
-      // Event listeners
+      // Legg til debug-kode for å sjekke logo
+      setTimeout(() => {
+        console.log('=== STRIPE LOGO DEBUG ===');
+        
+        const paymentContainer = document.querySelector('#widget-payment-element');
+        console.log('Payment container:', paymentContainer);
+        
+        const stripeFrames = document.querySelectorAll('iframe[name^="__privateStripeFrame"]');
+        console.log('Stripe frames found:', stripeFrames.length);
+        
+        const stripeLinks = document.querySelectorAll('#widget-payment-element .p-Links, #widget-payment-element [data-testid*="stripe"], #widget-payment-element a[href*="stripe.com"]');
+        console.log('Stripe branding elements:', stripeLinks);
+        
+        const containerHeight = paymentContainer ? paymentContainer.getBoundingClientRect().height : 0;
+        console.log('Container height:', containerHeight);
+        
+        console.log('=== END DEBUG ===');
+      }, 2000);
+      
       paymentElement.on('change', function(event) {
         if (event.error) {
           paymentError.textContent = event.error.message;
@@ -137,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       stripeInitialized = true;
-      console.log('Stripe Payment Element initialized with manual payment method creation');
+      console.log('Stripe Payment Element initialized correctly');
     } catch (error) {
       console.error('Error initializing Stripe:', error);
       paymentError.textContent = 'Kunne ikke laste betalingsløsning';
