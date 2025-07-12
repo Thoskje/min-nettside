@@ -110,8 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       bilDisplay.innerHTML = `
         <div class="widget-bil-display">
-          <p><strong>${bilMerke} ${bilModell} ${bilAr}</strong></p>
-          <p>Reg.nr: ${regnr}</p>
+          <p>${bilMerke} ${bilModell} ${bilAr}</p>
         </div>
       `;
     },
