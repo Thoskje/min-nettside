@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="widget-bil-display">
           <p><strong>${bilMerke} ${bilModell} ${bilAr}</strong></p>
           <p>Reg.nr: ${regnr}</p>
-          <p>Konsultasjon med bilmekaniker</p>
         </div>
       `;
     },
