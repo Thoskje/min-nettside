@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const data = await res.json();
         
-        // Behandle API-respons
-        const bilListe = data.kjoretoydataListe || data.kjoretoydata;
+        // Korrekt parsing basert på faktisk API-struktur
+        const bilListe = data.kjoretoydataListe || [data];
         let merke = '';
         let modell = '';
         let arsmodell = '';
@@ -188,22 +188,53 @@ document.addEventListener('DOMContentLoaded', function() {
         if (bilListe && bilListe.length > 0) {
           const bil = bilListe[0];
           
-          merke = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-          modell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-          arsmodell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-          drivstoff = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-          motortype = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+          // Hent tekniske data
+          const tekniskeData = bil.godkjenning?.tekniskGodkjenning?.tekniskeData;
+          
+          if (tekniskeData) {
+            // Merke og modell
+            const generelt = tekniskeData.generelt;
+            if (generelt) {
+              merke = generelt.merke?.[0]?.merke || '';
+              modell = generelt.handelsbetegnelse?.[0] || '';
+            }
+            
+            // Motor og drivstoff
+            const motor = tekniskeData.motorOgDrivverk?.motor?.[0];
+            if (motor) {
+              motortype = motor.motorKode || '';
+              // Drivstoff fra motor-seksjonen
+              drivstoff = motor.drivstoff?.[0]?.drivstoffKode?.kodeBeskrivelse || '';
+            }
+            
+            // Alternativ drivstoff fra miljødata
+            if (!drivstoff) {
+              const miljodata = tekniskeData.miljodata?.miljoOgdrivstoffGruppe?.[0];
+              drivstoff = miljodata?.drivstoffKodeMiljodata?.kodeBeskrivelse || '';
+            }
+          }
+          
+          // Førstegangsregistrering
           forstegangsregistrert = bil.forstegangsregistrering?.registrertForstegangNorgeDato || '';
-        } else {
-          merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
-          modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
-          arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
-          drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
-          motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+          
+          // Utled årsmodell fra førstegangsregistrering
+          if (forstegangsregistrert) {
+            arsmodell = forstegangsregistrert.substring(0, 4);
+          }
+          
+          // Alternativt fra godkjenning
+          if (!arsmodell) {
+            const godkjenningDato = bil.godkjenning?.tekniskGodkjenning?.gyldigFraDato;
+            if (godkjenningDato) {
+              arsmodell = godkjenningDato.substring(0, 4);
+            }
+          }
         }
-        
+
+        console.log('Parsed bildata:', { merke, modell, arsmodell, drivstoff, motortype, forstegangsregistrert });
+
         if (merke || modell) {
-          // Lagre all data i localStorage
+          // Lagre data i localStorage
           const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnr})`;
           localStorage.setItem('bilnavn', bilnavn);
           localStorage.setItem('bilRegistreringsnummer', regnr);
@@ -212,18 +243,18 @@ document.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem('bilÅr', arsmodell);
           localStorage.setItem('bilMotor', `${drivstoff} ${motortype}`.trim());
           
-          // Vis detaljert bilinformasjon
-          bilinfoDiv.innerHTML = `
-            <div class="bil-info">
-              <strong>Bilmerke:</strong> ${merke}<br>
-              <strong>Bilmodell:</strong> ${modell}<br>
-              ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
-              <strong>Årsmodell:</strong> ${arsmodell}<br>
-              <strong>Drivstoff:</strong> ${drivstoff}<br>
-              <strong>Motortype:</strong> ${motortype}<br>
-              <strong>Registreringsnummer:</strong> ${regnr}
-            </div>
-          `;
+          // Vis kun felter med innhold
+          let bilinfoHTML = '<div class="bil-info">';
+          
+          if (merke) bilinfoHTML += `<strong>Bilmerke:</strong> ${merke}<br>`;
+          if (modell) bilinfoHTML += `<strong>Bilmodell:</strong> ${modell}<br>`;
+          if (forstegangsregistrert) bilinfoHTML += `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>`;
+          if (arsmodell) bilinfoHTML += `<strong>Årsmodell:</strong> ${arsmodell}<br>`;
+          if (drivstoff) bilinfoHTML += `<strong>Drivstoff:</strong> ${drivstoff}<br>`;
+          if (motortype) bilinfoHTML += `<strong>Motortype:</strong> ${motortype}<br>`;
+          bilinfoHTML += `<strong>Registreringsnummer:</strong> ${regnr}</div>`;
+          
+          bilinfoDiv.innerHTML = bilinfoHTML;
           
           godkjennBtn.style.display = 'block';
           
