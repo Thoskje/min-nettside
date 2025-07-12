@@ -669,3 +669,29 @@
   width: auto;
 }
 
+/* Legg til for å sikre logo-visning */
+
+#widget-payment-element {
+  min-height: 400px !important; /* Gi nok plass for logo */
+  overflow: visible !important;
+}
+
+/* Sørg for at Stripe branding vises */
+#widget-payment-element iframe {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Spesifikk for Stripe footer */
+#widget-payment-element .p-Links,
+#widget-payment-element [data-testid*="footer"],
+#widget-payment-element [data-testid*="powered"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: center !important;
+  padding: 8px 0 !important;
+  font-size: 12px !important;
+  color: #6b7280 !important;
+}
+
