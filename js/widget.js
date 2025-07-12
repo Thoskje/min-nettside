@@ -1,7 +1,5 @@
 /**
- * Biloppslag og betaling widget
- * Kombinerer all funksjonalitet i én fil
- */
+ * Biloppslag og betaling widget */
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Widget script loaded');
   
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const bilAr = localStorage.getItem('bilÅr') || '';
       
       bilDisplay.innerHTML = `
-        <div class="bil-info-payment">
+        <div class="payment-widget">
           <p><strong>${bilMerke} ${bilModell} ${bilAr}</strong></p>
           <p>Reg.nr: ${regnr}</p>
           <p>Chat-konsultasjon med bilmekaniker</p>
