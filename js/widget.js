@@ -1,14 +1,14 @@
 /**
- * Biloppslag og betaling widget */
+ * Bilinfo og betaling widget */
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Widget script loaded');
   
   // ============= DOM-elementer =============
-  const widgetOverlay = document.getElementById('biloppslagbetaling-overlay');
+  const widgetOverlay = document.getElementById('bilinfobetaling-overlay');
   const closeBtn = document.getElementById('widget-close');
   const cancelBtn = document.getElementById('widget-cancel');
   
-  // Steg 1: Biloppslag
+  // Steg 1: Bilinfo
   const regnrInput = document.getElementById('widget-regnr');
   const sokBtn = document.getElementById('widget-sok-bil');
   const bilinfoDiv = document.getElementById('widget-bilinfo');
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === widgetOverlay) widget.close();
   });
   
-  // Biloppslag funksjonalitet
+  // Bilinfo funksjonalitet
   if (sokBtn && regnrInput) {
     sokBtn.addEventListener('click', async function() {
       const regnr = regnrInput.value.trim().toUpperCase();
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const data = await res.json();
         
-        // Bruk samme biloppslag-logikk som i original biloppslag.js
+        // Bruk samme biloppslag-logikk som i original biinfo-display.js
         const bilListe = data.kjoretoydataListe || data.kjoretoydata;
         let merke = '';
         let modell = '';
@@ -225,11 +225,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="bil-info">
               <strong>Bilmerke:</strong> ${merke}<br>
               <strong>Bilmodell:</strong> ${modell}<br>
+                ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
               <strong>Årsmodell:</strong> ${arsmodell}<br>
               <strong>Drivstoff:</strong> ${drivstoff}<br>
               <strong>Motortype:</strong> ${motortype}<br>
-              ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
-              <strong>Registreringsnummer:</strong> ${regnr}<br>
+
             </div>
           `;
           
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Tilbake til biloppslag
+  // Tilbake til bilinfo
   if (backBtn) {
     backBtn.addEventListener('click', function() {
       widget.goToStep(1);
