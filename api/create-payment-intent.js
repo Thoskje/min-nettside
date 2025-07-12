@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     // Opprett payment intent uten email
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 14900, // 149 kr i øre
+      amount: 24900, // 249 kr i øre
       currency: 'nok',
       description: 'Chat med bilmekaniker',
       metadata: {
