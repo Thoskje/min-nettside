@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Steg 2: Betaling
   const bilDisplay = document.getElementById('widget-bil-display');
   const paymentForm = document.getElementById('widget-payment-form');
-  const cardElement = document.getElementById('widget-card-element');
   const paymentError = document.getElementById('widget-payment-error');
   const backBtn = document.getElementById('widget-back');
   const betalBtn = document.getElementById('widget-betal');
@@ -30,94 +29,165 @@ document.addEventListener('DOMContentLoaded', function() {
   const stepElements = document.querySelectorAll('.step');
   const stepContents = document.querySelectorAll('.step-content');
   
-  // ============= Stripe-oppsett =============
-  let stripe, elements, card;
+  // ============= Stripe-oppsett (ERSTATT HELE SEKSJONEN) =============
+  let stripe, elements, paymentElement;
   let stripeInitialized = false;
   
+  // FØRSTE JS-KODE: initStripe-funksjonen
   function initStripe() {
     if (stripeInitialized) return;
     
     try {
       stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0');
+      
+      // Payment Element med maksimal tilpasning
       elements = stripe.elements({
-        fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
+        mode: 'payment',
+        amount: 24900, // 249 kr i øre
+        currency: 'nok',
+        appearance: {
+          theme: 'stripe',
+          variables: {
+            colorPrimary: '#635BFF',
+            colorBackground: '#ffffff',
+            colorText: '#1a1a1a',
+            colorDanger: '#e74c3c',
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontSizeBase: '16px',
+            fontWeightNormal: '400',
+            fontWeightMedium: '500',
+            fontWeightBold: '600',
+            borderRadius: '8px',
+            spacingUnit: '4px',
+            gridColumnSpacing: '12px',
+            gridRowSpacing: '12px',
+            colorInputBackground: '#ffffff',
+            colorInputBorder: '#d0d0d0',
+            colorInputBorderFocus: '#635BFF',
+            colorInputPlaceholder: '#aab7c4',
+            colorInputText: '#1a1a1a',
+            tabSpacing: '0px',
+            tabBorderRadius: '0px'
+          },
+          rules: {
+            '.TabsContainer': {
+              border: '1px solid #e0e0e0',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              boxShadow: 'none'
+            },
+            '.Tab': {
+              border: 'none',
+              borderBottom: '1px solid #e0e0e0',
+              borderRadius: '0px',
+              padding: '16px 20px',
+              backgroundColor: '#ffffff',
+              transition: 'all 0.2s ease'
+            },
+            '.Tab:last-child': {
+              borderBottom: 'none'
+            },
+            '.Tab--selected': {
+              backgroundColor: '#f8f9ff',
+              borderColor: '#635BFF'
+            },
+            '.Tab:hover': {
+              backgroundColor: '#f8f9ff'
+            },
+            '.TabIcon': {
+              marginRight: '12px'
+            },
+            '.TabIcon--selected': {
+              color: '#635BFF'
+            },
+            '.TabLabel': {
+              fontWeight: '500',
+              fontSize: '16px',
+              color: '#1a1a1a'
+            },
+            '.TabMore': {
+              fontSize: '14px',
+              color: '#666666'
+            },
+            '.Input': {
+              border: '1px solid #d0d0d0',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              fontSize: '16px',
+              backgroundColor: '#ffffff',
+              transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+            },
+            '.Input:focus': {
+              borderColor: '#635BFF',
+              boxShadow: '0 0 0 3px rgba(99, 91, 255, 0.1)',
+              outline: 'none'
+            },
+            '.Input--invalid': {
+              borderColor: '#e74c3c'
+            },
+            '.Input::placeholder': {
+              color: '#aab7c4',
+              opacity: '1'
+            },
+            '.PaymentMethodContainer': {
+              backgroundColor: '#ffffff',
+              border: 'none',
+              borderRadius: '0px',
+              padding: '0px'
+            },
+            '.Error': {
+              color: '#e74c3c',
+              fontSize: '14px',
+              marginTop: '8px'
+            }
+          }
+        },
+        fonts: [{ 
+          cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' 
+        }]
       });
       
-      // Sjekk Apple Pay tilgjengelighet
-      checkApplePayAvailability();
+      // Opprett Payment Element
+      paymentElement = elements.create('payment', {
+        layout: {
+          type: 'tabs',
+          defaultCollapsed: false,
+          radios: true,
+          spacedAccordionItems: false
+        },
+        paymentMethodOrder: ['card', 'apple_pay', 'google_pay'],
+        fields: {
+          billingDetails: 'never'
+        },
+        terms: {
+          card: 'never',
+          applePay: 'never',
+          googlePay: 'never'
+        }
+      });
       
-      // Initialiser kort-element (kun for kortbetaling)
-      initCardElement();
+      paymentElement.mount('#widget-payment-element');
       
-      // Sett opp betalingsmetode-handlers
-      setupPaymentMethodHandlers();
+      // Event listeners
+      paymentElement.on('change', function(event) {
+        if (event.error) {
+          paymentError.textContent = event.error.message;
+        } else {
+          paymentError.textContent = '';
+        }
+        
+        document.getElementById('widget-betal').disabled = !event.complete;
+      });
       
       stripeInitialized = true;
-      console.log('Stripe initialized');
+      console.log('Stripe Payment Element initialized with custom styling');
     } catch (error) {
       console.error('Error initializing Stripe:', error);
       paymentError.textContent = 'Kunne ikke laste betalingsløsning';
     }
   }
   
-  // Sjekk Apple Pay
-  function checkApplePayAvailability() {
-    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-      document.getElementById('apple-pay-container').style.display = 'block';
-      
-      document.getElementById('apple-pay-button').addEventListener('click', handleApplePayment);
-    }
-  }
-  
-  // Initialiser kort-element
-  function initCardElement() {
-    const style = {
-      base: {
-        color: "#0c1a2a",
-        fontFamily: 'Inter, Arial, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": { color: "#aab7c4" }
-      },
-      invalid: { color: "#e5424d", iconColor: "#e5424d" }
-    };
-    
-    card = elements.create('card', { style, hidePostalCode: true });
-    card.mount('#widget-card-element');
-    
-    card.on('change', function(event) {
-      if (event.error) {
-        paymentError.textContent = event.error.message;
-      } else {
-        paymentError.textContent = '';
-      }
-    });
-  }
-  
-  // Betalingsmetode-handlers
-  function setupPaymentMethodHandlers() {
-    const paymentRadios = document.querySelectorAll('input[name="payment-type"]');
-    
-    paymentRadios.forEach(radio => {
-      radio.addEventListener('change', function() {
-        // Fjern active class fra alle
-        document.querySelectorAll('.payment-method').forEach(method => {
-          method.classList.remove('active');
-        });
-        
-        // Legg til active class på valgt
-        this.closest('.payment-method').classList.add('active');
-      });
-    });
-  }
-  
-  // Apple Pay håndtering
-  async function handleApplePayment() {
-    console.log('Apple Pay clicked - implementer Apple Pay-logikk her');
-    // Implementer Apple Pay med Stripe
-  }
-  
-  // ============= Widget-navigering =============
+  // ============= Widget-navigering (EKSISTERENDE KODE) =============
   const widget = {
     currentStep: 1,
     
@@ -174,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   
-  // ============= Event Listeners =============
+  // ============= Event Listeners (EKSISTERENDE KODE) =============
   
   // Åpne widget
   document.querySelectorAll('.chat-btn, .cta-button').forEach(btn => {
@@ -332,64 +402,58 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // ============= BETALING =============
+  // ============= BETALING (ANDRE JS-KODE - ERSTATT EKSISTERENDE) =============
   if (paymentForm) {
     paymentForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      const selectedMethod = document.querySelector('input[name="payment-type"]:checked');
+      const betalBtn = document.getElementById('widget-betal');
+      betalBtn.disabled = true;
+      betalBtn.textContent = 'Behandler...';
+      paymentError.textContent = '';
       
-      if (selectedMethod.value === 'vipps') {
-        handleVippsPayment();
-      } else {
-        handleCardPayment();
+      const biltype = localStorage.getItem('bilnavn') || '';
+      
+      try {
+        // Opprett Payment Intent
+        const response = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ biltype })
+        });
+        
+        const { clientSecret, error: backendError } = await response.json();
+        
+        if (backendError) {
+          throw new Error(backendError);
+        }
+        
+        // Bekreft betaling med Payment Element
+        const { error, paymentIntent } = await stripe.confirmPayment({
+          elements,
+          clientSecret,
+          confirmParams: {
+            return_url: `${window.location.origin}/success.html`
+          },
+          redirect: 'if_required'
+        });
+        
+        if (error) {
+          paymentError.textContent = error.message || 'Betalingen ble ikke godkjent';
+          betalBtn.disabled = false;
+          betalBtn.textContent = 'Betal 249 kr';
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+          localStorage.setItem('paymentIntentId', paymentIntent.id);
+          localStorage.setItem('betalingsStatus', 'betalt');
+          widget.goToStep(3);
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        paymentError.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen.';
+        betalBtn.disabled = false;
+        betalBtn.textContent = 'Betal 249 kr';
       }
     });
-  }
-  
-  async function handleCardPayment() {
-    const betalBtn = document.getElementById('widget-betal');
-    betalBtn.disabled = true;
-    paymentError.textContent = '';
-    
-    const biltype = localStorage.getItem('bilnavn') || '';
-    
-    try {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ biltype })
-      });
-      
-      const data = await response.json();
-      
-      if (!data.clientSecret) {
-        throw new Error(data.error || 'Ingen betalingsnøkkel mottatt');
-      }
-      
-      const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
-        payment_method: { card: card }
-      });
-      
-      if (error) {
-        paymentError.textContent = error.message || 'Betalingen ble ikke godkjent';
-        betalBtn.disabled = false;
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        localStorage.setItem('paymentIntentId', paymentIntent.id);
-        localStorage.setItem('betalingsStatus', 'betalt');
-        
-        widget.goToStep(3);
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      paymentError.textContent = 'Det oppsto en teknisk feil. Vennligst prøv igjen.';
-      betalBtn.disabled = false;
-    }
-  }
-  
-  async function handleVippsPayment() {
-    alert('Vipps-betaling er ikke implementert ennå');
-    // Her kan du implementere Vipps via annen leverandør
   }
   
   // ============= CHAT =============

@@ -145,89 +145,30 @@
       </div>
     </div>
     
-    <!-- Steg 2: Betaling med custom design -->
+    <!-- Steg 2: Betaling med Stripe Payment Element -->
     <div id="step-2" class="step-content">
+      <!-- Oppsummering seksjon -->
       <div class="payment-summary">
-        <strong>Oppsummering:</strong>
-        <br><br>
-        <div id="widget-bil-display"></div>
-        <p>Konsultasjon med bilmekaniker</p>
-        <div class="price">249 kr</div>
+        <h3><strong>Oppsummering:</strong></h3>
+        <div id="widget-bil-display" class="bil-summary">
+          <!-- Fylles automatisk med bilinfo -->
+        </div>
+        <div class="service-line">Konsultasjon med bilmekaniker</div>
+        <div class="price-line"><strong>249 kr</strong></div>
       </div>
       
-      <!-- Custom betalingsmetoder (som i bildet) -->
+      <!-- Stripe Payment Element (tilpasset for å ligne bildet) -->
       <form id="widget-payment-form">
-        
-        <!-- Apple Pay (hvis tilgjengelig) -->
-        <div id="apple-pay-container" class="payment-method apple-pay" style="display: none;">
-          <button type="button" id="apple-pay-button" class="apple-pay-btn">
-            <svg width="40" height="17" viewBox="0 0 40 17" fill="white">
-              <!-- Apple Pay ikon -->
-              <path d="M6.7 0C4.4 0 2.8 1.7 2.8 4.1c0 2.3 1.5 4.2 3.8 4.2 2.3 0 3.8-1.8 3.8-4.2C10.4 1.7 8.9 0 6.7 0z"/>
-            </svg>
-          </button>
+        <div id="widget-payment-element" class="payment-element-container">
+          <!-- Stripe Payment Element monteres her -->
         </div>
         
-        <!-- Divider -->
-        <div class="payment-divider">
-          <span>Eller fortsett under</span>
-        </div>
+        <div id="widget-payment-error" class="payment-error"></div>
         
-        <!-- Betalingsmetoder container -->
-        <div class="payment-methods-container">
-          
-          <!-- Kort (aktiv som standard) -->
-          <div class="payment-method card-method active">
-            <input type="radio" id="card-option" name="payment-type" value="card" checked>
-            <label for="card-option" class="payment-label">
-              <div class="payment-method-left">
-                <div class="radio-circle"></div>
-                <span>Betal med kort</span>
-              </div>
-              <div class="payment-icons">
-                <img src="https://js.stripe.com/v3/fingerprinted/img/visa-729c05c240c4bdb47b03ac81d9945bfe.svg" alt="Visa" height="20">
-                <img src="https://js.stripe.com/v3/fingerprinted/img/mastercard-4d8844094130711885b5e41b28c9848f.svg" alt="Mastercard" height="20">
-              </div>
-            </label>
-            
-            <!-- Kort-detaljer (vises kun når valgt) -->
-            <div class="card-details">
-              <div class="card-field-container">
-                <div id="widget-card-element" class="stripe-card-field"></div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Vipps -->
-          <div class="payment-method vipps-method">
-            <input type="radio" id="vipps-option" name="payment-type" value="vipps">
-            <label for="vipps-option" class="payment-label">
-              <div class="payment-method-left">
-                <div class="radio-circle"></div>
-                <span>Vipps</span>
-              </div>
-              <div class="vipps-logo">
-                <svg width="60" height="20" viewBox="0 0 60 20" fill="#FF5B24">
-                  <!-- Vipps logo -->
-                  <path d="M15.3 2.8L11.8 17h-3.5L4.8 2.8h3.8l2.1 9.4 2.1-9.4h3.5z"/>
-                  <path d="M20.3 2.8v14.2h-3.4V2.8h3.4z"/>
-                  <path d="M31.8 7.2c0 3.2-2.1 5.4-5.3 5.4-1.4 0-2.6-.5-3.4-1.4v5.9h-3.4V4.9h3.2v1.2c.8-.9 2-1.4 3.6-1.4 3.2 0 5.3 2.2 5.3 5.5zm-3.4 0c0-1.4-.9-2.3-2.2-2.3s-2.2.9-2.2 2.3.9 2.3 2.2 2.3 2.2-.9 2.2-2.3z"/>
-                  <path d="M41.8 7.2c0 3.2-2.1 5.4-5.3 5.4-1.4 0-2.6-.5-3.4-1.4v5.9h-3.4V4.9h3.2v1.2c.8-.9 2-1.4 3.6-1.4 3.2 0 5.3 2.2 5.3 5.5zm-3.4 0c0-1.4-.9-2.3-2.2-2.3s-2.2.9-2.2 2.3.9 2.3 2.2 2.3 2.2-.9 2.2-2.3z"/>
-                  <path d="M52.3 8.5c0 2.4-1.9 4.1-4.5 4.1-1.3 0-2.4-.4-3.2-1.2l1.8-2.2c.4.4.9.6 1.4.6.6 0 1-.3 1-0.8 0-.5-.4-.7-1.1-1l-1.2-.5c-1.5-.6-2.3-1.6-2.3-3 0-2.2 1.8-3.8 4.2-3.8 1.2 0 2.2.4 3 1.1l-1.7 2.1c-.4-.3-.8-.5-1.3-.5-.5 0-.8.2-.8.7 0 .4.3.6 1 .9l1.2.5c1.6.7 2.5 1.6 2.5 3.1z"/>
-                </svg>
-              </div>
-            </label>
-          </div>
-        </div>
-        
-        <div id="widget-payment-error"></div>
-        
-        <div class="button-row">
-          <button type="button" id="widget-back" class="widget-btn secondary-btn">Tilbake</button>
-          <button type="submit" id="widget-betal" class="widget-btn payment-btn">
-            <span class="button-text">Betal 249 kr</span>
-            <span class="button-loading" style="display: none;">Behandler...</span>
-          </button>
+        <!-- Knapper -->
+        <div class="payment-buttons">
+          <button type="button" id="widget-back" class="btn-secondary">Tilbake</button>
+          <button type="submit" id="widget-betal" class="btn-primary">Betal 249 kr</button>
         </div>
       </form>
     </div>
