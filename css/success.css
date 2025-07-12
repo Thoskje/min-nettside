@@ -43,7 +43,7 @@
 .success-icon {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .success-icon svg {
