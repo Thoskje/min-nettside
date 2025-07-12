@@ -40,15 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0');
       
-      // Forenklet Payment Element - kun grunnleggende styling
+      // VIKTIG: Legg til paymentMethodCreation: 'manual'
       elements = stripe.elements({
         mode: 'payment',
         amount: 24900,
         currency: 'nok',
+        paymentMethodCreation: 'manual', // Dette var det som manglet!
         appearance: {
           theme: 'stripe',
           variables: {
-            // Kun støttede variabler
             colorPrimary: '#635BFF',
             colorBackground: '#ffffff',
             colorText: '#1a1a1a',
@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             spacingUnit: '4px'
           },
           rules: {
-            // Kun støttede CSS-regler
             '.Tab': {
               border: '1px solid #e0e0e0',
               padding: '16px 20px',
@@ -83,12 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // Opprett Payment Element
+      // Opprett Payment Element (kun kort for å unngå problemer)
       paymentElement = elements.create('payment', {
         layout: {
           type: 'tabs'
         },
-        paymentMethodOrder: ['card']
+        paymentMethodOrder: ['card'] // Kun kort
       });
       
       paymentElement.mount('#widget-payment-element');
@@ -103,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       stripeInitialized = true;
-      console.log('Stripe Payment Element initialized');
+      console.log('Stripe Payment Element initialized with manual payment method creation');
     } catch (error) {
       console.error('Error initializing Stripe:', error);
       paymentError.textContent = 'Kunne ikke laste betalingsløsning';
@@ -336,15 +335,15 @@ document.addEventListener('DOMContentLoaded', function() {
       paymentError.textContent = '';
       
       try {
-        // VIKTIG: elements.submit() må kalles FØRST
+        // 1. Submit elements først
         const { error: submitError } = await elements.submit();
         
         if (submitError) {
           throw submitError;
         }
         
-        // Opprett Payment Intent (forenklet test-versjon)
-        const paymentIntent = await stripe.createPaymentMethod({
+        // 2. Opprett Payment Method (nå fungerer det med manual mode)
+        const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
           elements,
           params: {
             billing_details: {
@@ -353,19 +352,21 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
         
-        if (paymentIntent.error) {
-          throw paymentIntent.error;
+        if (pmError) {
+          throw pmError;
         }
         
-        // Simuler vellykket betaling for testing
-        console.log('Payment method created:', paymentIntent.paymentMethod);
+        console.log('Payment Method created successfully:', paymentMethod);
         
-        // For test: Gå direkte til neste steg
+        // 3. For testing: Simuler vellykket betaling
         localStorage.setItem('betalingsStatus', 'betalt');
-        localStorage.setItem('paymentMethodId', paymentIntent.paymentMethod.id);
+        localStorage.setItem('paymentMethodId', paymentMethod.id);
         
-        // Gå til chat-steg
-        widget.goToStep(3);
+        // 4. Gå til chat-steg
+        betalBtn.textContent = 'Betaling godkjent!';
+        setTimeout(() => {
+          widget.goToStep(3);
+        }, 1000);
         
       } catch (error) {
         console.error('Payment error:', error);
@@ -373,8 +374,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Vis spesifikk feilmelding
         if (error.type === 'card_error') {
           paymentError.textContent = error.message;
+        } else if (error.type === 'validation_error') {
+          paymentError.textContent = 'Vennligst fyll ut alle kortopplysninger';
         } else {
-          paymentError.textContent = 'Vennligst fyll ut alle kortopplysninger korrekt';
+          paymentError.textContent = 'Det oppsto en feil. Prøv igjen.';
         }
         
         // Reaktiver knapp
