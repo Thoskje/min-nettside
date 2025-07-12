@@ -1,6 +1,5 @@
 /**
- * Bilinfo og betaling widget
- */
+ * Bilinfo og betaling widget */
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Widget script loaded');
   
@@ -38,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (stripeInitialized) return;
     
     try {
+      // Bruk din Stripe public key
       stripe = Stripe('pk_test_51RRgZNElNLQwLfbumd8AOKSjDYgs1O3uL1FiHamyNTSArSUW1gRgtVwD70TFKPrJmNvZfpOBVd9emY8Vyyo7HKSX00cp7qONI0');
       elements = stripe.elements({
         fonts: [{ cssSrc: 'https://fonts.googleapis.com/css?family=Inter:400,600,700' }]
@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
       card = elements.create('card', { style, hidePostalCode: true });
       card.mount('#widget-card-element');
       
+      // Håndter validerings-feil
       card.on('change', function(event) {
         if (event.error) {
           paymentError.textContent = event.error.message;
@@ -78,11 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
     currentStep: 1,
     
     goToStep: function(step) {
+      // Skjul alle steg
       stepContents.forEach(content => content.classList.remove('active'));
       stepElements.forEach(step => step.classList.remove('active', 'completed'));
       
+      // Vis valgt steg
       document.getElementById(`step-${step}`).classList.add('active');
       
+      // Oppdater step-indikatorer
       stepElements.forEach(el => {
         const stepNum = parseInt(el.dataset.step);
         if (stepNum < step) {
@@ -94,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       this.currentStep = step;
       
+      // Initialiser Stripe på steg 2
       if (step === 2 && !stripeInitialized) {
         initStripe();
         this.updatePaymentDisplay();
@@ -103,21 +108,15 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePaymentDisplay: function() {
       if (!bilDisplay) return;
       
-      // Bruk BilinfoDisplay for å hente data
-      const bilinfo = window.BilinfoDisplay ? 
-        (new window.BilinfoDisplay()).getQuickSummary() : 
-        {
-          bilmerke: localStorage.getItem('bilMerke') || '',
-          bilmodell: localStorage.getItem('bilModell') || '',
-          regnr: localStorage.getItem('bilRegistreringsnummer') || ''
-        };
-      
+      const bilMerke = localStorage.getItem('bilMerke') || '';
+      const bilModell = localStorage.getItem('bilModell') || '';
+      const regnr = localStorage.getItem('bilRegistreringsnummer') || '';
       const bilAr = localStorage.getItem('bilÅr') || '';
       
       bilDisplay.innerHTML = `
         <div class="widget-bil-display">
-          <p><strong>${bilinfo.bilmerke} ${bilinfo.bilmodell} ${bilAr}</strong></p>
-          <p>Reg.nr: ${bilinfo.regnr}</p>
+          <p><strong>${bilMerke} ${bilModell} ${bilAr}</strong></p>
+          <p>Reg.nr: ${regnr}</p>
           <p>Konsultasjon med bilmekaniker</p>
         </div>
       `;
@@ -127,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
       widgetOverlay.style.display = 'flex';
       this.goToStep(1);
       
+      // Reset data
       regnrInput.value = '';
       bilinfoDiv.innerHTML = '';
       godkjennBtn.style.display = 'none';
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ============= Event Listeners =============
   
-  // Åpne widget
+  // Åpne widget når knappen trykkes
   document.querySelectorAll('.chat-btn, .cta-button').forEach(btn => {
     if (btn && !btn.classList.contains('kurs-btn')) {
       btn.addEventListener('click', function(e) {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === widgetOverlay) widget.close();
   });
   
-  // ============= BILINFO - Forenklet API-kall =============
+  // Bilinfo funksjonalitet
   if (sokBtn && regnrInput) {
     sokBtn.addEventListener('click', async function() {
       const regnr = regnrInput.value.trim().toUpperCase();
@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
       godkjennBtn.style.display = 'none';
       
       try {
-        // Enkelt API-kall direkte
         const url = `/api/bil?regnr=${encodeURIComponent(regnr)}`;
         const res = await fetch(url);
         
@@ -183,43 +182,56 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const data = await res.json();
         
-        // Enkel parsing - kun det mest nødvendige
-        const bilListe = data.kjoretoydataListe || data.kjoretoydata || [data];
+        // Bruk samme biloppslag-logikk som i original biinfo-display.js
+        const bilListe = data.kjoretoydataListe || data.kjoretoydata;
         let merke = '';
         let modell = '';
         let arsmodell = '';
-        
-        if (bilListe.length > 0) {
+        let drivstoff = '';
+        let motortype = '';
+        let forstegangsregistrert = '';
+
+        if (bilListe && bilListe.length > 0) {
           const bil = bilListe[0];
+          
+          // Hent ut feltene fra objektet
           merke = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
           modell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
           arsmodell = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
+          drivstoff = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
+          motortype = bil.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
+          forstegangsregistrert = bil.forstegangsregistrering?.registrertForstegangNorgeDato || '';
+        } else {
+          // Sjekk alternativ struktur
+          merke = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.merke?.[0]?.merke || '';
+          modell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.handelsbetegnelse?.[0] || '';
+          arsmodell = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.generelt?.arsmodell || '';
+          drivstoff = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.drivstoff || '';
+          motortype = data.godkjenning?.tekniskGodkjenning?.tekniskeData?.motor?.[0]?.motortype || '';
         }
         
         if (merke || modell) {
-          // Lagre kun viktigste data
+          // Lagre data i localStorage
+          const bilnavn = `${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype} (${regnr})`;
+          localStorage.setItem('bilnavn', bilnavn);
+          localStorage.setItem('bilRegistreringsnummer', regnr);
           localStorage.setItem('bilMerke', merke);
           localStorage.setItem('bilModell', modell);
           localStorage.setItem('bilÅr', arsmodell);
-          localStorage.setItem('bilRegistreringsnummer', regnr);
-          localStorage.setItem('bilnavn', `${merke} ${modell} ${arsmodell} (${regnr})`);
+          localStorage.setItem('bilMotor', `${drivstoff} ${motortype}`.trim());
           
-          // Enkel visning
+          // Vis bilinformasjon
           bilinfoDiv.innerHTML = `
             <div class="bil-info">
-              <strong>Bilmerke:</strong> ${merke}<br>
-              <strong>Bilmodell:</strong> ${modell}<br>
-                ${forstegangsregistrert ? `<strong>Førstegangsregistrert:</strong> ${forstegangsregistrert}<br>` : ''}
-              <strong>Årsmodell:</strong> ${arsmodell}<br>
-              <strong>Drivstoff:</strong> ${drivstoff}<br>
-              <strong>Motortype:</strong> ${motortype}<br>
-
+              <strong>${merke} ${modell} ${arsmodell} ${drivstoff} ${motortype}</strong><br>
+              <span>Reg.nr: ${regnr}</span>
             </div>
           `;
           
+          // Vis godkjenn-knapp
           godkjennBtn.style.display = 'block';
           
-          // Oppdater Tawk.to
+          // Sett bilinformasjon i Tawk hvis tilgjengelig
           if (window.Tawk_API) {
             window.Tawk_API.setAttributes({
               'name': `${merke} ${modell} (${regnr})`
@@ -251,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // ============= BETALING =============
+  // Håndter betaling
   if (paymentForm) {
     paymentForm.addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -263,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const biltype = localStorage.getItem('bilnavn') || '';
       
       try {
+        // Hent clientSecret fra backend
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -275,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
           throw new Error(data.error || 'Ingen betalingsnøkkel mottatt');
         }
         
+        // Bekreft betaling med Stripe
         const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
           payment_method: { card: card }
         });
@@ -298,16 +312,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // ============= CHAT =============
+  // Start chat etter vellykket betaling
   if (startChatBtn) {
     startChatBtn.addEventListener('click', function() {
       widget.close();
       
+      // Start chat basert på hva som er tilgjengelig
       if (window.Tawk_API) {
-        window.Tawk_API.toggle();
+        window.Tawk_API.toggle(); // Åpne Tawk.to
       } else if (window.FrontChat) {
-        window.FrontChat('show');
+        window.FrontChat('show'); // Åpne FrontChat
       } else {
+        // Redirect til success-side som fallback
         window.location.href = '/success.html';
       }
     });
