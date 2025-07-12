@@ -657,3 +657,25 @@
   border: none !important;
 }
 
+/* Stripe branding */
+.stripe-branding {
+  text-align: center;
+  padding: 12px 0 8px 0;
+  margin-top: 8px;
+}
+
+.stripe-branding a {
+  display: inline-block;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.stripe-branding a:hover {
+  opacity: 0.8;
+}
+
+.stripe-branding img {
+  height: 17px;
+  width: auto;
+}
+
