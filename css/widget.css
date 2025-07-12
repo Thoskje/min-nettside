@@ -279,83 +279,6 @@
   margin-top: 0.3rem;
 }
 
-/* ---- STEG 3: Success ---- */
-.success-content {
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.success-icon {
-  width: 70px;
-  height: 70px;
-  background: #0c1a2a;
-  border-radius: 50%;
-  color: white;
-  font-size: 2.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-}
-
-.success-content p {
-  color: #64748b;
-  margin-bottom: 1.5rem;
-}
-
-#widget-start-chat {
-  max-width: 200px;
-  margin: 0 auto;
-}
-
-/* Error styling */
-.error {
-  color: #e5424d;
-  padding: 0.5rem 0;
-}
-
-/* Animations */
-@keyframes widget-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes widget-slide-up {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes widget-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .widget-modal {
-    padding: 1.5rem 1rem;
-    max-width: 95%;
-  }
-  
-  .widget-modal h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .progress-steps {
-    margin-bottom: 1.5rem;
-  }
-  
-  .step-number {
-    width: 28px;
-    height: 28px;
-    font-size: 0.9rem;
-  }
-  
-  .step-label {
-    font-size: 0.75rem;
-  }
-}
-
 /* Payment methods styling */
 .payment-methods-container {
   border: 2px solid #e0e0e0;
@@ -510,37 +433,80 @@
   z-index: 1;
 }
 
-/* Save card checkbox */
-.save-card-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  cursor: pointer;
+/* ---- STEG 3: Success ---- */
+.success-content {
+  text-align: center;
+  padding: 1rem 0;
 }
 
-.save-card-checkbox input[type="checkbox"] {
-  display: none;
-}
-
-.checkbox-custom {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #ccc;
-  border-radius: 3px;
+.success-icon {
+  width: 70px;
+  height: 70px;
+  background: #0c1a2a;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  margin: 0 auto 1.5rem;
 }
 
-.save-card-checkbox input:checked + .checkbox-custom {
-  background: #0070f3;
-  border-color: #0070f3;
+.success-content p {
+  color: #64748b;
+  margin-bottom: 1.5rem;
 }
 
-.save-card-checkbox input:checked + .checkbox-custom::after {
-  content: '✓';
-  color: white;
-  font-size: 12px;
+#widget-start-chat {
+  max-width: 200px;
+  margin: 0 auto;
 }
+
+/* Error styling */
+.error {
+  color: #e5424d;
+  padding: 0.5rem 0;
+}
+
+/* Animations */
+@keyframes widget-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes widget-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes widget-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .widget-modal {
+    padding: 1.5rem 1rem;
+    max-width: 95%;
+  }
+  
+  .widget-modal h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .progress-steps {
+    margin-bottom: 1.5rem;
+  }
+  
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+  
+  .step-label {
+    font-size: 0.75rem;
+  }
+}
+
