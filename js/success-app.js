@@ -1,6 +1,7 @@
 /**  
  * Main application code
- *  * @author  bilrådet.no/TS
+ *
+ * @author  bilrådet.no/TS
  * @version 1.0
  */
 
@@ -227,11 +228,10 @@ class SuccessApp {
   constructor() {
     // DOM-elementer
     this.errorElement = document.getElementById('payment-error');
-    this.errorMessageElement = document.getElementById('error-message'); // Legg til dette i HTML
+    this.errorMessageElement = document.getElementById('error-message');
     this.mainContentElement = document.getElementById('main-content');
     
     // Initialiser moduler
-    this.bilinfoDisplay = new BilinfoDisplay('bilinfo-detaljer');
     this.paymentConfirmation = new PaymentConfirmation();
     this.chatLoader = new ChatLoader();
     this.paymentVerifier = new PaymentVerifier();
@@ -244,11 +244,39 @@ class SuccessApp {
   initialize() {
     console.log('Initialiserer success-siden');
     
-    // Vis bilinformasjon
-    this.bilinfoDisplay.display();
+    // Vis bilinformasjon direkte
+    this._displayBilinfo();
     
     // Verifiser betaling
     this.paymentVerifier.verify();
+  }
+  
+  // Enkel bilinformasjon visning - ERSTATTER BilinfoDisplay
+  _displayBilinfo() {
+    const element = document.getElementById('bilinfo-detaljer');
+    if (!element) return;
+    
+    const bilmerke = localStorage.getItem('bilMerke') || '';
+    const bilmodell = localStorage.getItem('bilModell') || '';
+    const regnr = localStorage.getItem('bilRegistreringsnummer') || '';
+    const bilAr = localStorage.getItem('bilÅr') || '';
+    const bilMotor = localStorage.getItem('bilMotor') || '';
+    
+    if (bilmerke || regnr) {
+      let html = '<div class="bilinfo-details">';
+      
+      if (bilmerke && bilmodell) {
+        html += `<p><strong>${bilmerke} ${bilmodell}</strong></p>`;
+      }
+      if (bilAr) html += `<p><strong>Årsmodell:</strong> ${bilAr}</p>`;
+      if (bilMotor) html += `<p><strong>Motor:</strong> ${bilMotor}</p>`;
+      if (regnr) html += `<p><strong>Reg.nr:</strong> ${regnr}</p>`;
+      
+      html += '</div>';
+      element.innerHTML = html;
+    } else {
+      element.innerHTML = '<p>Ingen bilinformasjon tilgjengelig</p>';
+    }
   }
   
   // Sett opp hendelseshåndterere
