@@ -1,6 +1,4 @@
-/* === Biloppslag og betaling widget (EN WIDGET) === */
-
-/* Overlay */
+/* === WIDGET BASE === */
 .widget-overlay {
   position: fixed;
   inset: 0;
@@ -13,7 +11,6 @@
   animation: widget-fade-in 0.3s ease;
 }
 
-/* Modal */
 .widget-modal {
   width: 95%;
   max-width: 450px;
@@ -26,7 +23,7 @@
   animation: widget-slide-up 0.3s ease;
 }
 
-/* Progress stepper */
+/* === PROGRESS STEPPER === */
 .progress-steps {
   display: flex;
   justify-content: space-between;
@@ -88,22 +85,11 @@
   font-weight: 600;
 }
 
-/* Step content */
-.step-content {
-  display: none;
-}
-
-.step-content.active {
-  display: block;
-  animation: widget-fade-in 0.3s ease;
-}
-
-/* Form elements */
+/* === FORM ELEMENTS === */
 .widget-modal h2 {
   color: #0c1a2a;
   font-size: 1.3rem;
-  margin-top: 0;
-  margin-bottom: 1.2rem;
+  margin: 0 0 1.2rem 0;
   text-align: center;
 }
 
@@ -115,6 +101,7 @@
   font-size: 1rem;
   transition: border-color 0.2s;
   margin-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 .widget-modal input:focus {
@@ -123,56 +110,46 @@
   box-shadow: 0 0 0 2px rgba(255,153,0,0.2);
 }
 
-/* Buttons */
+/* === BUTTONS === */
 .widget-btn {
   padding: 0.8rem 1.2rem;
   border-radius: 8px;
   border: none;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  width: 100%;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .widget-btn:active {
   transform: translateY(1px);
 }
 
-/* Button variations */
+.widget-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button variants */
 .søk-btn {
   background: #0c1a2a;
   color: white;
+  width: 100%;
 }
 
-.søk-btn:hover {
-  background:#102236;
+.søk-btn:hover:not(:disabled) {
+  background: #102236;
 }
 
 .godkjenn-btn {
-  background:#e0e6ed;
-  color: #0c1a2a;
-}
-
-.godkjenn-btn:hover {
-  background: #0c1a2a;
-  color: white;
-}
-
-.secondary-btn {
   background: #e0e6ed;
   color: #0c1a2a;
+  width: 100%;
 }
 
-.secondary-btn:hover {
-  background: #d0d6dd;
-}
-
-.success-btn {
-  background: #e0e6ed;
-  color: #0c1a2a;
-}
-
-.success-btn:hover {
+.godkjenn-btn:hover:not(:disabled) {
   background: #0c1a2a;
   color: white;
 }
@@ -180,10 +157,21 @@
 .payment-btn {
   background: #635bff;
   color: white;
+  flex: 2;
 }
 
-.payment-btn:hover {
+.payment-btn:hover:not(:disabled) {
   background: #5147d5;
+}
+
+.secondary-btn {
+  background: #e0e6ed;
+  color: #0c1a2a;
+  flex: 1;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background: #d0d6dd;
 }
 
 .button-row {
@@ -192,31 +180,17 @@
   margin-top: 1.2rem;
 }
 
-/* Close button */
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 30px;
-  height: 30px;
-  background: #f8fafc;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  padding: 0;
+/* === STEP CONTENT === */
+.step-content {
+  display: none;
 }
 
-.close-btn:hover {
-  background: #e0e6ed;
+.step-content.active {
+  display: block;
+  animation: widget-fade-in 0.3s ease;
 }
 
-/* ---- STEG 1: Bilinfo ---- */
+/* === STEP 1: BILINFO === */
 #widget-bilinfo {
   padding: 1rem;
   background: #f8fafc;
@@ -225,11 +199,6 @@
   line-height: 1.5;
   max-height: 200px;
   overflow-y: auto;
-}
-
-.bil-info strong {
-  font-weight: 600;
-  color: #0c1a2a;
 }
 
 .loader {
@@ -251,7 +220,7 @@
   animation: widget-spin 1s linear infinite;
 }
 
-/* ---- STEG 2: Betaling ---- */
+/* === STEP 2: PAYMENT === */
 .payment-summary {
   background: #f8fafc;
   border-radius: 8px;
@@ -259,212 +228,82 @@
   margin-bottom: 1.5rem;
 }
 
-.payment-summary {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-}
-
 .payment-summary h3 {
-  margin: 0 0 16px 0;
-  font-size: 16px;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #0c1a2a;
 }
 
 .bil-summary {
   font-weight: 600;
-  font-size: 16px;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-}
-
-.service-line {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.price-line {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.widget-bil-display {
-  margin: 0.7rem 0;
-}
-
-#widget-card-element {
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1.5px solid #e0e6ed;
-  background: #f8fafc;
-  min-height: 40px;
+  font-size: 1rem;
+  color: #0c1a2a;
   margin-bottom: 0.5rem;
 }
 
-#widget-payment-error {
-  color: #e5424d;
+.service-line {
+  color: #64748b;
   font-size: 0.9rem;
-  min-height: 1.2em;
-  margin-top: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
-/* Payment methods styling */
-.payment-methods-container {
-  border: 2px solid #e0e0e0;
+.price-line {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0c1a2a;
+}
+
+/* Payment Element */
+.payment-element-container {
+  border: 1px solid #e0e6ed;
   border-radius: 12px;
   overflow: hidden;
-  margin: 20px 0;
+  margin: 1.5rem 0;
+  min-height: 200px;
 }
 
-.payment-method {
-  border-bottom: 1px solid #e0e0e0;
-  background: white;
-  transition: all 0.2s ease;
+#widget-payment-element {
+  min-height: 200px;
 }
 
-.payment-method:last-child {
-  border-bottom: none;
-}
-
-.payment-method.active {
-  background: #f8f9ff;
-  border-color: #0070f3;
-}
-
-.payment-method input[type="radio"] {
-  display: none;
-}
-
-.payment-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  cursor: pointer;
-  min-height: 60px;
-}
-
-.payment-method-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.radio-circle {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.payment-method.active .radio-circle {
-  border-color: #0070f3;
-  background: #0070f3;
-}
-
-.payment-method.active .radio-circle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-}
-
-/* Payment icons */
-.payment-icons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.payment-icons img {
-  height: 20px;
-}
-
-/* Vipps logo */
-.vipps-logo svg {
-  height: 24px;
-}
-
-/* Card details */
-.card-details {
-  padding: 20px;
-  border-top: 1px solid #e0e0e0;
-  background: white;
-  display: none;
-}
-
-.payment-method.active .card-details {
-  display: block;
-}
-
-.card-field-container {
-  margin-bottom: 16px;
-}
-
-.stripe-card-field {
-  padding: 12px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: white;
-  min-height: 44px;
-}
-
-/* Apple Pay */
-.apple-pay {
-  margin-bottom: 20px;
-}
-
-.apple-pay-btn {
-  width: 100%;
-  height: 48px;
-  background: #000;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* Payment divider */
-.payment-divider {
+/* Stripe Branding */
+.stripe-branding {
   text-align: center;
-  margin: 20px 0;
-  position: relative;
+  padding: 0.75rem 0 0.5rem 0;
+  margin: 0.5rem 0 1rem 0;
+  border-top: 1px solid #e0e6ed;
 }
 
-.payment-divider::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #e0e0e0;
+.stripe-branding a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: #64748b;
+  font-size: 0.75rem;
+  transition: opacity 0.2s ease;
 }
 
-.payment-divider span {
-  background: white;
-  padding: 0 16px;
-  color: #666;
-  font-size: 14px;
-  position: relative;
-  z-index: 1;
+.stripe-branding a:hover {
+  opacity: 0.8;
 }
 
-/* ---- STEG 3: Success ---- */
+.stripe-branding img {
+  height: 14px;
+  width: auto;
+}
+
+/* Payment Error */
+.payment-error {
+  color: #e5424d;
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 1rem 0;
+  min-height: 1.2em;
+}
+
+/* === STEP 3: SUCCESS === */
 .success-content {
   text-align: center;
   padding: 1rem 0;
@@ -483,23 +322,35 @@
   margin: 0 auto 1.5rem;
 }
 
-.success-content p {
-  color: #64748b;
-  margin-bottom: 1.5rem;
+/* === UTILITIES === */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  background: #f8fafc;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
 }
 
-#widget-start-chat {
-  max-width: 200px;
-  margin: 0 auto;
+.close-btn:hover {
+  background: #e0e6ed;
 }
 
-/* Error styling */
 .error {
   color: #e5424d;
   padding: 0.5rem 0;
+  font-size: 0.9rem;
 }
 
-/* Animations */
+/* === ANIMATIONS === */
 @keyframes widget-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -514,7 +365,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Responsive */
+/* === RESPONSIVE === */
 @media (max-width: 480px) {
   .widget-modal {
     padding: 1.5rem 1rem;
@@ -539,165 +390,13 @@
   .step-label {
     font-size: 0.75rem;
   }
-}
-
-/* Payment Element container */
-.payment-element-container {
-  margin: 24px 0;
-  /* Stripe Payment Element vil overstyre mye, men dette hjelper */
-}
-
-/* Payment summary styling */
-.payment-summary {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-}
-
-.payment-summary h3 {
-  margin: 0 0 16px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.bil-summary {
-  font-weight: 600;
-  font-size: 16px;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-}
-
-.service-line {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.price-line {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-/* Payment buttons */
-.payment-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.btn-secondary {
-  flex: 1;
-  padding: 12px 24px;
-  border: 1px solid #d0d0d0;
-  border-radius: 8px;
-  background: white;
-  color: #666;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-  background: #f5f5f5;
-}
-
-.btn-primary {
-  flex: 2;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  background: #635BFF;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background: #5A52E8;
-}
-
-.btn-primary:disabled {
-  background: #d0d0d0;
-  cursor: not-allowed;
-}
-
-/* Payment error */
-.payment-error {
-  color: #e74c3c;
-  font-size: 14px;
-  margin: 16px 0;
-  text-align: center;
-}
-
-/* Fine-tuning for Payment Element (kan ha begrenset effekt) */
-#widget-payment-element .p-TabsContainer {
-  border: 1px solid #e0e0e0 !important;
-  border-radius: 12px !important;
-}
-
-/* Legg til i widget.css */
-.payment-element-container {
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 24px 0;
-}
-
-/* Stripe branding */
-.stripe-branding {
-  text-align: center;
-  padding: 12px 0 8px 0;
-  margin: 8px 0 16px 0;
-  border-top: 1px solid #f0f0f0;
-}
-
-.stripe-branding a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  color: #6b7280;
-  font-size: 12px;
-  font-weight: 400;
-  transition: opacity 0.2s ease;
-}
-
-.stripe-branding a:hover {
-  opacity: 0.8;
-}
-
-.stripe-branding svg {
-  height: 16px;
-  width: auto;
-}
-
-/* Legg til for å sikre logo-visning */
-
-#widget-payment-element {
-  min-height: 400px !important; /* Gi nok plass for logo */
-  overflow: visible !important;
-}
-
-/* Sørg for at Stripe branding vises */
-#widget-payment-element iframe {
-  display: block !important;
-  visibility: visible !important;
-}
-
-/* Spesifikk for Stripe footer */
-#widget-payment-element .p-Links,
-#widget-payment-element [data-testid*="footer"],
-#widget-payment-element [data-testid*="powered"] {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  text-align: center !important;
-  padding: 8px 0 !important;
-  font-size: 12px !important;
-  color: #6b7280 !important;
+  
+  .button-row {
+    flex-direction: column;
+  }
+  
+  .widget-btn {
+    width: 100%;
+  }
 }
 
