@@ -87,8 +87,42 @@ document.addEventListener('DOMContentLoaded', function() {
         layout: {
           type: 'tabs'
         },
-        paymentMethodOrder: ['card']
-        // Ingen fields config - la Stripe håndtere det automatisk
+        paymentMethodOrder: ['card'],
+        // IKKE skjul Stripe branding
+        appearance: {
+          theme: 'stripe',
+          variables: {
+            colorPrimary: '#635BFF',
+            colorBackground: '#ffffff',
+            colorText: '#1a1a1a',
+            colorDanger: '#e74c3c',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontSizeBase: '16px',
+            borderRadius: '8px',
+            spacingUnit: '4px'
+          },
+          rules: {
+            '.Tab': {
+              border: '1px solid #e0e0e0',
+              padding: '16px 20px',
+              backgroundColor: '#ffffff'
+            },
+            '.Tab--selected': {
+              backgroundColor: '#f8f9ff',
+              borderColor: '#635BFF'
+            },
+            '.Input': {
+              border: '1px solid #d0d0d0',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              fontSize: '16px'
+            },
+            '.Input:focus': {
+              borderColor: '#635BFF',
+              boxShadow: '0 0 0 3px rgba(99, 91, 255, 0.1)'
+            }
+          }
+        }
       });
       
       paymentElement.mount('#widget-payment-element');
