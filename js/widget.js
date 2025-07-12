@@ -77,25 +77,45 @@ document.addEventListener('DOMContentLoaded', function() {
               boxShadow: 'none'
             },
             '.Tab': {
-              border: 'none',
+              border: '1px solid #e0e0e0', // Legg til full border på hver tab
               borderBottom: '1px solid #e0e0e0',
+              borderTop: 'none', // Unngå dobbel border
               borderRadius: '0px',
               padding: '16px 20px',
               backgroundColor: '#ffffff',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              minHeight: '60px',
+              display: 'flex',
+              alignItems: 'center',
+              margin: '0', // Fjern margin som kan påvirke border
+              boxSizing: 'border-box' // Sikre riktig box-sizing
+            },
+            '.Tab:first-child': {
+              borderTop: '1px solid #e0e0e0', // Første tab trenger topp-border
+              borderTopLeftRadius: '12px',
+              borderTopRightRadius: '12px'
             },
             '.Tab:last-child': {
-              borderBottom: 'none'
+              borderBottom: '1px solid #e0e0e0', // Siste tab trenger bunn-border
+              borderBottomLeftRadius: '12px',
+              borderBottomRightRadius: '12px'
+            },
+            '.Tab:not(:last-child)': {
+              borderBottom: '1px solid #e0e0e0'
             },
             '.Tab--selected': {
               backgroundColor: '#f8f9ff',
-              borderColor: '#635BFF'
+              borderColor: '#635BFF',
+              borderWidth: '2px', // Tykkere border på valgt
+              zIndex: '1'
             },
             '.Tab:hover': {
               backgroundColor: '#f8f9ff'
             },
             '.TabIcon': {
-              marginRight: '12px'
+              marginRight: '12px',
+              width: '20px',
+              height: '20px'
             },
             '.TabIcon--selected': {
               color: '#635BFF'
@@ -103,11 +123,20 @@ document.addEventListener('DOMContentLoaded', function() {
             '.TabLabel': {
               fontWeight: '500',
               fontSize: '16px',
-              color: '#1a1a1a'
+              color: '#1a1a1a',
+              flex: '1'
             },
             '.TabMore': {
               fontSize: '14px',
-              color: '#666666'
+              color: '#666666',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            },
+            '.PaymentMethodIcon': {
+              width: 'auto',
+              height: '20px',
+              maxWidth: '40px'
             },
             '.Input': {
               border: '1px solid #d0d0d0',
