@@ -147,37 +147,37 @@
     
     <!-- Steg 2: Betaling med Stripe Payment Element -->
     <div id="step-2" class="step-content">
-      <!-- Oppsummering seksjon -->
       <div class="payment-summary">
-        <h3><strong>Oppsummering:</strong></h3>
-        <div id="widget-bil-display" class="bil-summary">
-          <!-- Fylles automatisk med bilinfo -->
-        </div>
+        <h3>Oppsummering:</h3>
+        <div id="widget-bil-display"></div>
         <div class="service-line">Konsultasjon med bilmekaniker</div>
-        <div class="price-line"><strong>249 kr</strong></div>
+        <div class="price-line">249 kr</div>
       </div>
       
-      <!-- Stripe Payment Element (tilpasset for å ligne bildet) -->
       <form id="widget-payment-form">
         <div id="widget-payment-element" class="payment-element-container">
           <!-- Stripe Payment Element monteres her -->
         </div>
         
-        <!-- Stripe branding (vises hvis automatisk ikke fungerer) -->
+        <!-- MANUELL STRIPE LOGO -->
         <div class="stripe-branding">
           <a href="https://stripe.com" target="_blank" rel="noopener">
             Powered by 
-            <img src="https://js.stripe.com/v3/fingerprinted/img/powered_by_stripe-aadb01f.svg" 
-                 alt="Stripe" height="17">
+            <svg width="50" height="17" viewBox="0 0 50 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 1.2c-2.4 0-4.3 1.9-4.3 4.3s1.9 4.3 4.3 4.3c1.2 0 2.3-.5 3.1-1.3l-1.1-1.1c-.6.5-1.3.8-2 .8-1.5 0-2.7-1.2-2.7-2.7s1.2-2.7 2.7-2.7c.7 0 1.4.3 2 .8l1.1-1.1c-.8-.8-1.9-1.3-3.1-1.3z" fill="#6772E5"/>
+              <path d="M16.8 1.5h-1.6v8h1.6v-3.1c0-1.1.9-2 2-2s2 .9 2 2v3.1h1.6v-3.1c0-1.9-1.5-3.5-3.5-3.5-.8 0-1.5.3-2.1.8v-.7z" fill="#6772E5"/>
+              <path d="M27.1 1.5h-1.6v3.2c-.6-.5-1.3-.8-2.1-.8-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5c.8 0 1.5-.3 2.1-.8v.7h1.6v-8.3zm-2.1 6.7c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#6772E5"/>
+              <path d="M32.4 4.2c-1.9 0-3.5 1.6-3.5 3.5s1.6 3.5 3.5 3.5 3.5-1.6 3.5-3.5-1.6-3.5-3.5-3.5zm0 5.4c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#6772E5"/>
+              <path d="M40.7 4.2c-.8 0-1.5.3-2.1.8v-.7h-1.6v6.2h1.6v-3.1c0-1.1.9-2 2-2s2 .9 2 2v3.1h1.6v-3.1c0-1.9-1.5-3.5-3.5-3.5z" fill="#6772E5"/>
+            </svg>
           </a>
         </div>
         
         <div id="widget-payment-error" class="payment-error"></div>
         
-        <!-- Knapper -->
-        <div class="payment-buttons">
-          <button type="button" id="widget-back" class="btn-secondary">Tilbake</button>
-          <button type="submit" id="widget-betal" class="btn-primary">Betal 249 kr</button>
+        <div class="button-row">
+          <button type="button" id="widget-back" class="widget-btn secondary-btn">Tilbake</button>
+          <button type="submit" id="widget-betal" class="widget-btn primary-btn">Betal 249 kr</button>
         </div>
       </form>
     </div>
