@@ -114,10 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const bilAr = localStorage.getItem('bilÅr') || '';
       
       bilDisplay.innerHTML = `
-        <div class="payment-widget">
+        <div class="widget-bil-display">
           <p><strong>${bilMerke} ${bilModell} ${bilAr}</strong></p>
           <p>Reg.nr: ${regnr}</p>
-          <p>Chat-konsultasjon med bilmekaniker</p>
+          <p>Konsultasjon med bilmekaniker</p>
         </div>
       `;
     },
