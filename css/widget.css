@@ -145,7 +145,17 @@
 }
 
 .søk-btn:hover {
-  background: #102236;
+  background:#102236;
+}
+
+.godkjenn-btn {
+  background:#e0e6ed;
+  color: #0c1a2a;
+}
+
+.godkjenn-btn:hover {
+  background: #0c1a2a;
+  color: white;
 }
 
 .secondary-btn {
