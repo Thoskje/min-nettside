@@ -44,6 +44,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  background-color: #ffffff;
 }
 
 .success-icon svg {
