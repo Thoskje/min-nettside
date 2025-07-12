@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // Oppdater Tawk.to
           if (window.Tawk_API) {
             window.Tawk_API.setAttributes({
-              'name': `${merke} ${modell} (${regnr})`
+              'name': `${merke} ${modell} ${drivstoff} ${motortype} (${regnr})`
             }, function(error){});
           }
         } else {
