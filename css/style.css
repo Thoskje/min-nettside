@@ -224,28 +224,116 @@ nav a:hover {
   border-bottom: 3px solid var(--primary-color);
 }
 
+/* === TAB CONTENT MED SCROLL === */
 .h1-tab-content {
   display: none;
+  flex-direction: column;
+  height: 350px; /* Fast høyde for konsistent layout */
   text-align: center;
+}
+
+.h1-tab-content.active {
+  display: flex;
+  animation: tab-fade-in 0.3s ease;
+}
+
+.h1-tab-content h1 {
   font-size: 2.5rem;
   font-weight: 800;
   color: var(--text-color);
   margin-bottom: 1.2rem;
   letter-spacing: -1px;
+  flex-shrink: 0;
 }
 
-.h1-tab-content.active {
-  display: block;
+/* SCROLL AREA */
+.hero-content-scroll {
+  flex: 1;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0.5rem 0 1rem 0;
+  padding-right: 8px;
+  text-align: left;
+  
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
-/* === Hero-knapper === */
+.hero-content-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 3px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ff8800;
+}
+
+/* CONTENT INSIDE SCROLL */
+.hero-content-scroll p {
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  color: #222;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.hero-features,
+.hero-details ul,
+.hero-details ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.hero-features li,
+.hero-details li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  font-size: 1.1rem;
+}
+
+.hero-details h3 {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.hero-details h3:first-child {
+  margin-top: 1rem;
+}
+
+/* OPPDATER HERO-KNAPPER */
 .hero-knapper {
   display: flex;
   gap: 3.5rem;
-  margin-top: 4.5rem;
-  margin-top: auto; /* Push knappene til bunnen */
+  justify-content: center; /* VIKTIG: Sentrer knappene */
+  align-items: center;
+  margin-top: auto;
   padding-top: 1.5rem;
-  flex-shrink: 0; /* Forhindre at knapper krymper */
+  flex-shrink: 0;
+  width: 100%; /* Full bredde for sentrering */
+}
+
+/* TAB FADE ANIMATION */
+@keyframes tab-fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
 /* === Footer === */
@@ -367,6 +455,20 @@ footer a:hover {
   .h1-tab {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .h1-tab-content {
+    height: 240px;
+  }
+  
+  .hero-content-scroll {
+    max-height: 100px;
+  }
+  
+  .hero-content-scroll::-webkit-scrollbar {
+    width: 4px;
   }
 }
 
