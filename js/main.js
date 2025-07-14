@@ -92,25 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  /* ===========================
-     Hero "mer info"-piler
-     =========================== */
-  [
-    {icon: 'hero-more-icon', text: 'hero-more-text'},
-    {icon: 'avtal-more-icon', text: 'avtal-more-text'},
-    {icon: 'kurs-more-icon', text: 'kurs-more-text'}
-  ].forEach(({icon, text}) => {
-    const iconEl = document.getElementById(icon);
-    const textEl = document.getElementById(text);
-    if (iconEl && textEl) {
-      iconEl.addEventListener('click', function() {
-        const open = textEl.style.display === 'inline';
-        textEl.style.display = open ? 'none' : 'inline';
-        iconEl.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
-      });
-    }
-  });
-
+ 
   /* ===========================
      Hamburger-meny
      =========================== */
@@ -157,4 +139,42 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!menuBtn) console.error('Hamburger-meny: #menu-btn element ikke funnet');
     if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
+
+  // Handle gradient fade for scroll containers
+  const scrollContainers = document.querySelectorAll('.hero-content-scroll');
+  
+  scrollContainers.forEach(container => {
+    // Sjekk initial tilstand
+    updateGradientVisibility(container);
+    
+    // Oppdater ved scrolling
+    container.addEventListener('scroll', () => {
+      updateGradientVisibility(container);
+    });
+    
+    // Oppdater ved resize (innhold kan endre seg)
+    window.addEventListener('resize', () => {
+      updateGradientVisibility(container);
+    });
   });
+  
+  function updateGradientVisibility(container) {
+    const scrollTop = container.scrollTop;
+    const scrollHeight = container.scrollHeight;
+    const clientHeight = container.clientHeight;
+    const scrollBottom = scrollHeight - clientHeight - scrollTop;
+    
+    // Hvis det ikke er nok innhold til å scrolle, skjul gradient
+    if (scrollHeight <= clientHeight) {
+      container.classList.add('scrolled-to-bottom');
+      return;
+    }
+    
+    // Hvis scrollet til bunns (med 5px toleranse), skjul gradient
+    if (scrollBottom <= 5) {
+      container.classList.add('scrolled-to-bottom');
+    } else {
+      container.classList.remove('scrolled-to-bottom');
+    }
+  }
+});
