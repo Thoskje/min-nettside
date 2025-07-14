@@ -226,116 +226,27 @@ nav a:hover {
 }
 
 .h1-tab-content {
-  display: none; /* VIKTIG: Skjul alle tabs som standard */
-  height: 320px;
-  flex-direction: column;
-}
-
-.h1-tab-content.active {
-  display: flex; /* Vis kun aktiv tab */
-  animation: tab-fade-in 0.3s ease;
-}
-
-/* Tab fade-in animasjon */
-@keyframes tab-fade-in {
-  from { 
-    opacity: 0; 
-    transform: translateY(10px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
-}
-
-/* Hero-struktur med riktig tab-håndtering */
-.hero {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  min-height: 450px; /* Konsistent høyde */
-  display: flex;
-  flex-direction: column;
-}
-
-.h1-tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-  flex-shrink: 0;
-}
-
-/* Tab-innhold container */
-.tab-content-container {
-  flex: 1;
-  position: relative;
-  min-height: 320px;
-}
-
-.h1-tab-content {
-  position: absolute; /* Overlay tabs på samme plass */
-  top: 0;
-  left: 0;
-  right: 0;
   display: none;
-  height: 100%;
-  flex-direction: column;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 1.2rem;
+  letter-spacing: -1px;
 }
 
 .h1-tab-content.active {
-  display: flex;
-  z-index: 1;
+  display: block;
 }
 
-.h1-tab-content h1 {
-  margin-bottom: 1rem;
-  flex-shrink: 0;
-  text-align: center;
-}
-
-.hero-content-scroll {
-  flex: 1;
-  max-height: 180px;
-  overflow-y: auto;
-  margin: 0.5rem 0 1rem 0;
-  padding-right: 8px;
-  
-  /* Eksisterende scroll-styling... */
-  scrollbar-width: thin;
-  scrollbar-color: #ff9900 #f1f1f1;
-}
-
-.hero-content-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb {
-  background: #ff9900;
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb:hover {
-  background: #ff8800;
-}
-
+/* === Hero-knapper === */
 .hero-knapper {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-  margin-top: auto;
-  padding-top: 1rem;
+  gap: 3.5rem;
+  margin-top: 4.5rem;
+  margin-top: auto; /* Push knappene til bunnen */
+  padding-top: 1.5rem;
+  flex-shrink: 0; /* Forhindre at knapper krymper */
 }
 
 /* === Footer === */
