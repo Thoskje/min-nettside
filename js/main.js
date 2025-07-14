@@ -144,37 +144,50 @@ document.addEventListener('DOMContentLoaded', function() {
   const scrollContainers = document.querySelectorAll('.hero-content-scroll');
   
   scrollContainers.forEach(container => {
-    // Sjekk initial tilstand
-    updateGradientVisibility(container);
+    // Opprett gradient overlay
+    createGradientOverlay(container);
     
     // Oppdater ved scrolling
     container.addEventListener('scroll', () => {
-      updateGradientVisibility(container);
-    });
-    
-    // Oppdater ved resize (innhold kan endre seg)
-    window.addEventListener('resize', () => {
-      updateGradientVisibility(container);
+      updateGradientPosition(container);
     });
   });
   
-  function updateGradientVisibility(container) {
+  function createGradientOverlay(container) {
+    const overlay = document.createElement('div');
+    overlay.className = 'scroll-gradient-overlay';
+    overlay.style.cssText = `
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 15px;
+      height: 30px;
+      background: linear-gradient(to top, 
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.8) 40%,
+        rgba(255, 255, 255, 0.3) 70%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    `;
+    container.appendChild(overlay);
+  }
+  
+  function updateGradientPosition(container) {
+    const overlay = container.querySelector('.scroll-gradient-overlay');
     const scrollTop = container.scrollTop;
     const scrollHeight = container.scrollHeight;
     const clientHeight = container.clientHeight;
     const scrollBottom = scrollHeight - clientHeight - scrollTop;
     
-    // Hvis det ikke er nok innhold til å scrolle, skjul gradient
-    if (scrollHeight <= clientHeight) {
-      container.classList.add('scrolled-to-bottom');
-      return;
-    }
-    
-    // Hvis scrollet til bunns (med 5px toleranse), skjul gradient
-    if (scrollBottom <= 5) {
-      container.classList.add('scrolled-to-bottom');
+    if (scrollHeight <= clientHeight || scrollBottom <= 5) {
+      overlay.style.opacity = '0';
     } else {
-      container.classList.remove('scrolled-to-bottom');
+      overlay.style.opacity = '1';
+      // Flytt gradienten med innholdet
+      overlay.style.transform = `translateY(-${scrollTop}px)`;
     }
   }
 });

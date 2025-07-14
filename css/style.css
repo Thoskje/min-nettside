@@ -258,38 +258,33 @@ nav a:hover {
   margin: 0.5rem 0 1rem 0;
   padding-right: 8px;
   text-align: left;
-  position: relative;
-  
-  /* Fjern box-shadow */
-  /* box-shadow: ingen; */
   
   /* Eksisterende scroll-styling... */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
-/* GRADIENT FADE NEDERST */
-.hero-content-scroll::after {
+/* Gradient på selve innholdet */
+.hero-features::after,
+.hero-details::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 15px; /* Unngå scrollbar */
-  height: 30px; /* Juster høyde etter behov */
+  display: block;
+  height: 30px;
   background: linear-gradient(to top, 
-    rgba(255, 255, 255, 1) 0%,     /* Helt hvit nederst */
-    rgba(255, 255, 255, 0.8) 40%,  /* Gradvis gjennomsiktig */
-    rgba(255, 255, 255, 0.3) 70%,  /* Mer gjennomsiktig */
-    rgba(255, 255, 255, 0) 100%    /* Helt gjennomsiktig øverst */
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.3) 70%,
+    rgba(255, 255, 255, 0) 100%
   );
+  margin-top: -30px;
   pointer-events: none;
-  z-index: 2;
-  opacity: 1; /* Vis som standard */
+  opacity: 1;
   transition: opacity 0.3s ease;
 }
 
-/* Skjul gradient når brukeren har scrollet til bunns */
-.hero-content-scroll.scrolled-to-bottom::after {
+/* Skjul når ikke nødvendig */
+.hero-content-scroll.scrolled-to-bottom .hero-features::after,
+.hero-content-scroll.scrolled-to-bottom .hero-details::after {
   opacity: 0;
 }
 
@@ -514,14 +509,8 @@ footer a:hover {
   margin: 0.5rem 0 1rem 0;
   padding-right: 8px;
   text-align: left;
-  position: relative;
   
   /* Shadow effects */
-  box-shadow: 
-    inset 0 7px 9px -7px rgba(0,0,0,0.1),
-    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
-  
-  /* Eksisterende scroll-styling... */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
