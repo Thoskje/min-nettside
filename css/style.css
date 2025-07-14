@@ -258,8 +258,14 @@ nav a:hover {
   margin: 0.5rem 0 1rem 0;
   padding-right: 8px;
   text-align: left;
+  position: relative;
   
-  /* Custom scrollbar */
+  /* Shadow effects */
+  box-shadow: 
+    inset 0 7px 9px -7px rgba(0,0,0,0.1),
+    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
+  
+  /* Eksisterende scroll-styling... */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
@@ -474,5 +480,39 @@ footer a:hover {
   .hero-content-scroll::-webkit-scrollbar {
     width: 4px;
   }
+}
+
+/* Modern shadow som indikerer scrollbar */
+.hero-content-scroll {
+  flex: 1;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0.5rem 0 1rem 0;
+  padding-right: 8px;
+  text-align: left;
+  position: relative;
+  
+  /* Shadow effects */
+  box-shadow: 
+    inset 0 7px 9px -7px rgba(0,0,0,0.1),
+    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
+  
+  /* Eksisterende scroll-styling... */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) #f1f1f1;
+}
+
+.hero-content-scroll.at-top {
+  box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.1);
+}
+
+.hero-content-scroll.at-bottom {
+  box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.1);
+}
+
+.hero-content-scroll.in-middle {
+  box-shadow: 
+    inset 0 7px 9px -7px rgba(0,0,0,0.1),
+    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
 }
 
