@@ -278,6 +278,9 @@ nav a:hover {
   height: 30px; /* Juster høyde etter behov */
   background: linear-gradient(to top, 
     rgba(255, 255, 255, 1) 0%,     /* Helt hvit nederst */
+    rgba(255, 255, 255, 0.8) 40%,  /* Gradvis gjennomsiktig */
+    rgba(255, 255, 255, 0.3) 70%,  /* Mer gjennomsiktig */
+    rgba(255, 255, 255, 0) 100%    /* Helt gjennomsiktig øverst */
   );
   pointer-events: none;
   z-index: 2;
