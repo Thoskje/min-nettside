@@ -260,16 +260,40 @@ nav a:hover {
   text-align: left;
   position: relative;
   
-  /* Shadow effects */
-  box-shadow: 
-    inset 0 7px 9px -7px rgba(0,0,0,0.1),
-    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
+  /* Fjern box-shadow */
+  /* box-shadow: ingen; */
   
   /* Eksisterende scroll-styling... */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
+/* GRADIENT FADE NEDERST */
+.hero-content-scroll::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 15px; /* Unngå scrollbar */
+  height: 30px; /* Juster høyde etter behov */
+  background: linear-gradient(to top, 
+    rgba(255, 255, 255, 1) 0%,     /* Helt hvit nederst */
+    rgba(255, 255, 255, 0.8) 40%,  /* Gradvis gjennomsiktig */
+    rgba(255, 255, 255, 0.3) 70%,  /* Mer gjennomsiktig */
+    rgba(255, 255, 255, 0) 100%    /* Helt gjennomsiktig øverst */
+  );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1; /* Vis som standard */
+  transition: opacity 0.3s ease;
+}
+
+/* Skjul gradient når brukeren har scrollet til bunns */
+.hero-content-scroll.scrolled-to-bottom::after {
+  opacity: 0;
+}
+
+/* Webkit scrollbar styling (eksisterende) */
 .hero-content-scroll::-webkit-scrollbar {
   width: 6px;
 }
