@@ -150,7 +150,6 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   gap: 80px;
-  min-height: 400px; /* Sett en fast minimum høyde */
 }
 
 .hero h1 {
@@ -328,109 +327,46 @@ footer a:hover {
   color: white;
 }
 
-/* === HERO SCROLL CONTENT === */
-.hero-content-scroll {
-  max-height: 200px; /* Juster høyde etter behov */
-  overflow-y: auto;
-  padding-right: 8px; /* Plass til scrollbar */
-  margin: 1rem 0; /* Reduser margin */
-  flex: 1; /* La scroll-området ta tilgjengelig plass */
-  
-  /* Custom scrollbar for bedre utseende */
-  scrollbar-width: thin;
-  scrollbar-color: #ff9900 #f1f1f1;
-}
-
-/* Webkit scrollbar styling (Chrome, Safari, Edge) */
-.hero-content-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb {
-  background: #ff9900;
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb:hover {
-  background: #ff8800;
-}
-
-/* Content styling inside scroll area */
-.hero-content-scroll p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.hero-features,
-.hero-details ul,
-.hero-details ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.hero-features li,
-.hero-details li {
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-}
-
-.hero-details h3 {
-  color: #0c1a2a;
-  font-size: 1.1rem;
-  margin: 1.5rem 0 0.75rem 0;
-  font-weight: 600;
-}
-
-.hero-details h3:first-child {
-  margin-top: 1rem;
-}
-
-/* Fade effect at bottom to indicate more content */
-.hero-content-scroll::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background: linear-gradient(transparent, rgba(255,255,255,0.9));
-  pointer-events: none;
-}
-
-/* Remove the after effect when scrolled to bottom */
-.hero-content-scroll.scrolled-to-bottom::after {
-  display: none;
-}
-
-/* Juster scroll-høyde basert på skjermstørrelse */
-@media (max-width: 1024px) {
-  .hero-content-scroll {
-    max-height: 180px;
-  }
-}
-
+/* === Responsivt (utdrag, legg til mer etter behov) === */
 @media (max-width: 768px) {
-  .hero-content-scroll {
-    max-height: 140px;
+  .menu-btn {
+    display: block;
   }
   
-  .hero {
-    padding: 2rem 1rem; /* Reduser padding for mer plass */
+  header {
+    padding: 1rem;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-content-scroll {
-    max-height: 100px;
+@media (max-width: 700px) {
+  .hero, .tab-content {
+    padding: 1rem;
+    max-width: 98vw;
+    min-width: unset;
   }
   
-  .hero-content-scroll::-webkit-scrollbar {
-    width: 4px; /* Tynnere scrollbar på mobil */
+  .h1-tabs {
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-knapper {
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+  
+  .cta-button {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem 0;
+    border-radius: 1.5rem;
+  }
+  
+  .h1-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
