@@ -248,6 +248,28 @@ nav a:hover {
   flex-shrink: 0; /* Forhindre at knapper krymper */
 }
 
+/* Hvis du vil ha en gradient som indikerer mer innhold */
+.hero-tab-content {
+  position: relative;
+}
+
+.hero-content-scroll {
+  position: relative;
+  background: 
+    linear-gradient(white 0%, white),
+    linear-gradient(white 0%, white),
+    linear-gradient(rgba(0,0,0,0.1) 0%, transparent),
+    linear-gradient(transparent, rgba(0,0,0,0.1) 100%);
+  background-position: 
+    left top, 
+    left bottom, 
+    left top, 
+    left bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
+  background-attachment: local, local, scroll, scroll;
+}
+
 /* === Footer === */
 footer {
   background-color: var(--secondary-color);
