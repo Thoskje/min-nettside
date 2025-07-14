@@ -253,21 +253,106 @@ nav a:hover {
   position: relative;
 }
 
+/* === HERO SCROLL CONTENT === */
 .hero-content-scroll {
-  position: relative;
-  background: 
-    linear-gradient(white 0%, white),
-    linear-gradient(white 0%, white),
-    linear-gradient(rgba(0,0,0,0.1) 0%, transparent),
-    linear-gradient(transparent, rgba(0,0,0,0.1) 100%);
-  background-position: 
-    left top, 
-    left bottom, 
-    left top, 
-    left bottom;
-  background-repeat: no-repeat;
-  background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
-  background-attachment: local, local, scroll, scroll;
+  max-height: 200px; /* Juster høyde etter behov */
+  overflow-y: auto;
+  padding-right: 8px; /* Plass til scrollbar */
+  margin: 1rem 0 1.5rem 0;
+  
+  /* Custom scrollbar for bedre utseende */
+  scrollbar-width: thin;
+  scrollbar-color: #ff9900 #f1f1f1;
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) */
+.hero-content-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-thumb {
+  background: #ff9900;
+  border-radius: 3px;
+}
+
+.hero-content-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ff8800;
+}
+
+/* Content styling inside scroll area */
+.hero-content-scroll p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.hero-features,
+.hero-details ul,
+.hero-details ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.hero-features li,
+.hero-details li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.hero-details h3 {
+  color: #0c1a2a;
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.hero-details h3:first-child {
+  margin-top: 1rem;
+}
+
+/* Fade effect at bottom to indicate more content */
+.hero-content-scroll::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, rgba(255,255,255,0.9));
+  pointer-events: none;
+}
+
+/* Remove the after effect when scrolled to bottom */
+.hero-content-scroll.scrolled-to-bottom::after {
+  display: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .hero-content-scroll {
+    max-height: 150px; /* Mindre høyde på mobil */
+    padding-right: 4px;
+  }
+  
+  .hero-features,
+  .hero-details ul,
+  .hero-details ol {
+    padding-left: 1.2rem;
+  }
+  
+  .hero-details h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content-scroll {
+    max-height: 120px; /* Enda mindre på små skjermer */
+  }
 }
 
 /* === Footer === */
