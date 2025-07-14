@@ -150,6 +150,7 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   gap: 80px;
+  min-height: 400px; /* Sett en fast minimum høyde */
 }
 
 .hero h1 {
@@ -225,13 +226,15 @@ nav a:hover {
 }
 
 .h1-tab-content {
-  display: none;
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--text-color);
-  margin-bottom: 1.2rem;
-  letter-spacing: -1px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
+.h1-tab-content h1 {
+  margin-bottom: 1rem;
+  flex-shrink: 0; /* Forhindre at tittel krymper */
 }
 
 .h1-tab-content.active {
@@ -243,6 +246,9 @@ nav a:hover {
   display: flex;
   gap: 3.5rem;
   margin-top: 4.5rem;
+  margin-top: auto; /* Push knappene til bunnen */
+  padding-top: 1.5rem;
+  flex-shrink: 0; /* Forhindre at knapper krymper */
 }
 
 /* === Footer === */
@@ -329,7 +335,8 @@ footer a:hover {
   max-height: 200px; /* Juster høyde etter behov */
   overflow-y: auto;
   padding-right: 8px; /* Plass til scrollbar */
-  margin: 1rem 0 1.5rem 0;
+  margin: 1rem 0; /* Reduser margin */
+  flex: 1; /* La scroll-området ta tilgjengelig plass */
   
   /* Custom scrollbar for bedre utseende */
   scrollbar-width: thin;
