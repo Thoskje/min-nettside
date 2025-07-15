@@ -250,7 +250,7 @@ nav a:hover {
   flex-shrink: 0;
 }
 
-/* SCROLL AREA */
+/* === SCROLL AREA === */
 .hero-content-scroll {
   flex: 1;
   max-height: 200px;
@@ -258,37 +258,20 @@ nav a:hover {
   margin: 0.5rem 0 1rem 0;
   padding-right: 8px;
   text-align: left;
+  position: relative;
   
-  /* Eksisterende scroll-styling... */
+  /* Inset shadow som fade-effekt */
+  box-shadow: inset 0 -30px 30px -30px rgba(255, 255, 255, 0.8);
+  
+  /* Scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
-/* Gradient på selve innholdet */
-.hero-features::after,
-.hero-details::after {
-  content: '';
-  display: block;
-  height: 30px;
-  background: linear-gradient(to top, 
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.8) 40%,
-    rgba(255, 255, 255, 0.3) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  margin-top: -30px;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+.hero-content-scroll.scrolled-to-bottom {
+  box-shadow: none;
 }
 
-/* Skjul når ikke nødvendig */
-.hero-content-scroll.scrolled-to-bottom .hero-features::after,
-.hero-content-scroll.scrolled-to-bottom .hero-details::after {
-  opacity: 0;
-}
-
-/* Webkit scrollbar styling (eksisterende) */
 .hero-content-scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -307,7 +290,7 @@ nav a:hover {
   background: #ff8800;
 }
 
-/* CONTENT INSIDE SCROLL */
+/* CONTENT STYLING */
 .hero-content-scroll p {
   font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
   font-size: 1.25rem;
@@ -499,33 +482,5 @@ footer a:hover {
   .hero-content-scroll::-webkit-scrollbar {
     width: 4px;
   }
-}
-
-/* Modern shadow som indikerer scrollbar */
-.hero-content-scroll {
-  flex: 1;
-  max-height: 200px;
-  overflow-y: auto;
-  margin: 0.5rem 0 1rem 0;
-  padding-right: 8px;
-  text-align: left;
-  
-  /* Shadow effects */
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) #f1f1f1;
-}
-
-.hero-content-scroll.at-top {
-  box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.1);
-}
-
-.hero-content-scroll.at-bottom {
-  box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.1);
-}
-
-.hero-content-scroll.in-middle {
-  box-shadow: 
-    inset 0 7px 9px -7px rgba(0,0,0,0.1),
-    inset 0 -7px 9px -7px rgba(0,0,0,0.1);
 }
 

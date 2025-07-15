@@ -140,54 +140,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
 
-  // Handle gradient fade for scroll containers
+  // Scroll-detection for mask toggle
   const scrollContainers = document.querySelectorAll('.hero-content-scroll');
-  
+
   scrollContainers.forEach(container => {
-    // Opprett gradient overlay
-    createGradientOverlay(container);
-    
-    // Oppdater ved scrolling
-    container.addEventListener('scroll', () => {
-      updateGradientPosition(container);
-    });
+    updateScrollState(container);
+    container.addEventListener('scroll', () => updateScrollState(container));
   });
-  
-  function createGradientOverlay(container) {
-    const overlay = document.createElement('div');
-    overlay.className = 'scroll-gradient-overlay';
-    overlay.style.cssText = `
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 15px;
-      height: 30px;
-      background: linear-gradient(to top, 
-        rgba(255, 255, 255, 1) 0%,
-        rgba(255, 255, 255, 0.8) 40%,
-        rgba(255, 255, 255, 0.3) 70%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      pointer-events: none;
-      z-index: 2;
-      transition: opacity 0.3s ease;
-    `;
-    container.appendChild(overlay);
-  }
-  
-  function updateGradientPosition(container) {
-    const overlay = container.querySelector('.scroll-gradient-overlay');
+
+  function updateScrollState(container) {
     const scrollTop = container.scrollTop;
     const scrollHeight = container.scrollHeight;
     const clientHeight = container.clientHeight;
     const scrollBottom = scrollHeight - clientHeight - scrollTop;
     
     if (scrollHeight <= clientHeight || scrollBottom <= 5) {
-      overlay.style.opacity = '0';
+      container.classList.add('scrolled-to-bottom');
     } else {
-      overlay.style.opacity = '1';
-      // Flytt gradienten med innholdet
-      overlay.style.transform = `translateY(-${scrollTop}px)`;
+      container.classList.remove('scrolled-to-bottom');
     }
   }
 });
