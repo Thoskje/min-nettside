@@ -137,10 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Setup scroll-detection med litt delay
-    setTimeout(() => {
-      setupScrollDetectionForActiveTab();
-    }, 150);
+    // ROBUST scroll setup med flere forsøk
+    setupScrollForTab(tabNum);
   }
 
   // Tabs click
@@ -151,13 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // VIKTIG: Aktiver første tab MED DELAY
-  setTimeout(() => {
-    console.log('🚀 Aktiverer første tab med delay...');
-    activateTab('1');
-  }, 200);
+  // Aktiver første tab
+  activateTab('1');
 
- 
   /* ===========================
      Hamburger-meny
      =========================== */
@@ -204,4 +198,91 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!menuBtn) console.error('Hamburger-meny: #menu-btn element ikke funnet');
     if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
+
+  // ROBUST SCROLL SETUP
+  function setupScrollForTab(tabNum, attempt = 1) {
+    console.log(`🔄 Setup scroll for tab ${tabNum}, forsøk ${attempt}`);
+    
+    const tabContent = document.getElementById(`h1-tab-${tabNum}`);
+    const scrollContainer = tabContent?.querySelector('.hero-content-scroll');
+    
+    if (!scrollContainer || !tabContent.classList.contains('active')) {
+      if (attempt < 5) {
+        setTimeout(() => setupScrollForTab(tabNum, attempt + 1), 200 * attempt);
+      }
+      return;
+    }
+    
+    // Vent på at elementet har korrekte dimensjoner
+    const rect = scrollContainer.getBoundingClientRect();
+    if (rect.height === 0) {
+      console.log(`⏳ Tab ${tabNum} ikke rendret ennå, venter...`);
+      if (attempt < 5) {
+        setTimeout(() => setupScrollForTab(tabNum, attempt + 1), 300 * attempt);
+      }
+      return;
+    }
+    
+    console.log(`✅ Tab ${tabNum} klar, dimensjoner:`, {
+      width: rect.width,
+      height: rect.height,
+      scrollHeight: scrollContainer.scrollHeight,
+      clientHeight: scrollContainer.clientHeight
+    });
+    
+    // Fjern gamle listeners
+    if (scrollContainer._scrollHandler) {
+      scrollContainer.removeEventListener('scroll', scrollContainer._scrollHandler);
+    }
+    
+    // Opprett ny handler
+    const handler = () => updateScrollState(scrollContainer, tabNum);
+    scrollContainer._scrollHandler = handler;
+    scrollContainer.addEventListener('scroll', handler);
+    
+    // VIKTIG: Force initial state etter rendering
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        updateScrollState(scrollContainer, tabNum);
+      });
+    });
+  }
+
+  function updateScrollState(container, tabNum) {
+    const scrollTop = container.scrollTop;
+    const scrollHeight = container.scrollHeight;
+    const clientHeight = container.clientHeight;
+    const scrollBottom = scrollHeight - clientHeight - scrollTop;
+    
+    const isScrollable = scrollHeight > clientHeight + 5; // Litt buffer
+    const isAtBottom = scrollBottom <= 15; // Økt toleranse
+    
+    console.log(`📊 Tab ${tabNum} scroll:`, {
+      scrollable: isScrollable,
+      atBottom: isAtBottom,
+      scrollHeight,
+      clientHeight,
+      scrollBottom
+    });
+    
+    if (!isScrollable || isAtBottom) {
+      container.classList.add('scrolled-to-bottom');
+      console.log(`➕ Tab ${tabNum}: Skjuler gradient`);
+    } else {
+      container.classList.remove('scrolled-to-bottom');
+      console.log(`➖ Tab ${tabNum}: Viser gradient`);
+    }
+  }
+
+  // Setup initial scroll på window load (backup)
+  window.addEventListener('load', () => {
+    console.log('🎯 Window load - setup backup scroll detection');
+    setTimeout(() => {
+      const activeTab = document.querySelector('.h1-tab-content.active');
+      if (activeTab) {
+        const tabNum = activeTab.id.split('-').pop();
+        setupScrollForTab(tabNum);
+      }
+    }, 500);
+  });
 });
