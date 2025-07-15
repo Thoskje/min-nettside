@@ -260,8 +260,8 @@ nav a:hover {
   text-align: left;
   position: relative;
   
-  /* Inset shadow som fade-effekt */
-  box-shadow: inset 0 -30px 30px -30px rgba(255, 255, 255, 0.8);
+  /* Mer synlig gradient: */
+  box-shadow: inset 0 -40px 40px -30px rgba(246, 249, 252, 0.98);
   
   /* Scrollbar styling */
   scrollbar-width: thin;
@@ -270,6 +270,11 @@ nav a:hover {
 
 .hero-content-scroll.scrolled-to-bottom {
   box-shadow: none;
+}
+
+/* Debug: Legg til midlertidig for å teste */
+.hero-content-scroll:not(.scrolled-to-bottom) {
+  border-bottom: 2px solid rgba(255, 153, 0, 0.3);
 }
 
 .hero-content-scroll::-webkit-scrollbar {

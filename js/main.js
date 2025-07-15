@@ -72,9 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (btn) btn.classList.add('cta-active');
       }
     }
+
+    // VIKTIG: Setup scroll-detection for ny aktiv tab
+    setTimeout(() => {
+      setupScrollDetectionForActiveTab();
+    }, 100); // Vent til tab er fullt aktivert
   }
 
-  // Tabs click
+  // Tabs click - oppdatert
   tabButtons.forEach(tabBtn => {
     tabBtn.addEventListener('click', function() {
       const tabNum = tabBtn.getAttribute('data-h1');
@@ -82,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Aktiver første tab og CTA-knapp ved lasting
+  // Aktiver første tab
   activateTab('1');
-
+  
   // CTA-knapp: Kurs
   document.querySelectorAll('.hero-knapper .kurs-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -140,13 +145,38 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!mobileNav) console.error('Hamburger-meny: #mobile-nav element ikke funnet');
   }
 
-  // Scroll-detection for mask toggle
-  const scrollContainers = document.querySelectorAll('.hero-content-scroll');
-
-  scrollContainers.forEach(container => {
-    updateScrollState(container);
-    container.addEventListener('scroll', () => updateScrollState(container));
-  });
+  // OPPDATERT: Scroll-detection funksjon
+  function setupScrollDetectionForActiveTab() {
+    console.log('🔄 Setting up scroll detection for active tab...');
+    
+    // Finn kun scroll container i aktiv tab
+    const activeTab = document.querySelector('.h1-tab-content.active');
+    if (!activeTab) {
+      console.log('❌ Ingen aktiv tab funnet');
+      return;
+    }
+    
+    const scrollContainer = activeTab.querySelector('.hero-content-scroll');
+    if (!scrollContainer) {
+      console.log('❌ Ingen scroll container i aktiv tab');
+      return;
+    }
+    
+    console.log('✅ Fant scroll container i aktiv tab:', scrollContainer);
+    
+    // Fjern gamle event listeners (for å unngå duplikater)
+    scrollContainer.removeEventListener('scroll', handleScroll);
+    
+    // Legg til ny listener
+    scrollContainer.addEventListener('scroll', handleScroll);
+    
+    // Initial state check
+    updateScrollState(scrollContainer);
+    
+    function handleScroll() {
+      updateScrollState(scrollContainer);
+    }
+  }
 
   function updateScrollState(container) {
     const scrollTop = container.scrollTop;
@@ -154,10 +184,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const clientHeight = container.clientHeight;
     const scrollBottom = scrollHeight - clientHeight - scrollTop;
     
-    if (scrollHeight <= clientHeight || scrollBottom <= 5) {
+    const isScrollable = scrollHeight > clientHeight;
+    const isAtBottom = scrollBottom <= 10;
+    
+    console.log('📊 Scroll state:', {
+      tab: container.closest('.h1-tab-content')?.id,
+      scrollable: isScrollable,
+      atBottom: isAtBottom,
+      scrollBottom: scrollBottom,
+      hasClass: container.classList.contains('scrolled-to-bottom')
+    });
+    
+    if (!isScrollable || isAtBottom) {
       container.classList.add('scrolled-to-bottom');
+      console.log('➕ Lagt til scrolled-to-bottom klasse');
     } else {
       container.classList.remove('scrolled-to-bottom');
+      console.log('➖ Fjernet scrolled-to-bottom klasse');
     }
   }
+
+  // Setup for første tab
+  setupScrollDetectionForActiveTab();
 });
