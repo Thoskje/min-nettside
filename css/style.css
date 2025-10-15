@@ -34,6 +34,8 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  background: url('../bilder/bilde1.png') no-repeat center center fixed;
+  background-size: cover; /* Gjør at bildet dekker hele skjermen */
 }
 
 /* === Header og navigasjon === */
