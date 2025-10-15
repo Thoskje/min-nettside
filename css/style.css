@@ -543,3 +543,13 @@ footer a:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Bakgrunnsbilde for startsiden */
+.tabs-container {
+  background: url('../bilder/bilde1.png') no-repeat center center;
+  background-size: cover; /* Gjør at bildet dekker hele området */
+  height: 100vh; /* Full høyde for å dekke hele skjermen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
