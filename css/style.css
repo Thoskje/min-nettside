@@ -477,18 +477,17 @@ footer a:hover {
 }
 
 /* Hero-seksjonen */
-.hero .tabs-container {
-  margin-top: 20px;
+.tabs-container {
+  margin: 20px 0;
 }
 
-.hero .tabs {
+.tabs {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
-.hero .tab {
+.tab {
   padding: 10px 20px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -496,17 +495,16 @@ footer a:hover {
   font-size: 16px;
 }
 
-.hero .tab.active {
+.tab.active {
   background-color: #007bff;
   color: white;
 }
 
-.hero .tab-content {
+.tab-content {
   display: none;
-  text-align: center;
 }
 
-.hero .tab-content.active {
+.tab-content.active {
   display: block;
 }
 
