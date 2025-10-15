@@ -508,7 +508,7 @@ footer a:hover {
   display: block;
 }
 
-/* Tabs-container */
+/* Stil for tabs-knappene */
 .tabs-container {
   text-align: center;
   margin-top: 50px;
@@ -520,24 +520,26 @@ footer a:hover {
 }
 
 .tab {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 15px 30px;
   font-size: 18px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .tab:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #00d4ff, #007bff);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
 }
 
-.tab-content-wrapper {
-  display: none;
-}
-
-.tab-content-wrapper.active {
-  display: block;
+.tab:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
