@@ -476,33 +476,37 @@ footer a:hover {
   }
 }
 
-.tabs-container {
-  margin: 20px;
+/* Hero-seksjonen */
+.hero .tabs-container {
+  margin-top: 20px;
 }
 
-.tabs {
+.hero .tabs {
   display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.tab {
+.hero .tab {
   padding: 10px 20px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.tab.active {
+.hero .tab.active {
   background-color: #007bff;
   color: white;
 }
 
-.tab-content {
+.hero .tab-content {
   display: none;
+  text-align: center;
 }
 
-.tab-content.active {
+.hero .tab-content.active {
   display: block;
 }
 
