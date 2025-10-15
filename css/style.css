@@ -26,11 +26,12 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
+  overflow: hidden; /* Hindrer scroll hvis noe stikker utenfor */
 }
 
 /* Bakgrunnsbilde for startsiden */
 .tabs-container {
-  background: url('../bilder/bilde1.png') no-repeat center center fixed;
+  background: url('../bilder/bilde1.png') no-repeat center center;
   background-size: cover; /* Gjør at bildet dekker hele området */
   height: 100vh; /* Full høyde for å dekke hele skjermen */
   width: 100vw; /* Full bredde for å dekke hele skjermen */
@@ -39,7 +40,6 @@ html, body {
   align-items: center;
   margin: 0; /* Fjern marginer */
   padding: 0; /* Fjern padding */
-  overflow: hidden; /* Hindrer at noe stikker utenfor */
 }
 
 /* === Header og navigasjon === */
