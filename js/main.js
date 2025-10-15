@@ -286,3 +286,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 500);
   });
 });
+
+/* ===========================
+   Ny fane-funksjonalitet
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Fjern "active" fra alle faner og innhold
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(tc => tc.classList.remove('active'));
+
+      // Legg til "active" på valgt fane og innhold
+      tab.classList.add('active');
+      const target = tab.getAttribute('data-tab');
+      document.getElementById(`tab-${target}`).classList.add('active');
+    });
+  });
+});
