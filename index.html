@@ -39,7 +39,7 @@
   </header>
 
   <!-- Faner for Bedrift og Privat -->
-  <div class="tabs-container">
+  <div class="tabs-container" id="tabs-container">
     <div class="tabs">
       <button class="tab" data-tab="privat">Privat</button>
       <button class="tab" data-tab="bedrift">Bedrift</button>
@@ -47,7 +47,7 @@
   </div>
 
   <!-- Innhold for Privat -->
-  <div class="tab-content-wrapper" id="content-wrapper" style="display: none;">
+  <div class="tab-content-wrapper" id="privat-content" style="display: none;">
     <div class="tab-content" id="tab-privat">
       <!-- Hero-seksjonen og alt eksisterende innhold -->
       <div class="hero-bilde-container">
@@ -133,8 +133,10 @@
         </section>
       </div>
     </div>
+  </div>
 
-    <!-- Innhold for Bedrift -->
+  <!-- Innhold for Bedrift -->
+  <div class="tab-content-wrapper" id="bedrift-content" style="display: none;">
     <div class="tab-content" id="tab-bedrift">
       <h2>For Bedrifter</h2>
       <p>Spesialtilpassede tjenester for bedrifter som ønsker å holde bilparken i topp stand.</p>

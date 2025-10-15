@@ -291,21 +291,24 @@ document.addEventListener('DOMContentLoaded', function() {
    Ny fane-funksjonalitet
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
+  const tabsContainer = document.getElementById('tabs-container');
+  const privatContent = document.getElementById('privat-content');
+  const bedriftContent = document.getElementById('bedrift-content');
   const tabs = document.querySelectorAll('.tab');
-  const contentWrapper = document.getElementById('content-wrapper');
-  const tabContents = document.querySelectorAll('.tab-content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Vis innholdswrapperen
-      contentWrapper.style.display = 'block';
-
-      // Skjul alle tab-innhold
-      tabContents.forEach(tc => tc.classList.remove('active'));
-
-      // Vis innholdet for valgt tab
       const target = tab.getAttribute('data-tab');
-      document.getElementById(`tab-${target}`).classList.add('active');
+
+      // Skjul tabs-container
+      tabsContainer.style.display = 'none';
+
+      // Vis innhold basert på valgt tab
+      if (target === 'privat') {
+        privatContent.style.display = 'block';
+      } else if (target === 'bedrift') {
+        bedriftContent.style.display = 'block';
+      }
     });
   });
 });
