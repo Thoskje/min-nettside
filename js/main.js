@@ -294,14 +294,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabsContainer = document.getElementById('tabs-container');
   const privatContent = document.getElementById('privat-content');
   const bedriftContent = document.getElementById('bedrift-content');
-  const tabs = document.querySelectorAll('.tab');
 
+  // Debugging: Logg elementene for å se om de er null
+  console.log('tabsContainer:', tabsContainer);
+  console.log('privatContent:', privatContent);
+  console.log('bedriftContent:', bedriftContent);
+
+  if (!tabsContainer || !privatContent || !bedriftContent) {
+    console.error('Ett eller flere elementer ble ikke funnet. Sjekk HTML-strukturen.');
+    return;
+  }
+
+  const tabs = document.querySelectorAll('.tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const target = tab.getAttribute('data-tab');
-
-      // Skjul tabs-container
-      tabsContainer.style.display = 'none';
 
       // Skjul begge innholdene
       privatContent.style.display = 'none';
