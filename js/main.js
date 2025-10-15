@@ -296,11 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const bedriftContent = document.getElementById('bedrift-content');
   const tabs = document.querySelectorAll('.tab');
 
-  if (!tabsContainer || !privatContent || !bedriftContent) {
-    console.error('Fant ikke nødvendige elementer i HTML-en.');
-    return;
-  }
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const target = tab.getAttribute('data-tab');
