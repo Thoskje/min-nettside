@@ -508,3 +508,11 @@ footer a:hover {
   display: block;
 }
 
+.tab-content-wrapper {
+  display: none;
+}
+
+.tab-content-wrapper.active {
+  display: block;
+}
+

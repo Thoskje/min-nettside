@@ -292,16 +292,18 @@ document.addEventListener('DOMContentLoaded', function() {
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.tab');
+  const contentWrapper = document.getElementById('content-wrapper');
   const tabContents = document.querySelectorAll('.tab-content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Fjern "active" fra alle faner og innhold
-      tabs.forEach(t => t.classList.remove('active'));
+      // Vis innholdswrapperen
+      contentWrapper.style.display = 'block';
+
+      // Skjul alle tab-innhold
       tabContents.forEach(tc => tc.classList.remove('active'));
 
-      // Legg til "active" på valgt fane og innhold
-      tab.classList.add('active');
+      // Vis innholdet for valgt tab
       const target = tab.getAttribute('data-tab');
       document.getElementById(`tab-${target}`).classList.add('active');
     });
