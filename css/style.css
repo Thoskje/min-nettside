@@ -34,8 +34,6 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background: url('../bilder/bilde1.png') no-repeat center center fixed;
-  background-size: cover; /* Gjør at bildet dekker hele skjermen */
 }
 
 /* === Header og navigasjon === */
@@ -510,43 +508,38 @@ footer a:hover {
   display: block;
 }
 
-/* Sentrer tabs-container på siden */
+/* Stil for tabs-knappene */
 .tabs-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Full høyde for å sentrere vertikalt */
   text-align: center;
-  background: linear-gradient(135deg, #f6f9fc, #e0e6ed); /* Lys gradientbakgrunn */
+  margin-top: 50px;
 }
 
-/* Stil for tabs-knappene */
 .tabs {
   display: inline-flex;
-  gap: 30px; /* Øk avstanden mellom knappene */
+  gap: 20px;
 }
 
 .tab {
-  padding: 15px 40px;
-  font-size: 20px;
-  font-weight: 700;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
   color: white;
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient med lilla og blå */
+  background: linear-gradient(135deg, #007bff, #00d4ff);
   border: none;
-  border-radius: 50px; /* Runde knapper */
+  border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Myk skygge */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .tab:hover {
-  background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverser gradienten ved hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.5); /* Glødende effekt */
-  transform: translateY(-5px); /* Løft knappen litt opp */
+  background: linear-gradient(135deg, #00d4ff, #007bff);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .tab:active {
-  transform: translateY(2px); /* Trykk-effekt */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
+  transform: translateY(2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
