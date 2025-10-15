@@ -22,18 +22,21 @@
 }
 
 html, body {
-  height: 100%;
-  min-height: 100%;
-  background: var(--bg-color);
-  font-family: var(--font-family);
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
+  height: 100%; /* Sørg for at body og html dekker hele skjermen */
+}
+
+/* Bakgrunnsbilde for startsiden */
+.tabs-container {
+  background: url('../bilder/bilde1.png') no-repeat center center;
+  background-size: cover; /* Gjør at bildet dekker hele området */
+  height: 100vh; /* Full høyde for å dekke hele skjermen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0; /* Fjern marginer */
+  padding: 0; /* Fjern padding */
 }
 
 /* === Header og navigasjon === */
@@ -541,15 +544,5 @@ footer a:hover {
 .tab:active {
   transform: translateY(2px);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Bakgrunnsbilde for startsiden */
-.tabs-container {
-  background: url('../bilder/bilde1.png') no-repeat center center;
-  background-size: cover; /* Gjør at bildet dekker hele området */
-  height: 100vh; /* Full høyde for å dekke hele skjermen */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
