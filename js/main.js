@@ -303,6 +303,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // Skjul tabs-container
       tabsContainer.style.display = 'none';
 
+      // Skjul begge innholdene
+      privatContent.style.display = 'none';
+      bedriftContent.style.display = 'none';
+
       // Vis innhold basert på valgt tab
       if (target === 'privat') {
         privatContent.style.display = 'block';
