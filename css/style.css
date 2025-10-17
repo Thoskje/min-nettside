@@ -517,10 +517,12 @@ footer a:hover {
   background: linear-gradient(135deg, #f6f9fc, #e0e6ed); /* Lys gradientbakgrunn */
   margin: 0; /* Fjern margin */
   padding: 0; /* Fjern padding */
-  background: url('../bilder/bilde1.png') no-repeat center center fixed;
-  background-size: 50% !important; /* Zoom bildet ut */
-  background-position: center top; /* Juster plasseringen */
-  height: 100vh;
+  background: 
+    url('../bilder/bilde1.png') no-repeat center center fixed, /* Øverste bakgrunnsbilde */
+    url('../Copilot_20251015_161816.png') no-repeat center center fixed; /* Bakgrunn bak */
+  background-size: cover, cover; /* Sørg for at begge bildene dekker hele området */
+  background-blend-mode: normal; /* Behold begge bildene synlige */
+  height: 100vh; /* Full høyde for å dekke hele skjermen */
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -565,8 +567,11 @@ footer a:hover {
 .home-page .tabs-container {
   margin: 0; /* Fjern margin */
   padding: 0; /* Fjern padding */
-  background: url('../bilder/bilde1.png') no-repeat center center fixed;
-  background-size: 80%; /* Zoom bildet ut ved å redusere størrelsen */
+  background: 
+    url('../bilder/bilde1.png') no-repeat center center fixed, /* Øverste bakgrunnsbilde */
+    url('../Copilot_20251015_161816.png') no-repeat center center fixed; /* Bakgrunn bak */
+  background-size: cover, cover; /* Sørg for at begge bildene dekker hele området */
+  background-blend-mode: normal; /* Behold begge bildene synlige */
   height: 100vh; /* Full høyde for å dekke hele skjermen */
   width: 100vw; /* Full bredde for å dekke hele skjermen */
   display: flex;
