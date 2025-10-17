@@ -291,24 +291,24 @@ document.addEventListener('DOMContentLoaded', function() {
    Ny fane-funksjonalitet
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const tabsContainer = document.getElementById('tabs-container');
-  const privatContent = document.getElementById('privat-content');
-  const bedriftContent = document.getElementById('bedrift-content');
+  const tabsContainer = document.getElementById('tabs-container'); // Tabs-container
+  const privatContent = document.getElementById('privat-content'); // Privat innhold
+  const bedriftContent = document.getElementById('bedrift-content'); // Bedrift innhold
+  const tabs = document.querySelectorAll('.tab'); // Alle tabs
 
-  // Debugging: Logg elementene for å se om de er null
-  console.log('tabsContainer:', tabsContainer);
-  console.log('privatContent:', privatContent);
-  console.log('bedriftContent:', bedriftContent);
-
+  // Sjekk at elementene finnes
   if (!tabsContainer || !privatContent || !bedriftContent) {
-    console.error('Ett eller flere elementer ble ikke funnet. Sjekk HTML-strukturen.');
+    console.error('Ett eller flere nødvendige elementer mangler i HTML.');
     return;
   }
 
-  const tabs = document.querySelectorAll('.tab');
+  // Legg til klikkhendelse for hver tab
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-tab');
+      const target = tab.getAttribute('data-tab'); // Hent hvilken tab som er klikket
+
+      // Skjul tabs-container
+      tabsContainer.style.display = 'none';
 
       // Skjul begge innholdene
       privatContent.style.display = 'none';
