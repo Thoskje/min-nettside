@@ -25,7 +25,13 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper for innhold og footer */
+#content-wrapper {
+  flex: 1; /* Sørger for at innholdet fyller tilgjengelig plass */
 }
 
 /* === Header og navigasjon === */
@@ -335,7 +341,7 @@ nav a:hover {
 /* === Footer === */
 footer {
   position: relative; /* Sørg for at footeren holder seg nederst */
-  margin-top: auto; /* Behold avstanden til innholdet */
+  margin-top: auto; /* Skyv footeren til bunnen av siden */
   background-color: var(--secondary-color);
   color: white;
   text-align: center;
@@ -600,7 +606,7 @@ footer a:hover {
 /* Behold footerens posisjon */
 footer {
   position: relative; /* Sørg for at footeren holder seg nederst */
-  margin-top: auto; /* Behold avstanden til innholdet */
+  margin-top: auto; /* Skyv footeren til bunnen av siden */
   background-color: var(--secondary-color);
   color: white;
   text-align: center;
