@@ -22,18 +22,10 @@
 }
 
 html, body {
-  height: 100%;
-  min-height: 100%;
-  background: var(--bg-color);
-  font-family: var(--font-family);
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 /* === Header og navigasjon === */
@@ -516,6 +508,16 @@ footer a:hover {
   height: 100vh; /* Full høyde for å sentrere vertikalt */
   text-align: center;
   background: linear-gradient(135deg, #f6f9fc, #e0e6ed); /* Lys gradientbakgrunn */
+  margin: 0; /* Fjern margin */
+  padding: 0; /* Fjern padding */
+  background: url('../bilder/bilde1.png') no-repeat center center fixed;
+  background-size: cover; /* Gjør at bildet dekker hele området */
+  height: 100vh; /* Full høyde for å dekke hele skjermen */
+  width: 100vw; /* Full bredde for å dekke hele skjermen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Hindrer at noe stikker utenfor */
 }
 
 .home-page .tabs {
@@ -553,16 +555,5 @@ footer a:hover {
 
 .tab-content-wrapper.active {
   display: block; /* Vis innhold når det er aktivt */
-}
-
-/* Bakgrunnsbilde kun for startsiden */
-.home-page .tabs-container {
-  background: url('../bilder/bilde1.png') no-repeat center center fixed;
-  background-size: cover; /* Gjør at bildet dekker hele området */
-  height: 100vh; /* Full høyde for å dekke hele skjermen */
-  width: 100vw; /* Full bredde for å dekke hele skjermen */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
