@@ -291,35 +291,42 @@ document.addEventListener('DOMContentLoaded', function() {
    Ny fane-funksjonalitet
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const tabsContainer = document.getElementById('tabs-container'); // Tabs-container
-  const privatContent = document.getElementById('privat-content'); // Privat innhold
-  const bedriftContent = document.getElementById('bedrift-content'); // Bedrift innhold
-  const tabs = document.querySelectorAll('.tab'); // Alle tabs
+  const tabs = document.querySelectorAll('.tab');
+  const privatTabs = document.querySelectorAll('.privat-content .h1-tab');
+  const bedriftTabs = document.querySelectorAll('.bedrift-content .h1-tab');
+  const privatContents = document.querySelectorAll('.privat-content .h1-tab-content');
+  const bedriftContents = document.querySelectorAll('.bedrift-content .h1-tab-content');
 
-  // Sjekk at elementene finnes
-  if (!tabsContainer || !privatContent || !bedriftContent) {
-    console.error('Ett eller flere nødvendige elementer mangler i HTML.');
-    return;
-  }
-
-  // Legg til klikkhendelse for hver tab
+  // Håndter hovedtabs (Privat/Bedrift)
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-tab'); // Hent hvilken tab som er klikket
+      const target = tab.getAttribute('data-tab');
+      document.querySelectorAll('.tab-content-wrapper').forEach(content => {
+        content.style.display = 'none';
+      });
+      document.getElementById(`${target}-content`).style.display = 'block';
+    });
+  });
 
-      // Skjul tabs-container
-      tabsContainer.style.display = 'none';
+  // Håndter Privat-tabs
+  privatTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-h1');
+      privatContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`privat-tab-${target}`).classList.add('active');
+    });
+  });
 
-      // Skjul begge innholdene
-      privatContent.style.display = 'none';
-      bedriftContent.style.display = 'none';
-
-      // Vis innhold basert på valgt tab
-      if (target === 'privat') {
-        privatContent.style.display = 'block';
-      } else if (target === 'bedrift') {
-        bedriftContent.style.display = 'block';
-      }
+  // Håndter Bedrift-tabs
+  bedriftTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-h1');
+      bedriftContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`bedrift-tab-${target}`).classList.add('active');
     });
   });
 });
