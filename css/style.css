@@ -334,12 +334,13 @@ nav a:hover {
 
 /* === Footer === */
 footer {
+  position: relative; /* Sørg for at footeren holder seg nederst */
+  margin-top: auto; /* Behold avstanden til innholdet */
   background-color: var(--secondary-color);
   color: white;
   text-align: center;
   padding: 1rem;
   font-size: 0.9rem;
-  margin-top: auto;
 }
 
 footer a {
@@ -549,11 +550,71 @@ footer a:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
 }
 
-.tab-content-wrapper {
-  display: none; /* Skjul innhold som standard */
+/* Kun for startsiden */
+.home-page {
+  font-family: var(--font-family); /* Behold den globale fonten */
 }
 
-.tab-content-wrapper.active {
-  display: block; /* Vis innhold når det er aktivt */
+.home-page .tabs-container {
+  margin: 0; /* Fjern margin */
+  padding: 0; /* Fjern padding */
+  background: url('../bilder/bilde1.png') no-repeat center center fixed;
+  background-size: cover; /* Gjør at bildet dekker hele området */
+  height: 100vh; /* Full høyde for å dekke hele skjermen */
+  width: 100vw; /* Full bredde for å dekke hele skjermen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Hindrer at noe stikker utenfor */
+}
+
+.home-page .tabs {
+  display: inline-flex;
+  gap: 30px; /* Øk avstanden mellom knappene */
+}
+
+.home-page .tab {
+  padding: 15px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient med lilla og blå */
+  border: none;
+  border-radius: 50px; /* Runde knapper */
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Myk skygge */
+  transition: all 0.3s ease;
+}
+
+.home-page .tab:hover {
+  background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverser gradienten ved hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.5); /* Glødende effekt */
+  transform: translateY(-5px); /* Løft knappen litt opp */
+}
+
+.home-page .tab:active {
+  transform: translateY(2px); /* Trykk-effekt */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
+}
+
+/* Behold footerens posisjon */
+footer {
+  position: relative; /* Sørg for at footeren holder seg nederst */
+  margin-top: auto; /* Behold avstanden til innholdet */
+  background-color: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #fff;
 }
 
