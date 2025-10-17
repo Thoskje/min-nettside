@@ -508,8 +508,8 @@ footer a:hover {
   display: block;
 }
 
-/* Sentrer tabs-container på siden */
-.tabs-container {
+/* Kun for knappene på hjemmesiden */
+.home-page .tabs-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -518,13 +518,12 @@ footer a:hover {
   background: linear-gradient(135deg, #f6f9fc, #e0e6ed); /* Lys gradientbakgrunn */
 }
 
-/* Stil for tabs-knappene */
-.tabs {
+.home-page .tabs {
   display: inline-flex;
   gap: 30px; /* Øk avstanden mellom knappene */
 }
 
-.tab {
+.home-page .tab {
   padding: 15px 40px;
   font-size: 20px;
   font-weight: 700;
@@ -537,13 +536,13 @@ footer a:hover {
   transition: all 0.3s ease;
 }
 
-.tab:hover {
+.home-page .tab:hover {
   background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverser gradienten ved hover */
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.5); /* Glødende effekt */
   transform: translateY(-5px); /* Løft knappen litt opp */
 }
 
-.tab:active {
+.home-page .tab:active {
   transform: translateY(2px); /* Trykk-effekt */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
 }
