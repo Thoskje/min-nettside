@@ -644,3 +644,33 @@ footer a:hover {
   }
 }
 
+/* Felles stil for hero-seksjonen */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f6f9fc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabs for Privat */
+.privat-content .h1-tabs .h1-tab {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.privat-content .h1-tabs .h1-tab.active {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+/* Tabs for Bedrift */
+.bedrift-content .h1-tabs .h1-tab {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+}
+
+.bedrift-content .h1-tabs .h1-tab.active {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+}
+
