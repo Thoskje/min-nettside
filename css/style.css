@@ -544,13 +544,13 @@ footer a:hover {
   border: none;
   border-radius: 50px; /* Runde knapper */
   cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Myk skygge */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(37, 117, 252, 0.5); /* Glødende effekt */
   transition: all 0.3s ease;
 }
 
 .home-page .tab:hover {
   background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverser gradienten ved hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.5); /* Glødende effekt */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.7); /* Økt glød ved hover */
   transform: translateY(-5px); /* Løft knappen litt opp */
 }
 
@@ -594,13 +594,13 @@ footer a:hover {
   border: none;
   border-radius: 50px; /* Runde knapper */
   cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Myk skygge */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(37, 117, 252, 0.5); /* Glødende effekt */
   transition: all 0.3s ease;
 }
 
 .home-page .tab:hover {
   background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverser gradienten ved hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.5); /* Glødende effekt */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(101, 84, 192, 0.7); /* Økt glød ved hover */
   transform: translateY(-5px); /* Løft knappen litt opp */
 }
 
