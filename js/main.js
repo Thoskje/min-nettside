@@ -1,9 +1,7 @@
 console.log("main.js lastet");
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* ===========================
-     Hide header ved scroll
-     =========================== */
+  /* Hide header ved scroll */
   let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
   const header = document.querySelector("header");
   const deadzone = 20;
@@ -22,9 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===========================
-     Accordion
-     =========================== */
+  /* Accordion */
   document.querySelectorAll(".accordion-header").forEach(h => {
     h.addEventListener("click", () => {
       const body = h.nextElementSibling;
@@ -32,9 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ===========================
-     Topp-navigasjon: Privat/Bedrift
-     =========================== */
+  /* Landing: tabs -> vis seksjon først ved klikk (eller hash) */
   const tabsContainer = document.getElementById("tabs-container");
   const topTabs = document.querySelectorAll(".tabs .tab");
   const privatWrapper = document.getElementById("privat-content");
@@ -47,33 +41,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (name === "bedrift" && bedriftWrapper) bedriftWrapper.style.display = "block";
   }
 
-  function ensureOneVisible() {
-    const wrappers = [privatWrapper, bedriftWrapper].filter(Boolean);
-    if (wrappers.length === 0) return; // ingen seksjoner i HTML
-
-    const anyVisible = wrappers.some(el => getComputedStyle(el).display !== "none");
-    if (!anyVisible) {
-      // vis privat hvis finnes, ellers bedrift
-      if (privatWrapper) showSection("privat");
-      else if (bedriftWrapper) showSection("bedrift");
-      if (tabsContainer) tabsContainer.style.display = "none";
-    }
+  function openAndHideTabs(name) {
+    showSection(name);
+    if (tabsContainer) tabsContainer.style.display = "none";
   }
 
+  // Ikke rør tabs-container ved load; vis landing. Åpne via hash hvis satt.
+  if (location.hash === "#privat") openAndHideTabs("privat");
+  else if (location.hash === "#bedrift") openAndHideTabs("bedrift");
+  // Klikk på knapper
   topTabs.forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (tabsContainer) tabsContainer.style.display = "none";
-      showSection(btn.dataset.tab);
-    });
+    btn.addEventListener("click", () => openAndHideTabs(btn.dataset.tab));
   });
 
-  // Sikre at noe vises ved første last
-  ensureOneVisible();
-  window.addEventListener("load", ensureOneVisible);
-
-  /* ===========================
-     Hjelpere for hero scroll-indikator
-     =========================== */
+  /* Hero scroll-indikator */
   function attachScrollDetection(container) {
     if (!container) return;
     if (container._scrollHandler) {
@@ -87,36 +68,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     container._scrollHandler = handler;
     container.addEventListener("scroll", handler);
-    handler(); // initial
+    handler();
   }
 
-  /* ===========================
-     Generisk hero-setup for en seksjon
-     prefix: 'p' eller 'b'
-     =========================== */
+  /* Generisk hero-setup (separat for p- og b-innhold) */
   function setupHero(scopeEl, tabSelector, panelSelector, dataAttr, idPrefix) {
     if (!scopeEl) return;
-
     const tabs = scopeEl.querySelectorAll(tabSelector);
     const panels = scopeEl.querySelectorAll(panelSelector);
 
     function activate(id) {
       tabs.forEach(t => t.classList.remove("active"));
       panels.forEach(p => p.classList.remove("active"));
-
       const activeTab = Array.from(tabs).find(t => t.getAttribute(dataAttr) === id);
       const activePanel = scopeEl.querySelector(`${idPrefix}${id}`);
       if (activeTab) activeTab.classList.add("active");
       if (activePanel) activePanel.classList.add("active");
 
-      // CTA-highlight i aktivt panel (valgfritt)
       scopeEl.querySelectorAll(".hero-knapper .cta-button").forEach(b => b.classList.remove("cta-active"));
       if (activePanel) {
         const sel = id === "1" ? ".chat-btn" : id === "2" ? ".avtal-btn" : id === "3" ? ".kurs-btn" : null;
         if (sel) activePanel.querySelector(sel)?.classList.add("cta-active");
       }
-
-      // Scroll-indikator
       attachScrollDetection(activePanel?.querySelector(".hero-content-scroll"));
     }
 
@@ -125,13 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (initId) activate(initId);
   }
 
-  // Sett opp begge seksjoner (separate og uavhengige)
+  // Sett opp begge (uavhengig)
   setupHero(privatWrapper, ".p-tab", ".p-tab-content", "data-p", "#p-tab-");
   setupHero(bedriftWrapper, ".b-tab", ".b-tab-content", "data-b", "#b-tab-");
 
-  /* ===========================
-     Hamburger-meny
-     =========================== */
+  /* Hamburger-meny */
   const menuBtn = document.getElementById("menu-btn");
   const mobileNav = document.getElementById("mobile-nav");
   if (menuBtn && mobileNav) {
@@ -153,9 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===========================
-     Åpne/lukke widget overlay
-     =========================== */
+  /* Åpne/lukke widget overlay */
   const overlay = document.getElementById("bilinfobetaling-overlay");
   document.addEventListener("click", e => {
     const openBtn = e.target.closest("[data-open-widget]");
