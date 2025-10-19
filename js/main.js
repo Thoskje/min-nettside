@@ -323,3 +323,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+/* Tabs: vis/hide hovedseksjoner (bedrift/privat) uten å røre annet */
+document.addEventListener('DOMContentLoaded', function () {
+  const topTabs = document.querySelectorAll('.tabs .tab');
+  const wrappers = {
+    privat: document.getElementById('privat-content'),
+    bedrift: document.getElementById('bedrift-content')
+  };
+
+  function show(name) {
+    Object.values(wrappers).forEach(el => { if (el) el.style.display = 'none'; });
+    if (wrappers[name]) wrappers[name].style.display = 'block';
+  }
+
+  // Standard: vis privat (kan endres til 'bedrift')
+  if (wrappers.privat && wrappers.bedrift &&
+      wrappers.privat.style.display === 'none' &&
+      wrappers.bedrift.style.display === 'none') {
+    show('privat');
+  }
+
+  topTabs.forEach(btn => {
+    btn.addEventListener('click', () => show(btn.dataset.tab));
+  });
+});
+
+/* PRIVAT: egne p-* tabs (uavhengig av bedrift) */
+document.addEventListener('DOMContentLoaded', function () {
+  const scope = document.getElementById('privat-content');
+  if (!scope) return;
+
+  const tabs = scope.querySelectorAll('.p-tab');
+  const panels = scope.querySelectorAll('.p-tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.getAttribute('data-p'); // 1,2,3
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      panels.forEach(p => p.classList.remove('active'));
+      const active = scope.querySelector('#p-tab-' + id);
+      if (active) active.classList.add('active');
+    });
+  });
+});
+
+/* BEDRIFT: egne b-* tabs (uavhengig av privat) */
+document.addEventListener('DOMContentLoaded', function () {
+  const scope = document.getElementById('bedrift-content');
+  if (!scope) return;
+
+  const tabs = scope.querySelectorAll('.b-tab');
+  const panels = scope.querySelectorAll('.b-tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.getAttribute('data-b'); // 1,2,3
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      panels.forEach(p => p.classList.remove('active'));
+      const active = scope.querySelector('#b-tab-' + id);
+      if (active) active.classList.add('active');
+    });
+  });
+});
