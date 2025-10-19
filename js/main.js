@@ -47,6 +47,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (name === "bedrift" && bedriftWrapper) bedriftWrapper.style.display = "block";
   }
 
+  function ensureOneVisible() {
+    const wrappers = [privatWrapper, bedriftWrapper].filter(Boolean);
+    if (wrappers.length === 0) return; // ingen seksjoner i HTML
+
+    const anyVisible = wrappers.some(el => getComputedStyle(el).display !== "none");
+    if (!anyVisible) {
+      // vis privat hvis finnes, ellers bedrift
+      if (privatWrapper) showSection("privat");
+      else if (bedriftWrapper) showSection("bedrift");
+      if (tabsContainer) tabsContainer.style.display = "none";
+    }
+  }
+
   topTabs.forEach(btn => {
     btn.addEventListener("click", () => {
       if (tabsContainer) tabsContainer.style.display = "none";
@@ -54,14 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Standardvalg hvis begge er skjult fra HTML (display:none)
-  if (privatWrapper && bedriftWrapper &&
-      getComputedStyle(privatWrapper).display === "none" &&
-      getComputedStyle(bedriftWrapper).display === "none") {
-    showSection("privat");
-    // Skjul tabs-container slik som ved klikk
-    if (tabsContainer) tabsContainer.style.display = "none";
-  }
+  // Sikre at noe vises ved første last
+  ensureOneVisible();
+  window.addEventListener("load", ensureOneVisible);
 
   /* ===========================
      Hjelpere for hero scroll-indikator
