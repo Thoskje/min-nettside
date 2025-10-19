@@ -15,11 +15,7 @@
   --font-family: 'Inter', Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   margin: 0;
@@ -30,9 +26,7 @@ html, body {
 }
 
 /* Wrapper for innhold og footer */
-#content-wrapper {
-  flex: 1; /* Sørger for at innholdet fyller tilgjengelig plass */
-}
+#content-wrapper { flex: 1; }
 
 /* === Header og navigasjon === */
 header {
@@ -48,9 +42,7 @@ header {
   transition: transform 0.3s;
 }
 
-header.hidden {
-  transform: translateY(-100%);
-}
+header.hidden { transform: translateY(-100%); }
 
 .logo {
   font-size: 1.2rem;
@@ -83,36 +75,15 @@ header.hidden {
   overflow: hidden;
   transition: all 0.3s ease;
 }
-
-.mobile-nav.open {
-  display: block;
-}
-
-.mobile-nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-.mobile-nav li {
-  border-bottom: 1px solid var(--border-color);
-}
-
-.mobile-nav li:last-child {
-  border-bottom: none;
-}
-
+.mobile-nav.open { display: block; }
+.mobile-nav ul { list-style: none; padding: 0; }
+.mobile-nav li { border-bottom: 1px solid var(--border-color); }
+.mobile-nav li:last-child { border-bottom: none; }
 .mobile-nav a {
-  display: block;
-  padding: 1rem 1.5rem;
-  color: var(--text-color);
-  text-decoration: none;
-  transition: background 0.2s;
+  display: block; padding: 1rem 1.5rem; color: var(--text-color);
+  text-decoration: none; transition: background 0.2s;
 }
-
-.mobile-nav a:hover {
-  background: var(--bg-color);
-  color: var(--primary-color);
-}
+.mobile-nav a:hover { background: var(--bg-color); color: var(--primary-color); }
 
 /* Desktop nav */
 nav a {
@@ -123,16 +94,10 @@ nav a {
   border-radius: var(--radius-sm);
   transition: background 0.2s, color 0.2s;
 }
-
-nav a:hover {
-  background: var(--primary-color);
-  color: #fff;
-}
+nav a:hover { background: var(--primary-color); color: #fff; }
 
 /* === Hero og faner === */
-.hero-bilde-container {
-  padding: 2rem 1rem;
-}
+.hero-bilde-container { padding: 2rem 1rem; }
 
 .hero {
   max-width: 1300px;
@@ -179,21 +144,11 @@ nav a:hover {
   transition: background 0.2s, color 0.2s;
   width: 250px;
 }
+.cta-button:hover { background: #ffb84d; color: #fff; }
 
-.cta-button:hover {
-  background: #ffb84d;
-  color: #fff;
-}
+.cta-button.cta-active { background: var(--primary-color) !important; color: #fff !important; }
+.cta-button.cta-active:hover { background: #ff8800 !important; color: #fff !important; }
 
-.cta-button.cta-active {
-  background: var(--primary-color) !important;
-  color: #fff !important;
-}
-
-.cta-button.cta-active:hover {
-  background: #ff8800 !important;
-  color: #fff !important;
-}
 /* === Hero tabs === */
 .h1-tabs {
   display: flex;
@@ -201,7 +156,6 @@ nav a:hover {
   justify-content: center;
   margin-bottom: 0.5rem;
 }
-
 .h1-tab {
   background: var(--bg-color);
   color: var(--text-color);
@@ -217,7 +171,6 @@ nav a:hover {
   position: relative;
   top: 0;
 }
-
 .h1-tab.active {
   background: #fff !important;
   color: var(--primary-color) !important;
@@ -230,14 +183,10 @@ nav a:hover {
 .h1-tab-content {
   display: none;
   flex-direction: column;
-  height: 350px; /* Fast høyde for konsistent layout */
+  height: 350px;
   text-align: center;
 }
-
-.h1-tab-content.active {
-  display: flex;
-  animation: tab-fade-in 0.3s ease;
-}
+.h1-tab-content.active { display: flex; animation: tab-fade-in 0.3s ease; }
 
 .h1-tab-content h1 {
   font-size: 2.5rem;
@@ -256,29 +205,13 @@ nav a:hover {
   margin: 0.5rem 0 1rem 0;
   padding-right: 8px;
   text-align: left;
-  
-  /* Custom scrollbar */
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) #f1f1f1;
 }
-
-.hero-content-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 3px;
-}
-
-.hero-content-scroll::-webkit-scrollbar-thumb:hover {
-  background: #ff8800;
-}
+.hero-content-scroll::-webkit-scrollbar { width: 6px; }
+.hero-content-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+.hero-content-scroll::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 3px; }
+.hero-content-scroll::-webkit-scrollbar-thumb:hover { background: #ff8800; }
 
 /* CONTENT INSIDE SCROLL */
 .hero-content-scroll p {
@@ -288,76 +221,41 @@ nav a:hover {
   margin-bottom: 1rem;
   line-height: 1.7;
 }
+.hero-features, .hero-details ul, .hero-details ol { margin: 1rem 0; padding-left: 1.5rem; }
+.hero-features li, .hero-details li { margin-bottom: 0.5rem; line-height: 1.5; font-size: 1.1rem; }
+.hero-details h3 { color: var(--text-color); font-size: 1.2rem; margin: 1.5rem 0 0.75rem; font-weight: 600; }
+.hero-details h3:first-child { margin-top: 1rem; }
 
-.hero-features,
-.hero-details ul,
-.hero-details ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.hero-features li,
-.hero-details li {
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-  font-size: 1.1rem;
-}
-
-.hero-details h3 {
-  color: var(--text-color);
-  font-size: 1.2rem;
-  margin: 1.5rem 0 0.75rem 0;
-  font-weight: 600;
-}
-
-.hero-details h3:first-child {
-  margin-top: 1rem;
-}
-
-/* OPPDATER HERO-KNAPPER */
+/* HERO-KNAPPER */
 .hero-knapper {
   display: flex;
   gap: 3.5rem;
-  justify-content: center; /* VIKTIG: Sentrer knappene */
+  justify-content: center;
   align-items: center;
   margin-top: auto;
   padding-top: 1.5rem;
   flex-shrink: 0;
-  width: 100%; /* Full bredde for sentrering */
+  width: 100%;
 }
 
 /* TAB FADE ANIMATION */
 @keyframes tab-fade-in {
-  from { 
-    opacity: 0; 
-    transform: translateY(10px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* === Footer === */
 footer {
-  position: relative; /* Sørg for at footeren holder seg nederst */
-  margin-top: auto; /* Skyv footeren til bunnen av siden */
+  position: relative;
+  margin-top: auto;
   background-color: var(--secondary-color);
   color: white;
   text-align: center;
   padding: 1rem;
   font-size: 0.9rem;
 }
-
-footer a {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-footer a:hover {
-  color: #fff;
-}
+footer a { color: #888; text-decoration: none; transition: color 0.2s ease; }
+footer a:hover { color: #fff; }
 
 /* === Cookie-banner === */
 .cookie-banner {
@@ -372,7 +270,6 @@ footer a:hover {
   z-index: 1000;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
 }
-
 .cookie-banner button {
   background-color: var(--primary-color);
   color: white;
@@ -382,277 +279,80 @@ footer a:hover {
   border-radius: var(--radius-sm);
   cursor: pointer;
 }
-
-.cookie-banner a {
-  color: var(--primary-color);
-  text-decoration: underline;
-}
+.cookie-banner a { color: var(--primary-color); text-decoration: underline; }
 
 /* === Cookie-innstillinger modal === */
-#cookie-settings-modal {
-  background: var(--secondary-color);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-}
-
-#cookie-settings-modal h3 {
-  color: white;
-  margin-bottom: 1.5rem;
-}
-
-#cookie-settings-modal label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
+#cookie-settings-modal { background: var(--secondary-color); border-radius: var(--radius-md); padding: 2rem; }
+#cookie-settings-modal h3 { color: white; margin-bottom: 1.5rem; }
+#cookie-settings-modal label { display: block; margin-bottom: 0.5rem; }
 #cookie-settings-modal button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
+  padding: 0.5rem 1rem; border: none; border-radius: var(--radius-sm);
+  font-weight: 600; cursor: pointer;
 }
+#cookie-settings-modal button[type="submit"] { background: var(--primary-color); color: white; }
 
-#cookie-settings-modal button[type="submit"] {
-  background: var(--primary-color);
-  color: white;
-}
+/* === Tabs på startsiden (Home) === */
+.home-page { font-family: var(--font-family); }
 
-/* === Responsivt (utdrag, legg til mer etter behov) === */
-@media (max-width: 768px) {
-  .menu-btn {
-    display: block;
-  }
-  
-  header {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 700px) {
-  .hero, .tab-content {
-    padding: 1rem;
-    max-width: 98vw;
-    min-width: unset;
-  }
-  
-  .h1-tabs {
-    flex-direction: row;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .hero-knapper {
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-top: 1rem;
-  }
-  
-  .cta-button {
-    width: 100%;
-    font-size: 1.05rem;
-    padding: 1rem 0;
-    border-radius: 1.5rem;
-  }
-  
-  .h1-tab {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .h1-tab-content {
-    height: 240px;
-  }
-  
-  .hero-content-scroll {
-    max-height: 100px;
-  }
-  
-  .hero-content-scroll::-webkit-scrollbar {
-    width: 4px;
-  }
-}
-
-/* Hero-seksjonen */
-.tabs-container {
-  margin: 20px 0;
-}
-
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.tab {
-  padding: 10px 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.tab.active {
-  background-color: #007bff;
-  color: white;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* Kun for knappene på hjemmesiden */
+/* Sentrert wrapper m/ to bakgrunnsbilder */
 .home-page .tabs-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Full høyde for å sentrere vertikalt */
-  text-align: center;
-  background: linear-gradient(135deg, #f6f9fc, #e0e6ed); /* Lys gradientbakgrunn */
-  margin: 0; /* Fjern margin */
-  padding: 0; /* Fjern padding */
-  background: 
-    url('../bilder/bilde1.png') no-repeat center center fixed, /* Øverste bakgrunnsbilde */
-  background-size: cover, cover; /* Sørg for at begge bildene dekker hele området */
-  background-blend-mode: normal; /* Behold begge bildene synlige */
-  height: 100vh; /* Full høyde for å dekke hele skjermen */
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Hindrer at noe stikker utenfor */
-}
-
-.home-page .tabs {
-  display: inline-flex;
-  gap: 30px; /* Øk avstanden mellom knappene */
-}
-
-.home-page .tab {
-  padding: 15px 40px;
-  font-size: 20px;
-  font-weight: 700;
-  color: white; /* Tekstfarge */
-  background: linear-gradient(135deg, #00b4d8, #0077b6); /* Ny gradientfarge */
-  border: none;
-  border-radius: 50px; /* Runde knapper */
-  cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 183, 255, 0.5); /* Glødende effekt */
-  transition: all 0.3s ease;
-}
-
-.home-page .tab:hover {
-  background: linear-gradient(135deg, #0077b6, #00b4d8); /* Reverser gradienten ved hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 183, 255, 0.7); /* Økt glød ved hover */
-  transform: translateY(-5px); /* Løft knappen litt opp */
-}
-
-.home-page .tab:active {
-  transform: translateY(2px); /* Trykk-effekt */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
-}
-
-/* Kun for startsiden */
-.home-page {
-  font-family: var(--font-family); /* Behold den globale fonten */
-}
-
-.home-page .tabs-container {
-  margin: 0; /* Fjern margin */
-  padding: 0; /* Fjern padding */
-  background: 
-    url('../bilder/bilde1.png') no-repeat center center fixed, /* Øverste bakgrunnsbilde */
-    url('../bilder/Copilot_20251015_161816.png') no-repeat center center fixed; /* Bakgrunn bak */
-  background-size: cover, cover; /* Sørg for at begge bildene dekker hele området */
-  background-blend-mode: normal; /* Behold begge bildene synlige */
-  height: 100vh; /* Full høyde for å dekke hele skjermen */
-  width: 100vw; /* Full bredde for å dekke hele skjermen */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Hindrer at noe stikker utenfor */
-}
-
-.home-page .tabs {
-  display: inline-flex;
-  gap: 30px; /* Øk avstanden mellom knappene */
-}
-
-.home-page .tab {
-  padding: 15px 40px;
-  font-size: 20px;
-  font-weight: 700;
-  color: white; /* Tekstfarge */
-  background: linear-gradient(135deg, #00b4d8, #0077b6); /* Ny gradientfarge */
-  border: none;
-  border-radius: 50px; /* Runde knapper */
-  cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 183, 255, 0.5); /* Glødende effekt */
-  transition: all 0.3s ease;
-}
-
-.home-page .tab:hover {
-  background: linear-gradient(135deg, #0077b6, #00b4d8); /* Reverser gradienten ved hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 183, 255, 0.7); /* Økt glød ved hover */
-  transform: translateY(-5px); /* Løft knappen litt opp */
-}
-
-.home-page .tab:active {
-  transform: translateY(2px); /* Trykk-effekt */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Redusert skygge */
-}
-
-/* Behold footerens posisjon */
-footer {
-  position: relative; /* Sørg for at footeren holder seg nederst */
-  margin-top: auto; /* Skyv footeren til bunnen av siden */
-  background-color: var(--secondary-color);
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-footer a:hover {
-  color: #fff;
-}
-
-.home-page .tabs-container {
+  display: flex; justify-content: center; align-items: center;
+  height: 100vh; width: 100vw; text-align: center; overflow: hidden;
+  background:
+    url('../bilder/bilde1.png') no-repeat center center fixed,
+    url('../bilder/Copilot_20251015_161816.png') no-repeat center center fixed;
+  background-size: cover, cover;
+  background-blend-mode: normal;
   animation: fadeIn 1.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.home-page .tabs { display: inline-flex; gap: 30px; }
+.home-page .tab {
+  padding: 15px 40px; font-size: 20px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2), 0 0 10px rgba(0,183,255,0.5);
+  transition: all 0.3s ease;
 }
+.home-page .tab:hover {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.3), 0 0 15px rgba(0,183,255,0.7);
+  transform: translateY(-5px);
+}
+.home-page .tab:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-/* Privat: egne alias-klasser (arver stil fra .h1-*) */
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+/* === Privat/Bedrift: separate alias for paneler === */
 #privat-content .p-tab-content { display: none; }
 #privat-content .p-tab-content.active { display: block; }
 
-/* Bedrift: egne alias-klasser (arver stil fra .h1-*) */
 #bedrift-content .b-tab-content { display: none; }
 #bedrift-content .b-tab-content.active { display: block; }
 
-/* Valgfritt: separert fargeprofil for tabs (kommentér ut hvis ikke ønsket) */
-#privat-content .p-tab.active { /* eksempel */ }
-#bedrift-content .b-tab.active { /* eksempel for egen farge */ }
+/* Valgfritt: egne aktive farger per seksjon (legg til om ønskelig) */
+/*
+#privat-content .p-tab.active { background: #fff; color: var(--primary-color); }
+#bedrift-content .b-tab.active { background: #fff; color: #0077b6; border-bottom: 3px solid #00b4d8; }
+*/
+
+/* === Responsivt === */
+@media (max-width: 768px) {
+  .menu-btn { display: block; }
+  header { padding: 1rem; }
+}
+
+@media (max-width: 700px) {
+  .hero, .tab-content { padding: 1rem; max-width: 98vw; min-width: unset; }
+  .h1-tabs { flex-direction: row; gap: 0.5rem; margin-bottom: 1rem; }
+  .hero-knapper { flex-direction: column; gap: 0.7rem; margin-top: 1rem; }
+  .cta-button { width: 100%; font-size: 1.05rem; padding: 1rem 0; border-radius: 1.5rem; }
+  .h1-tab { padding: 0.6rem 1rem; font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+  .h1-tab-content { height: 240px; }
+  .hero-content-scroll { max-height: 100px; }
+  .hero-content-scroll::-webkit-scrollbar { width: 4px; }
+}
 
