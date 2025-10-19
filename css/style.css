@@ -644,3 +644,15 @@ footer a:hover {
   }
 }
 
+/* Privat: egne alias-klasser (arver stil fra .h1-*) */
+#privat-content .p-tab-content { display: none; }
+#privat-content .p-tab-content.active { display: block; }
+
+/* Bedrift: egne alias-klasser (arver stil fra .h1-*) */
+#bedrift-content .b-tab-content { display: none; }
+#bedrift-content .b-tab-content.active { display: block; }
+
+/* Valgfritt: separert fargeprofil for tabs (kommentér ut hvis ikke ønsket) */
+#privat-content .p-tab.active { /* eksempel */ }
+#bedrift-content .b-tab.active { /* eksempel for egen farge */ }
+
