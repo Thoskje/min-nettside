@@ -40,12 +40,15 @@
   <div class="tab-content-wrapper" id="privat-content" style="display: none;">
     <div class="hero-bilde-container">
       <section class="hero">
-        <div class="h1-tabs">
-          <button class="h1-tab active" data-h1="1">Chat</button>
-          <button class="h1-tab" data-h1="2">Avtal time</button>
-          <button class="h1-tab" data-h1="3">Kurs</button>
+        <!-- behold h1-tabs for eksisterende stil, men legg til p-tabs -->
+        <div class="h1-tabs p-tabs">
+          <button class="h1-tab p-tab active" data-p="1">Chat</button>
+          <button class="h1-tab p-tab" data-p="2">Avtal time</button>
+          <button class="h1-tab p-tab" data-p="3">Kurs</button>
         </div>
-        <div class="h1-tab-content active" id="h1-tab-1">
+
+        <!-- unike ID-er for privat: p-tab-* + behold h1-tab-content-klassen -->
+        <div class="h1-tab-content p-tab-content active" id="p-tab-1">
           <h1>Din digitale bilmekaniker</h1>
           <div class="hero-content-scroll">
             <p>Få raske og spesifikke råd, tips og veiledning for din bil:</p>
@@ -62,7 +65,8 @@
             <button class="cta-button kurs-btn">Kurs</button>
           </div>
         </div>
-        <div class="h1-tab-content" id="h1-tab-2">
+
+        <div class="h1-tab-content p-tab-content" id="p-tab-2">
           <h1>Avtal time</h1>
           <div class="hero-content-scroll">
             <p>Book en tid med våre bil-eksperter for personlig rådgivning eller videokonsultasjon.</p>
@@ -90,7 +94,8 @@
             <button class="cta-button kurs-btn">Kurs</button>
           </div>
         </div>
-        <div class="h1-tab-content" id="h1-tab-3">
+
+        <div class="h1-tab-content p-tab-content" id="p-tab-3">
           <h1>Kurs</h1>
           <div class="hero-content-scroll">
             <p>Lær mer om bilhold, vedlikehold og sikkerhet gjennom våre digitale kurs.</p>
@@ -126,12 +131,15 @@
   <div class="tab-content-wrapper" id="bedrift-content" style="display: none;">
     <div class="hero-bilde-container">
       <section class="hero">
-        <div class="h1-tabs">
-          <button class="h1-tab active" data-h1="1">Chat</button>
-          <button class="h1-tab" data-h1="2">Avtal time</button>
-          <button class="h1-tab" data-h1="3">Kurs</button>
+        <!-- behold h1-tabs for nåværende stil, men legg til b-tabs -->
+        <div class="h1-tabs b-tabs">
+          <button class="h1-tab b-tab active" data-b="1">Chat</button>
+          <button class="h1-tab b-tab" data-b="2">Avtal time</button>
+          <button class="h1-tab b-tab" data-b="3">Kurs</button>
         </div>
-        <div class="h1-tab-content active" id="h1-tab-1">
+
+        <!-- unike ID-er for bedrift: b-tab-* -->
+        <div class="h1-tab-content b-tab-content active" id="b-tab-1">
           <h1>Din digitale bilmekaniker</h1>
           <div class="hero-content-scroll">
             <p>Få raske og spesifikke råd, tips og veiledning for din bil:</p>
@@ -148,7 +156,8 @@
             <button class="cta-button kurs-btn">Kurs</button>
           </div>
         </div>
-        <div class="h1-tab-content" id="h1-tab-2">
+
+        <div class="h1-tab-content b-tab-content" id="b-tab-2">
           <h1>Avtal time</h1>
           <div class="hero-content-scroll">
             <p>Book en tid med våre bil-eksperter for personlig rådgivning eller videokonsultasjon.</p>
@@ -176,18 +185,19 @@
             <button class="cta-button kurs-btn">Kurs</button>
           </div>
         </div>
-        <div class="h1-tab-content" id="h1-tab-3">
+
+        <div class="h1-tab-content b-tab-content" id="b-tab-3">
           <h1>Kurs</h1>
           <div class="hero-content-scroll">
             <p>Lær mer om bilhold, vedlikehold og sikkerhet gjennom våre digitale kurs.</p>
             <div class="hero-details">
               <h3>Tilgjengelige kurs:</h3>
               <ul>
-                <li><strong>Grunnleggende bilvedlikehold</strong> - Lær det viktigste om å holde bilen din i god stand</li>
-                <li><strong>Før EU-kontrollen</strong> - Slik gjør du bilen klar og unngår stryk</li>
-                <li><strong>Vinterforberedelser</strong> - Gjør bilen vinterklar og trygg</li>
-                <li><strong>Økonomisk bilhold</strong> - Spar penger på vedlikehold og reparasjoner</li>
-                <li><strong>Bilsikkerhet</strong> - Kjenn tegnene på problemer før de blir farlige</li>
+                <li><strong>Grunnleggende bilvedlikehold</strong></li>
+                <li><strong>Før EU-kontrollen</strong></li>
+                <li><strong>Vinterforberedelser</strong></li>
+                <li><strong>Økonomisk bilhold</strong></li>
+                <li><strong>Bilsikkerhet</strong></li>
               </ul>
               <h3>Kursformat:</h3>
               <ul>
