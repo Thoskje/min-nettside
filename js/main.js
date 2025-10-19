@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
       getComputedStyle(privatWrapper).display === "none" &&
       getComputedStyle(bedriftWrapper).display === "none") {
     showSection("privat");
+    // Skjul tabs-container slik som ved klikk
+    if (tabsContainer) tabsContainer.style.display = "none";
   }
 
   /* ===========================
